@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Stakeholder.Blogging
 {
-    [Authorize(Policy ="touristPolicy")]
-    [Authorize(Policy ="authorPolicy")]
-    [Route("api/blogging/blog")]
+    [Authorize(Policy = "authorPolicy")]
+    [Authorize(Policy = "touristPolicy")]
+    [Route("api/blog")]
     public class BlogController: BaseApiController
     {
         private readonly IBlogService _blogService;
