@@ -20,10 +20,11 @@ public class Person : Entity
         Name = name;
         Surname = surname;
         Email = email;
-        Validate();
         Picture = picture;
         Bio = bio;
         Quote = quote;
+        Validate();
+
     }
 
     private void Validate()

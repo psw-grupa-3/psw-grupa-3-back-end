@@ -2,10 +2,12 @@
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Tours.API.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers
 {
+    [Authorize(Policy = "allRolesPolicy")]
     [Route("api/profile")]
     public class UserProfileController : BaseApiController
     {
