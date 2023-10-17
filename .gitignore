@@ -549,5 +549,3 @@ $RECYCLE.BIN/
 
 # Migrations
 src/**/Migrations/*
-
-src/BuildingBlocks/Explorer.BuildingBlocks.Infrastructure/Database/DbConnectionStringBuilder.cs
