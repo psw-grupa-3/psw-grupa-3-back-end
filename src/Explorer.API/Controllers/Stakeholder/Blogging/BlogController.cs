@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Explorer.API.Controllers.Stakeholder.Blogging
 {
     [Authorize(Policy = "authorPolicy")]
-    [Authorize(Policy = "touristPolicy")]
     [Route("api/blog")]
     public class BlogController: BaseApiController
     {

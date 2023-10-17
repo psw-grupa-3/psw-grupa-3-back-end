@@ -9,9 +9,10 @@ namespace Explorer.Blog.Core.Domain
         public string Description { get; init; }
         public DateTime CreationDate { get; init; } = DateTime.Now;
         public BlogStatus Status { get; init; } = BlogStatus.DRAFT;
+        public string[] Images { get; init; }
 
         public Blog(string title, string description, DateTime creationDate,
-            BlogStatus status)
+            BlogStatus status, string[] images)
         {
             if (string.IsNullOrEmpty(title)) throw new ArgumentException("Invalid or empty title.");
             if (string.IsNullOrEmpty(description)) throw new ArgumentException("Invalid or empty description.");
@@ -19,6 +20,7 @@ namespace Explorer.Blog.Core.Domain
             Description = description;
             CreationDate = creationDate;
             Status = status;
+            Images = images;
         }
     }
 }

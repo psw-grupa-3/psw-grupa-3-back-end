@@ -8,5 +8,6 @@
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
         public BlogStatus Status { get; set; }
+        public string[] Images { get; set; }
     }
 }
