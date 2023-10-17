@@ -16,7 +16,6 @@ namespace Explorer.API.Controllers.Administrator.Administration
         {
             _equipmentService = equipmentService;
         }
-            
 
         [HttpGet]
         public ActionResult<PagedResult<EquipmentDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
