@@ -11,8 +11,8 @@ namespace Explorer.Stakeholders.API.Public
     public interface IMembershipRequestService
     {
          Result<MembershipRequestDto> CreateMembershipRequest(MembershipRequestDto req);
-         Result<MembershipRequestDto> AcceptMembershipRequest(MembershipRequestDto req);
-         Result<MembershipRequestDto> RejectMembershipRequest(MembershipRequestDto req);
+         Result<MembershipRequestDto> AcceptMembershipRequest(int id);
+         Result<MembershipRequestDto> RejectMembershipRequest(int id);
 
     }
 }

@@ -9,12 +9,14 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
     public class MembershipRequestService : CrudService<MembershipRequestDto, MembershipRequest>, IMembershipRequestService
     {
+        
         public MembershipRequestService(ICrudRepository<MembershipRequest> crudRepository, IMapper mapper) : base(crudRepository, mapper)
         {
         }
@@ -32,14 +34,21 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
         }
 
-        public Result<MembershipRequestDto> AcceptMembershipRequest(MembershipRequestDto req)
+        public Result<MembershipRequestDto> AcceptMembershipRequest(int id)
         {
-            throw new NotImplementedException();
+            var result = CrudRepository.Get(id);
+            result.IsAccepted = true;
+            CrudRepository.Update(result);
+            return MapToDto(result);
+
         }
 
-        public Result<MembershipRequestDto> RejectMembershipRequest(MembershipRequestDto req)
+        public Result<MembershipRequestDto> RejectMembershipRequest(int id)
         {
-            throw new NotImplementedException();
+            var result = CrudRepository.Get(id);
+            result.IsAccepted = false;
+            CrudRepository.Update(result);
+            return MapToDto(result);
         } 
     }
 }

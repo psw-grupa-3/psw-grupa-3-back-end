@@ -20,9 +20,9 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpPut("accept/{id:int}")]
-        public ActionResult<MembershipRequestDto> Accept([FromBody] MembershipRequestDto req)
+        public ActionResult<MembershipRequestDto> Accept(int id)
         {
-            var result = _membershipRequestService.AcceptMembershipRequest(req);
+            var result = _membershipRequestService.AcceptMembershipRequest(id);
             return CreateResponse(result);
         }
         [HttpPost]
@@ -40,9 +40,9 @@ namespace Explorer.API.Controllers.Tourist
         }  
       
         [HttpPut("reject/{id:int}")]
-        public ActionResult<MembershipRequestDto> Reject([FromBody] MembershipRequestDto req)
+        public ActionResult<MembershipRequestDto> Reject(int id)
         {
-            var result = _membershipRequestService.RejectMembershipRequest(req);
+            var result = _membershipRequestService.RejectMembershipRequest(id);
             return CreateResponse(result);
         }
         

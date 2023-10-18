@@ -13,7 +13,7 @@ namespace Explorer.Stakeholders.Core.Domain
         public int MembershipRequestId { get; init; }
         public int TouristId { get; init; }
         public int ClubId { get; init; }
-        public bool IsAccepted { get; init; }
+        public bool IsAccepted { get; set; }
 
         public MembershipRequest(int touristId, int clubId)
         {

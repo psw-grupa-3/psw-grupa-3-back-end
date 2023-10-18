@@ -25,5 +25,17 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             _dbContext.SaveChanges();
             return request;
         }
+
+        public MembershipRequest Update(MembershipRequest request)
+        {
+            _dbContext.MembershipRequests.Update(request);
+            _dbContext.SaveChanges();
+            return request;
+        }
+
+        public MembershipRequest Get(int id)
+        {
+            return _dbContext.MembershipRequests.FirstOrDefault(mr => mr.Id == id);
+        }
     }
 }
