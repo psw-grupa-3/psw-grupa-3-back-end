@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Explorer.API.Controllers.Author
 {
     [Authorize(Policy = "authorPolicy")]
-    [Route("api/author/equipment")]
+    [Route("api/author/equipmentManagment")]
     public class EquipmentManagmentController : BaseApiController
     {
         private readonly IEquipmentManagmentService _equipmentManagmentService;
@@ -27,16 +27,16 @@ namespace Explorer.API.Controllers.Author
         }
 
         [HttpPost]
-        public ActionResult<EquipmentManagmentDto> Create([FromBody] EquipmentManagmentDto equipmentManagmentService)
+        public ActionResult<EquipmentManagmentDto> Create([FromBody] EquipmentManagmentDto equipmentManagment)
         {
-            var result = _equipmentManagmentService.Create(equipmentManagmentService);
+            var result = _equipmentManagmentService.Create(equipmentManagment);
             return CreateResponse(result);
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<EquipmentManagmentDto> Update([FromBody] EquipmentManagmentDto equipmentManagmentService)
+        public ActionResult<EquipmentManagmentDto> Update([FromBody] EquipmentManagmentDto equipmentManagment)
         {
-            var result = _equipmentManagmentService.Update(equipmentManagmentService);
+            var result = _equipmentManagmentService.Update(equipmentManagment);
             return CreateResponse(result);
         }
 

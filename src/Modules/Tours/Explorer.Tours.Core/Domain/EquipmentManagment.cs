@@ -11,7 +11,7 @@ namespace Explorer.Tours.Core.Domain
     {
         public int AuthorId { get; init; }
         public int EquipmentId { get; init; }
-        public int TourId { get; set; }
+        public int TourId { get; init; }
 
         public EquipmentManagment(int authorId, int equipmentId, int tourId)
         {

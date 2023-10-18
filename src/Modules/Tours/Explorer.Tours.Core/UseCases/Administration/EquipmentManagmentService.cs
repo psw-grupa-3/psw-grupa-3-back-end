@@ -9,11 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.Core.UseCases
+namespace Explorer.Tours.Core.UseCases.Administration
 {
     public class EquipmentManagmentService : CrudService<EquipmentManagmentDto, EquipmentManagment>, IEquipmentManagmentService
     {
-        public EquipmentManagmentService(ICrudRepository<EquipmentManagment> crudRepository, IMapper mapper) : base(crudRepository, mapper)
+        public EquipmentManagmentService(ICrudRepository<EquipmentManagment> repository, IMapper mapper) : base(repository, mapper)
         {
         }
     }
