@@ -36,5 +36,12 @@ namespace Explorer.Stakeholders.Core.UseCases
             crudRepository.Update(club);
             return Result.Ok();
         }*/
-    }
+       
+        
+            // Ostale metode i logika za klubove
+
+            
+        }
+
+    
 }
