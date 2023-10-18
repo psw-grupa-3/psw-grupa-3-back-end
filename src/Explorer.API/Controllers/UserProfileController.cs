@@ -18,7 +18,7 @@ namespace Explorer.API.Controllers
             _userProfileService = userProfileService;
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}")]
         public ActionResult<PagedResult<UserProfileDto>> GetUser([FromQuery] int page, [FromQuery] int pageSize) {
             var result = _userProfileService.GetPaged(page, pageSize);
             return CreateResponse(result);
