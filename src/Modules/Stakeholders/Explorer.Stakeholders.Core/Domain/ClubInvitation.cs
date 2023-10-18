@@ -13,16 +13,18 @@ namespace Explorer.Stakeholders.Core.Domain
         //public int ClubOwnerId { get; init; }
         public int TouristId { get; init; }
         public int ClubId { get; init; }
-        public bool IsRead { get; init; }=false;
+       
 
         public ClubInvitation() { }
-        public ClubInvitation(int touristId,int clubId,bool isRead)
+        public ClubInvitation(int touristId,int clubId)
+
         {
-            if (TouristId == 0) throw new ArgumentException("Invalid TouristId");
+           
+            if (touristId == 0) throw new ArgumentException("Invalid TouristId");
             TouristId = touristId;
-            if (ClubId == 0) throw new ArgumentException("Invalid ClubId");
+            if (clubId == 0) throw new ArgumentException("Invalid ClubId");
             ClubId = clubId;
-            IsRead = isRead;
+            
            
         }
     }

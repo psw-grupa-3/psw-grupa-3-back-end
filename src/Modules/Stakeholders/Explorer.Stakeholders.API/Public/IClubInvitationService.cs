@@ -8,7 +8,8 @@ public interface IClubInvitationService
 {
    
     Result<ClubInvitationDto> Create(ClubInvitationDto clubInvitation);
- 
-    //Result<ClubInvitationDto> UpdateEntity(int id,ClubInvitationDto clubInvitation);
-    //Result Delete(int id);
+
+   // Result<ClubInvitationDto> Update(ClubInvitationDto clubInvitation);
+    
+    Result Delete(int id);
 }

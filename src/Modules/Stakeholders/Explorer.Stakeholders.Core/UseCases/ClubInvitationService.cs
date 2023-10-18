@@ -19,25 +19,12 @@ namespace Explorer.Stakeholders.Core.UseCases
 {
     public class ClubInvitationService : CrudService<ClubInvitationDto, ClubInvitation>, IClubInvitationService
     {
+        
         public ClubInvitationService(ICrudRepository<ClubInvitation> repository, IMapper mapper) : base(repository, mapper)
         {
-            //crudRepository = repository;
+          
         }
-/*
-        public Result<ClubInvitationDto> UpdateEntity(int id, ClubInvitationDto updatedData)
-        {
-            // Ažuriranje postojećeg entiteta sa novim podacima
-            ClubInvitation clubInvitation = new ClubInvitation
-            {
-                TouristId = updatedData.TouristId,
-                ClubId = updatedData.ClubId,
-                IsRead = updatedData.IsRead,
-            };
 
-            crudRepository.Update(clubInvitation);
-            return Result.Ok();
-           
-        }
-*/
+     
     }
 }

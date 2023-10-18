@@ -11,6 +11,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public int Id { get; set; }
         public int TouristId { get; set; }
         public int ClubId { get; set; }
-        public bool IsRead { get; set; }
+      
     }
 }
