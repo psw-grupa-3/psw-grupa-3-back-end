@@ -7,8 +7,8 @@ using Explorer.Tours.Core.UseCases.Administration;
 
 namespace Explorer.API.Controllers.Tourist
 {
-    [Authorize(Policy = "touristPolicy")]
-    [Route("api/tourist/problem")]
+    
+    
     public class ProblemController : BaseApiController
     {
         private readonly IProblemService _problemService;
@@ -16,11 +16,20 @@ namespace Explorer.API.Controllers.Tourist
         {
             _problemService = problemService;
         }
-
+        [Route("api/tourist/problem")]
+        [Authorize(Policy = "touristPolicy")]
         [HttpPost]
         public ActionResult<ProblemDto> Create([FromBody] ProblemDto problem)
         {
             var result = _problemService.Create(problem);
+            return CreateResponse(result);
+        }
+        [Route("api/tourist/problems")]
+        [Authorize(Policy = "administratorPolicy")]
+        [HttpGet]
+        public ActionResult<PagedResult<ProblemDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _problemService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
     }
