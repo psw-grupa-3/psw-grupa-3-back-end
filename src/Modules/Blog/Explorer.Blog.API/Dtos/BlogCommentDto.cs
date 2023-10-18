@@ -8,7 +8,7 @@ namespace Explorer.Blog.API.Dtos
 {
     public class BlogCommentDto
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
         public int UserId { get; set; }
         public int BlogId { get; set; }
         public string Comment { get; set; }

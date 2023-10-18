@@ -21,7 +21,7 @@ namespace Explorer.Blog.Core.Domain
 
             if (userId == 0) throw new ArgumentException("Invalid UserId");
             UserId = userId;
-            if (BlogId == 0) throw new ArgumentException("Invalid BlogId");
+            if (blogId == 0) throw new ArgumentException("Invalid BlogId");
             BlogId = blogId;
             if (string.IsNullOrWhiteSpace(comment)) throw new ArgumentException("Invalid Name.");
             Comment = comment;
@@ -29,6 +29,5 @@ namespace Explorer.Blog.Core.Domain
             TimeUpdated = timeUpdated;
         }
 
-        public BlogComment() { }
     }
 }
