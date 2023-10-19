@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Explorer.API.Controllers
 {
     [Authorize(Policy = "allRolesPolicy")]
-    [Route("api/profile")]
+    [Route("api/userprofile")]
     public class UserProfileController : BaseApiController
     {
         private readonly IUserProfileService _userProfileService;
@@ -19,8 +19,8 @@ namespace Explorer.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<PagedResult<UserProfileDto>> GetUser([FromQuery] int page, [FromQuery] int pageSize) {
-            var result = _userProfileService.GetPaged(page, pageSize);
+        public ActionResult<PagedResult<UserProfileDto>> GetUser(int id) {
+            var result = _userProfileService.Get(id);
             return CreateResponse(result);
         }
 
