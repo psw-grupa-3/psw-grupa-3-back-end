@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist
 {
-    //[Authorize(Policy = "touristPolicy")]
+    //[Authorize(Policy = "administratorPolicy")]
     [Route("api/club")]
     public class ClubController : BaseApiController
     {
@@ -25,8 +25,9 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<ClubRegistrationDto> Update([FromBody] ClubRegistrationDto reg)
+        public ActionResult<ClubRegistrationDto> Update([FromBody] ClubRegistrationDto reg, int id)
         {
+            //reg.Id = id;
             var result = _clubService.Update(reg);
             return CreateResponse(result);
         }
