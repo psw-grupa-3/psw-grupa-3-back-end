@@ -1,5 +1,6 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace Explorer.API.Controllers.Tourist
     public class ClubController : BaseApiController
     {
         private readonly IClubService _clubService;
+      
 
         public ClubController(IClubService clubService)
         {
             _clubService = clubService;
+    
         }
 
         [HttpPost]
@@ -31,5 +34,6 @@ namespace Explorer.API.Controllers.Tourist
             var result = _clubService.Update(reg);
             return CreateResponse(result);
         }
+
     }
 }

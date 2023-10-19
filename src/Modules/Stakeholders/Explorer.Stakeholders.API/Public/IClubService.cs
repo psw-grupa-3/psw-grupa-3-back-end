@@ -13,5 +13,6 @@ namespace Explorer.Stakeholders.API.Public
         Result<ClubRegistrationDto> Create(ClubRegistrationDto reg);
         Result<ClubRegistrationDto> Update(ClubRegistrationDto reg);
         //Result<ClubRegistrationDto> UpdateEntity(int id, ClubRegistrationDto reg);
+
     }
 }
