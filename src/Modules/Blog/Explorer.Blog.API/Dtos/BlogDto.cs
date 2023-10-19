@@ -7,7 +7,7 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
-        public BlogStatus Status { get; set; }
+        public BlogStatus Status { get; set; } = BlogStatus.DRAFT;
         public string[] Images { get; set; }
     }
 }

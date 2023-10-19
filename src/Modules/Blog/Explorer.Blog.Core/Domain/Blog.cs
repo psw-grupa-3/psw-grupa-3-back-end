@@ -18,7 +18,7 @@ namespace Explorer.Blog.Core.Domain
             if (string.IsNullOrEmpty(description)) throw new ArgumentException("Invalid or empty description.");
             Title = title;
             Description = description;
-            CreationDate = creationDate;
+            CreationDate = creationDate.ToUniversalTime();
             Status = status;
             Images = images;
         }
