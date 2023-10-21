@@ -8,8 +8,6 @@ public interface IClubInvitationService
 {
    
     Result<ClubInvitationDto> Create(ClubInvitationDto clubInvitation);
-
-   // Result<ClubInvitationDto> Update(ClubInvitationDto clubInvitation);
-    
+    bool IsInvitationOwner(int userId,int clubId);
     Result Delete(int id);
 }

@@ -19,12 +19,20 @@ namespace Explorer.Stakeholders.Core.UseCases
 {
     public class ClubInvitationService : CrudService<ClubInvitationDto, ClubInvitation>, IClubInvitationService
     {
-        
-        public ClubInvitationService(ICrudRepository<ClubInvitation> repository, IMapper mapper) : base(repository, mapper)
+
+
+        private IClubService clubServiceInstance;
+        public ClubInvitationService(ICrudRepository<ClubInvitation> repository, IMapper mapper, IClubService clubService) : base(repository, mapper)
         {
-          
+            clubServiceInstance = clubService;
         }
 
-     
+        public bool IsInvitationOwner(int userId, int clubId)
+        {
+               return clubServiceInstance.IsClubOwner(userId,clubId);
+       
+        }
+
+
     }
 }

@@ -1,8 +1,12 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -15,12 +19,26 @@ namespace Explorer.API.Controllers.Tourist
         public ClubInvitationController(IClubInvitationService clubInvitationService)
         {
             _clubInvitationService = clubInvitationService;
+
         }
 
         [HttpPost]
         public ActionResult<ClubInvitationDto> Create([FromBody] ClubInvitationDto clubInvitation)
         {
-            var result = _clubInvitationService.Create(clubInvitation);
+            
+
+            if (HttpContext.User.Identity != null)
+            {
+                var userId = int.Parse(HttpContext.User.Claims.First(c => c.Type == "id").Value);
+               
+              
+                if (!_clubInvitationService.IsInvitationOwner(userId,clubInvitation.ClubId))
+                {
+                    return BadRequest("You are not owner of the club.");
+                }
+            }
+
+                var result = _clubInvitationService.Create(clubInvitation);
             return CreateResponse(result);
         }
 
