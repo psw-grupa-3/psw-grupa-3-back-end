@@ -15,9 +15,10 @@ namespace Explorer.Tours.Core.Domain
         public string Description { get; init; }
         public DateTime Time { get; init; } = DateTime.Now;
         public int TourId { get; init; }
+        public int TouristId { get; init; }
         public Problem() { }
 
-        public Problem(string category, bool priority, string description, DateTime time, int tourId)
+        public Problem(string category, bool priority, string description, DateTime time, int tourId, int touristId)
         {
             if (string.IsNullOrWhiteSpace(category)) throw new ArgumentException("Invalid category.");
             Category = category;
@@ -26,6 +27,7 @@ namespace Explorer.Tours.Core.Domain
             Description = description;
             Time = time;
             TourId = tourId;
+            TouristId=touristId;
         }
     }
 }
