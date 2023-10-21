@@ -2,7 +2,7 @@
 
 public class UserProfileDto
 {
-    public int ss;
+    public int sasa;
     public string Name { get; set; }
     public string Surname { get; set; }
     public string Picture { get; set; }
