@@ -1,6 +1,7 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,16 +10,18 @@ using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist
 {
-    //[Authorize(Policy = "touristPolicy")]
+    //[Authorize(Policy = "administratorPolicy")]
     [Route("api/club")]
     public class ClubController : BaseApiController
     {
         private readonly IClubService _clubService;
         
+      
 
         public ClubController(IClubService clubService)
         {
             _clubService = clubService;
+    
         }
 
         [HttpPost]
@@ -29,8 +32,9 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<ClubRegistrationDto> Update([FromBody] ClubRegistrationDto reg)
+        public ActionResult<ClubRegistrationDto> Update([FromBody] ClubRegistrationDto reg, int id)
         {
+            //reg.Id = id;
             var result = _clubService.Update(reg);
             return CreateResponse(result);
         }
@@ -62,5 +66,6 @@ namespace Explorer.API.Controllers.Tourist
 
             return CreateResponse(result);
         }
+
     }
 }

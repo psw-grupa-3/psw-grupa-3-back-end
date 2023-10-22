@@ -9,7 +9,9 @@ public class StakeholderProfile : Profile
 {
     public StakeholderProfile()
     {
+        CreateMap<AppRatingDto, AppRating>().ReverseMap();
         CreateMap<ClubRegistrationDto, Club>().ReverseMap();
         CreateMap<ClubInvitationDto, ClubInvitation>().ReverseMap();
+        CreateMap<MembershipRequestDto, MembershipRequest>().ReverseMap();
     }
 }

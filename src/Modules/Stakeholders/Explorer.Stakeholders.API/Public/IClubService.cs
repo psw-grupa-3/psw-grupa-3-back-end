@@ -17,5 +17,6 @@ namespace Explorer.Stakeholders.API.Public
         bool IsClubOwner(int userId,int clubId);
         Result<PagedResult<ClubRegistrationDto>> GetPaged(int page, int pageSize);
         //Result<ClubRegistrationDto> UpdateEntity(int id, ClubRegistrationDto reg);
+
     }
 }
