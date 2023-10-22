@@ -2,10 +2,13 @@
 
 public class UserProfileDto
 {
-    public string Name { get; set; }
-    public string Surname { get; set; }
-    public string Picture { get; set; }
-    public string Bio { get; set; }
-    public string Quote { get; set; }
-    
+    public int Id { get; set; }
+    public long UserId { get; init; }
+    public string Name { get; init; }
+    public string Surname { get; init; }
+    public string Email { get; init; }
+    public string Picture { get; init; }
+    public string Bio { get; init; }
+    public string Quote { get; init; }
+
 }

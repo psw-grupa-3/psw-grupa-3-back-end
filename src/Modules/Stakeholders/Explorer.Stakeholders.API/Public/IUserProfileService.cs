@@ -14,5 +14,6 @@ namespace Explorer.Stakeholders.API.Public
         //Result<PagedResult<UserProfileDto>> GetPaged(int page, int pageSize);
         Result<UserProfileDto> Update(UserProfileDto profile);
         Result<UserProfileDto> Get(int id);
+        Result<UserProfileDto> GetPersonByUserId(int id);
     }
 }

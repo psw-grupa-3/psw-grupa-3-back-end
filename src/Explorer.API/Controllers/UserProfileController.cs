@@ -20,7 +20,7 @@ namespace Explorer.API.Controllers
 
         [HttpGet("{id:int}")]
         public ActionResult<PagedResult<UserProfileDto>> GetUser(int id) {
-            var result = _userProfileService.Get(id);
+            var result = _userProfileService.GetPersonByUserId(id);
             return CreateResponse(result);
         }
 
