@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Administrator.Administration
 {
-    [Authorize(Policy = "administratorPolicy")]
     [Route("api/administration/equipment")]
     public class EquipmentController : BaseApiController
     {
@@ -17,6 +16,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             _equipmentService = equipmentService;
         }
 
+        [Authorize(Policy = "administratorAndTouristPolicy")]
         [HttpGet]
         public ActionResult<PagedResult<EquipmentDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
@@ -24,6 +24,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             return CreateResponse(result);
         }
 
+        [Authorize(Policy = "administratorPolicy")]
         [HttpPost]
         public ActionResult<EquipmentDto> Create([FromBody] EquipmentDto equipment)
         {
@@ -31,6 +32,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             return CreateResponse(result);
         }
 
+        [Authorize(Policy = "administratorPolicy")]
         [HttpPut("{id:int}")]
         public ActionResult<EquipmentDto> Update([FromBody] EquipmentDto equipment)
         {
@@ -38,6 +40,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             return CreateResponse(result);
         }
 
+        [Authorize(Policy = "administratorPolicy")]
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
