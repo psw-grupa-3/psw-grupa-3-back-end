@@ -1,4 +1,6 @@
-﻿namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
+﻿using Explorer.Stakeholders.API.Dtos;
+
+namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
 {
     public interface IUserRepository
     {
@@ -6,7 +8,8 @@
         User? GetActiveByName(string username);
         User Create(User user);
         long GetPersonId(long userId);
-        void Block(long userId); // Add Block method
-        List<User> GetAll(); // Add GetAll method
+        void Block(string username);
+        List<UserAdminDto> GetAll();
+        Person GetPersonById(long personId);
     }
 }

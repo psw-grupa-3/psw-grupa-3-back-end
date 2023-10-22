@@ -24,13 +24,24 @@ namespace Explorer.API.Controllers.Admin
             return Ok(users);
         }
 
-       
-
-        [HttpPost("{id:int}/block")]
-        public ActionResult BlockUser(int id)
+        [HttpPost("block-users")]
+        public IActionResult BlockUsers([FromBody] List<string> usernames)
         {
-            _userService.Block(id); // Replace with your actual blocking method
-            return NoContent();
+            try
+            {
+                foreach (var username in usernames)
+                {
+                    _userService.Block(username);
+                }
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Greška prilikom blokiranja korisnika: {ex.Message}");
+            }
         }
+
+
+
     }
 }

@@ -29,12 +29,12 @@ namespace Explorer.Stakeholders.Core.UseCases
             return MapToDto(userEntity);
         }
 
-        public Result Block(long userId)
+        public Result Block(string username)
         {
             try
             {
                 // Implement service-specific logic to block a user
-                userRepository.Block(userId);
+                userRepository.Block(username);
                 return Result.Ok();
             }
             catch (Exception ex)
@@ -42,26 +42,21 @@ namespace Explorer.Stakeholders.Core.UseCases
                 return Result.Fail($"Error blocking the user: {ex.Message}");
             }
         }
-
         public Result<IEnumerable<UserAdminDto>> GetAll()
         {
-            try
+            var userAdminDtos = userRepository.GetAll();
+
+            var userAndPersonDtos = userAdminDtos.Select(userAdminDto => new UserAdminDto
             {
-                // Implement service-specific logic to get all users
-                var users = userRepository.GetAll();
-                var userAdminDtos = users.Select(user =>
-                {
-                    var userDto = MapToDto(user);
-                    userDto.Role = user.GetPrimaryRoleName(); // Convert UserRole to a string
-                    return userDto;
-                });
-                return Result.Ok(userAdminDtos);
-            }
-            catch (Exception ex)
-            {
-                return Result.Fail<IEnumerable<UserAdminDto>>($"Error getting all users: {ex.Message}");
-            }
+                Username = userAdminDto.Username,
+                Email = userAdminDto.Email,
+                Role = userAdminDto.Role,
+                IsActive = userAdminDto.IsActive
+            });
+
+            return Result.Ok(userAndPersonDtos);
         }
+
 
 
     }

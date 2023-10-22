@@ -7,7 +7,7 @@ namespace Explorer.Stakeholders.API.Public
     public interface IUserService
     {
         Result<UserAdminDto> Update(UserAdminDto user);
-        Result Block(long userId); // Change the return type here
+        Result Block(string username); // Change the return type here
         Result<IEnumerable<UserAdminDto>> GetAll();
     }
 }
