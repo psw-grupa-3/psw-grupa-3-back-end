@@ -13,5 +13,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public string Description { get; set; }
         public string URL {  get; set; }
         public int OwnerId { get; set; }
+        public List<int> MembersId { get; set; } = new List<int>();
     }
 }

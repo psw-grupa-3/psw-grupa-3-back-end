@@ -19,6 +19,7 @@ namespace Explorer.Stakeholders.Core.UseCases
 {
     public class ClubService : CrudService<ClubRegistrationDto, Club>, IClubService
     {
+        
         public ClubService(ICrudRepository<Club> repository, IMapper mapper) : base(repository, mapper) {
             //crudRepository = repository;
         }
@@ -36,12 +37,33 @@ namespace Explorer.Stakeholders.Core.UseCases
             crudRepository.Update(club);
             return Result.Ok();
         }*/
-       
-        
-            // Ostale metode i logika za klubove
 
+        
+        public ClubRegistrationDto MemberExist(ClubRegistrationDto club,int id) {
+          
+                club.MembersId.Remove(id);
             
+            return club;
         }
 
-    
+
+
+
+        public bool IsClubOwner(int userId,int clubId)
+        {
+
+            Result<PagedResult<ClubRegistrationDto>> allClubsResult = GetPaged(1, int.MaxValue);
+
+            if (allClubsResult.IsSuccess)
+            {
+
+                var allClubs = allClubsResult.Value.Results;
+                
+                return allClubs.Any(club => club.OwnerId == userId && club.Id==clubId);
+            }
+            return false;
+        }
+
+
+    }
 }

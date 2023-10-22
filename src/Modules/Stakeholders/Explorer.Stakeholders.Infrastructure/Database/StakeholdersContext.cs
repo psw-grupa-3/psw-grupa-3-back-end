@@ -10,6 +10,7 @@ public class StakeholdersContext : DbContext
     public DbSet<Person> People { get; set; }
     public DbSet<AppRating> AppRatings { get; set; }
     public DbSet<Club> Clubs { get; set; }
+    public DbSet<ClubInvitation> ClubInvitations { get; set; }
 
     public DbSet<MembershipRequest> MembershipRequests { get; set; }    
 
