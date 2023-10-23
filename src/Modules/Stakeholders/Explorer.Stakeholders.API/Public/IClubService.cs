@@ -13,7 +13,7 @@ namespace Explorer.Stakeholders.API.Public
     {
         Result<ClubRegistrationDto> Create(ClubRegistrationDto reg);
         Result<ClubRegistrationDto> Update(ClubRegistrationDto reg);
-        ClubRegistrationDto MemberExist(ClubRegistrationDto club,int id);
+       // ClubRegistrationDto MemberExist(ClubRegistrationDto club,int id);
         bool IsClubOwner(int userId,int clubId);
         Result<PagedResult<ClubRegistrationDto>> GetPaged(int page, int pageSize);
         //Result<ClubRegistrationDto> UpdateEntity(int id, ClubRegistrationDto reg);
