@@ -39,12 +39,12 @@ namespace Explorer.Stakeholders.Core.UseCases
         }*/
 
         
-        public ClubRegistrationDto MemberExist(ClubRegistrationDto club,int id) {
+       /* public ClubRegistrationDto MemberExist(ClubRegistrationDto club,int id) {
           
                 club.MembersId.Remove(id);
             
             return club;
-        }
+        }*/
 
 
 

@@ -13,17 +13,17 @@ namespace Explorer.Stakeholders.Core.Domain
         public string Description { get; init; }
         public string URL { get; init; }
         public int OwnerId { get; init; }
-        public List<int> MembersId { get; init; } = new List<int>();
+       
 
         public Club() { }
-        public Club(string name, string description, string url, int ownerId, List<int> membersId)
+        public Club(string name, string description, string url, int ownerId)
         {
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
             Description = description;
             URL = url;
             OwnerId = ownerId;
-            MembersId = membersId;
+            
         }
     }
 }

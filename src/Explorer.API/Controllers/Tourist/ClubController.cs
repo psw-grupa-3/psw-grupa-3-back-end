@@ -40,7 +40,7 @@ namespace Explorer.API.Controllers.Tourist
         }
        
 
-        [HttpPut("members/{id:int}")]
+     /*   [HttpPut("members/{id:int}")]
         public ActionResult<ClubRegistrationDto> DropMember([FromBody] ClubRegistrationDto club, int id)
         {
             if (HttpContext.User.Identity != null)
@@ -66,6 +66,6 @@ namespace Explorer.API.Controllers.Tourist
 
             return CreateResponse(result);
         }
-
+     */
     }
 }
