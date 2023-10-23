@@ -1,9 +1,15 @@
-﻿namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+﻿using Explorer.Stakeholders.API.Dtos;
 
-public interface IUserRepository
+namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
 {
-    bool Exists(string username);
-    User? GetActiveByName(string username);
-    User Create(User user);
-    long GetPersonId(long userId);
+    public interface IUserRepository
+    {
+        bool Exists(string username);
+        User? GetActiveByName(string username);
+        User Create(User user);
+        long GetPersonId(long userId);
+        void Block(string username);
+        List<UserAdminDto> GetAll();
+        Person GetPersonById(long personId);
+    }
 }

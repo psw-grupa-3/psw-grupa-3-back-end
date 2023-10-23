@@ -19,7 +19,23 @@ namespace Explorer.Stakeholders.Core.UseCases
 {
     public class ClubService : CrudService<ClubRegistrationDto, Club>, IClubService
     {
+        
         public ClubService(ICrudRepository<Club> repository, IMapper mapper) : base(repository, mapper) {
         }
+        public bool IsClubOwner(int userId,int clubId)
+        {
+
+            Result<PagedResult<ClubRegistrationDto>> allClubsResult = GetPaged(1, int.MaxValue);
+
+            if (allClubsResult.IsSuccess)
+            {
+
+                var allClubs = allClubsResult.Value.Results;
+                
+                return allClubs.Any(club => club.OwnerId == userId && club.Id==clubId);
+            }
+            return false;
+        }
+
     }
 }

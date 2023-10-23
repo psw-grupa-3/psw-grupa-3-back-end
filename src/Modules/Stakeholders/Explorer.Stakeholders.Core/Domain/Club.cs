@@ -13,6 +13,7 @@ namespace Explorer.Stakeholders.Core.Domain
         public string Description { get; init; }
         public string URL { get; init; }
         public int OwnerId { get; init; }
+       
 
         public Club() { }
         public Club(string name, string description, string url, int ownerId)
@@ -22,6 +23,7 @@ namespace Explorer.Stakeholders.Core.Domain
             Description = description;
             URL = url;
             OwnerId = ownerId;
+            
         }
     }
 }
