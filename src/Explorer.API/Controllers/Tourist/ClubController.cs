@@ -1,8 +1,10 @@
-﻿using Explorer.Stakeholders.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos;
+using Explorer.Tours.API.Dtos.Tour.DataIn;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,12 @@ namespace Explorer.API.Controllers.Tourist
         {
             _clubService = clubService;
     
+        }
+
+        [HttpGet("getAll")]
+        public ActionResult<PagedResult<ClubRegistrationDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            return CreateResponse(_clubService.GetPaged(page, pageSize));
         }
 
         [HttpPost]

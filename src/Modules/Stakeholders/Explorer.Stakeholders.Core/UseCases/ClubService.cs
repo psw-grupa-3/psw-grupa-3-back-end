@@ -21,34 +21,7 @@ namespace Explorer.Stakeholders.Core.UseCases
     {
         
         public ClubService(ICrudRepository<Club> repository, IMapper mapper) : base(repository, mapper) {
-            //crudRepository = repository;
         }
-
-        /*public Result<ClubRegistrationDto> UpdateEntity(int id, ClubRegistrationDto updatedData)
-        {
-            // Ažuriranje postojećeg entiteta sa novim podacima
-            Club club = new Club
-            {
-                Name = updatedData.Name,
-                Description = updatedData.Description,
-                URL = updatedData.URL,
-            };
-
-            crudRepository.Update(club);
-            return Result.Ok();
-        }*/
-
-        
-       /* public ClubRegistrationDto MemberExist(ClubRegistrationDto club,int id) {
-          
-                club.MembersId.Remove(id);
-            
-            return club;
-        }*/
-
-
-
-
         public bool IsClubOwner(int userId,int clubId)
         {
 
@@ -63,7 +36,6 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
             return false;
         }
-
 
     }
 }
