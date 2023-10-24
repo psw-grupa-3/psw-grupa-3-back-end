@@ -33,6 +33,7 @@ public static class StakeholdersStartup
         services.AddScoped<IClubService, ClubService>();
         services.AddScoped<IClubInvitationService, ClubInvitationService>();
         services.AddScoped<IMembershipRequestService, MembershipRequestService>();
+        services.AddScoped<IClubMemberService, ClubMemberService>();
 
     }
 
@@ -46,6 +47,8 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<AppRating>), typeof(CrudDatabaseRepository<AppRating, StakeholdersContext>));
         services.AddScoped(typeof(ICrudRepository<MembershipRequest>),
             typeof(CrudDatabaseRepository<MembershipRequest, StakeholdersContext>));
+        services.AddScoped(typeof(ICrudRepository<ClubMember>), typeof(CrudDatabaseRepository<ClubMember, StakeholdersContext>));
+
         services.AddDbContext<StakeholdersContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("stakeholders"),
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "stakeholders")));
