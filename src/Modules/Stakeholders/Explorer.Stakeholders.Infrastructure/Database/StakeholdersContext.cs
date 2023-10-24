@@ -11,6 +11,7 @@ public class StakeholdersContext : DbContext
     public DbSet<AppRating> AppRatings { get; set; }
     public DbSet<Club> Clubs { get; set; }
     public DbSet<ClubInvitation> ClubInvitations { get; set; }
+    public DbSet<ClubMember> ClubMembers { get; set; }
 
     public DbSet<MembershipRequest> MembershipRequests { get; set; }    
 
