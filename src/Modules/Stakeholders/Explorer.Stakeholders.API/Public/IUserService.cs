@@ -8,6 +8,6 @@ namespace Explorer.Stakeholders.API.Public
     {
         Result<UserAdminDto> Update(UserAdminDto user);
         Result Block(string username); // Change the return type here
-        Result<IEnumerable<UserAdminDto>> GetAll();
+        Result<List<UserAdminDto>> GetAll();
     }
 }

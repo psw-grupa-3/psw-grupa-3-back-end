@@ -9,7 +9,7 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
         User Create(User user);
         long GetPersonId(long userId);
         void Block(string username);
-        List<UserAdminDto> GetAll();
+        List<UserPerson> GetAll();
         Person GetPersonById(long personId);
     }
 }
