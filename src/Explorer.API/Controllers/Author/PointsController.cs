@@ -44,5 +44,13 @@ namespace Explorer.API.Controllers.Author
             var result = _pointsService.Delete(id);
             return CreateResponse(result);
         }
+
+        [HttpGet("getAllForTour/{id}")]
+        [AllowAnonymous]
+        public ActionResult GetAllForTour(int id)
+        {
+            var result = _pointsService.GetAllForTour(id);
+            return CreateResponse(result);
+        }
     }
 }

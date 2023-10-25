@@ -10,5 +10,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<PointsDto> Create(PointsDto points);
         Result<PointsDto> Update(PointsDto points);
         Result Delete(int id);
+        Result<List<PointsDto>> GetAllForTour(int id);
     }
 }
