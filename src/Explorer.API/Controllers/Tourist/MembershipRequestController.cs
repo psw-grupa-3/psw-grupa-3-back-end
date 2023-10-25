@@ -1,4 +1,5 @@
-﻿using Explorer.Stakeholders.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.UseCases;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,12 @@ namespace Explorer.API.Controllers.Tourist
         {
             var result = _membershipRequestService.AcceptMembershipRequest(id);
             return CreateResponse(result);
+        }
+
+        [HttpGet("getAll")]
+        public ActionResult<PagedResult<MembershipRequestDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            return CreateResponse(_membershipRequestService.GetPaged(page, pageSize));
         }
         [HttpPost]
         public ActionResult<MembershipRequestDto> Create([FromBody] MembershipRequestDto req)
