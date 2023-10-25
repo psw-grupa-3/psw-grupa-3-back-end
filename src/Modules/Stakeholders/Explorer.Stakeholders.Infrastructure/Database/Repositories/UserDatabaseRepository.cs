@@ -41,29 +41,28 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return person.Id;
         }
 
-        public List<UserAdminDto> GetAll()
+        public List<UserPerson> GetAll()
         {
             var users = _dbContext.Users.ToList();
-            var userAndPersonDtos = new List<UserAdminDto>();
+            var userWithPersonInfoList = new List<UserPerson>();
 
             foreach (var user in users)
             {
-                var personId = _dbContext.People.FirstOrDefault(p => p.UserId == user.Id)?.Id;
-                if (personId != null)
+                var person = _dbContext.People.FirstOrDefault(p => p.UserId == user.Id);
+                if (person != null)
                 {
-                    var person = _dbContext.People.FirstOrDefault(p => p.Id == personId);
-                    var userAndPersonDto = new UserAdminDto
+                    var userWithPersonInfo = new UserPerson
                     {
                         Username = user.Username,
-                        Email = person?.Email,
+                        Email = person.Email,
                         Role = user.GetPrimaryRoleName(),
                         IsActive = user.IsActive
                     };
-                    userAndPersonDtos.Add(userAndPersonDto);
+                    userWithPersonInfoList.Add(userWithPersonInfo);
                 }
             }
 
-            return userAndPersonDtos;
+            return userWithPersonInfoList;
         }
 
 

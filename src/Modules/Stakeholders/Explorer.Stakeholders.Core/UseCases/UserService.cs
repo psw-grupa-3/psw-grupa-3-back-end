@@ -42,19 +42,21 @@ namespace Explorer.Stakeholders.Core.UseCases
                 return Result.Fail($"Error blocking the user: {ex.Message}");
             }
         }
-        public Result<IEnumerable<UserAdminDto>> GetAll()
+        public Result<List<UserAdminDto>> GetAll()
         {
-            var userAdminDtos = userRepository.GetAll();
-
-            var userAndPersonDtos = userAdminDtos.Select(userAdminDto => new UserAdminDto
+            List<UserAdminDto> users = new();
+            foreach(var user in userRepository.GetAll())
             {
-                Username = userAdminDto.Username,
-                Email = userAdminDto.Email,
-                Role = userAdminDto.Role,
-                IsActive = userAdminDto.IsActive
-            });
-
-            return Result.Ok(userAndPersonDtos);
+                users.Add(new()
+                {
+                    UserId = user.UserId,
+                    Username = user.Username,
+                    Role = user.Role,
+                    IsActive = user.IsActive,
+                    Email = user.Email
+                }) ;
+            }
+            return users;
         }
 
 
