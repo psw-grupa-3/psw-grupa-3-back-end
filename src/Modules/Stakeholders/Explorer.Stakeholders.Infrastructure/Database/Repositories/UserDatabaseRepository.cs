@@ -56,7 +56,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
                     {
                         Username = user.Username,
                         Email = person?.Email,
-                        Role = user.GetPrimaryRoleName(),
+                        Role = (API.Dtos.UserRole)user.Role,
                         IsActive = user.IsActive
                     };
                     userAndPersonDtos.Add(userAndPersonDto);
