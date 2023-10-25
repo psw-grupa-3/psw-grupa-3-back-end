@@ -9,6 +9,7 @@ namespace Explorer.Tours.Core.Domain
         public string Name { get; init; }
         public string Description { get; init; }
         public string Picture { get; init; }
+        public long TourId { get; init; }
 
         public Points(double latitude, double longitude, string name, string description, string picture)
         {
