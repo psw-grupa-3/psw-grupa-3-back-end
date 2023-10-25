@@ -10,7 +10,6 @@ namespace Explorer.Stakeholders.Core.Domain
 {
     public class MembershipRequest : Entity
     {
-        public int MembershipRequestId { get; init; }
         public int TouristId { get; init; }
         public int ClubId { get; init; }
         public bool IsAccepted { get; set; }
@@ -19,8 +18,6 @@ namespace Explorer.Stakeholders.Core.Domain
         {
             TouristId = touristId;
             ClubId = clubId;
-            IsAccepted = false;
-
         }
     }
 
