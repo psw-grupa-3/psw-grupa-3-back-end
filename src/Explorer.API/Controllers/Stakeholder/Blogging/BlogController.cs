@@ -21,5 +21,23 @@ namespace Explorer.API.Controllers.Stakeholder.Blogging
             var result = _blogService.Create(blog);
             return CreateResponse(result);
         }
+
+        [HttpGet("getAll")]
+        public ActionResult<BlogDto> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            return CreateResponse(_blogService.GetPaged(page, pageSize));
+        }
+
+        [HttpPut("{blogId:int}")]
+        public ActionResult<BlogDto> Update([FromBody] BlogDto blog)
+        {
+            return CreateResponse(_blogService.Update(blog));
+        }
+
+        [HttpDelete("{blogId:int}")]
+        public ActionResult Delete(int blogId)
+        {
+            return CreateResponse(_blogService.Delete(blogId));
+        }
     }
 }
