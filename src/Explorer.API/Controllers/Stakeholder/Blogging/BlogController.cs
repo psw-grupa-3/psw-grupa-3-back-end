@@ -22,6 +22,14 @@ namespace Explorer.API.Controllers.Stakeholder.Blogging
             return CreateResponse(result);
         }
 
+        [AllowAnonymous]
+        [HttpGet("get/{blogId:int}")]
+        public ActionResult<BlogDto> Get([FromQuery] int id)
+        {
+            return CreateResponse(_blogService.Get(id));
+        }
+
+        [AllowAnonymous]
         [HttpGet("getAll")]
         public ActionResult<BlogDto> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
