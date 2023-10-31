@@ -16,5 +16,6 @@ namespace Explorer.Tours.API.Public.Personalization
         Result<PreferenceDto> Get(int id);
         Result<PreferenceDto> Update(PreferenceDto preference);
         Result Delete(int id);
+        Result<List<PreferenceDto>> GetAllForTourist(int touristId);
     }
 }
