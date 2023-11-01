@@ -1,4 +1,5 @@
-﻿using Explorer.Tours.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 using FluentResults;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace Explorer.Tours.API.Public.Administration
     public interface ITourReviewService
     {
         Result<TourReviewDto> Create(TourReviewDto tourReview);
+        Result<PagedResult<TourReviewDto>> GetPaged(int page, int pageSize);
     }
 }
