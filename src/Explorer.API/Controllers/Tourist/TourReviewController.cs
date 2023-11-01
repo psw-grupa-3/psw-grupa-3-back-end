@@ -24,5 +24,12 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tourReviewService.Create(tourReview);
             return CreateResponse(result);
         }
+
+        [HttpGet]
+        public ActionResult<PagedResult<TourReviewDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var result = _tourReviewService.GetPaged(page, pageSize);
+            return CreateResponse(result);
+        }
     }
 }

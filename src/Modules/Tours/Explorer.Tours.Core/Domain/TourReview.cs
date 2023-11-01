@@ -14,16 +14,18 @@ namespace Explorer.Tours.Core.Domain
         public int Rating { get; init; }
         public string Comment { get; init; }
         public int TouristId { get; init; }
+        public string TouristUsername { get; init; }
         public DateTime TourDate { get; init; }
         public DateTime CreationDate { get; init; } = DateTime.Now;
         public List<string> Images { get; init; }
         public int TourId { get; init; }
 
-        public TourReview(int rating, string comment, int touristId, DateTime tourDate, DateTime creationDate, List<string> images, int tourId)
+        public TourReview(int rating, string comment, int touristId, string touristUsername, DateTime tourDate, DateTime creationDate, List<string> images, int tourId)
         {
             Rating = rating;
             Comment = comment;
             TouristId = touristId;
+            TouristUsername = touristUsername;
             TourDate = tourDate;
             CreationDate = creationDate;
             Images = images ?? new List<string>();
@@ -35,6 +37,7 @@ namespace Explorer.Tours.Core.Domain
             if (Rating < 1 || Rating > 5) throw new ArgumentException("Invalid rating");
             if (string.IsNullOrWhiteSpace(Comment)) throw new ArgumentException("Invalid or empty comment");
             if (TouristId == 0) throw new ArgumentException("Invalid TouristId");
+            if (string.IsNullOrWhiteSpace(TouristUsername)) throw new ArgumentException("Invalid or empty tourist username");
             if (TourDate > DateTime.Now) throw new ArgumentException("Invalid tour date.");
             if (TourId == 0) throw new ArgumentException("Invalid TourId");
         }
