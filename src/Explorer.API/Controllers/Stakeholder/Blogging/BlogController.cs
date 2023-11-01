@@ -23,8 +23,8 @@ namespace Explorer.API.Controllers.Stakeholder.Blogging
         }
 
         [AllowAnonymous]
-        [HttpGet("get/{blogId:int}")]
-        public ActionResult<BlogDto> Get([FromQuery] int id)
+        [HttpGet("get/{id:int}")]
+        public ActionResult<BlogDto> Get([FromRoute] int id)
         {
             return CreateResponse(_blogService.Get(id));
         }
