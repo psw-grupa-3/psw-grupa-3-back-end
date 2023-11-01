@@ -1,14 +1,16 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos.Tour.DataIn;
+using Explorer.Tours.API.Dtos.Tours;
 using FluentResults;
 
 namespace Explorer.Tours.API.Public.Administration
 {
     public interface ITourService
     {
-        Result<PagedResult<TourIn>> GetPaged(int page,  int pageSize);
-        Result<TourIn> Create(TourIn dataIn);
-        Result<TourIn> Update(TourIn dataIn);
+        Result<PagedResult<TourDto>> GetPaged(int page,  int pageSize);
+        Result<TourDto> Create(TourDto dataIn);
+        Result<TourDto> Update(TourDto dataIn);
         Result Delete(int id);
+        Result<TourDto> PublishTour(long id);
+        Result<TourDto> ArhiveTour(long id);
     }
 }

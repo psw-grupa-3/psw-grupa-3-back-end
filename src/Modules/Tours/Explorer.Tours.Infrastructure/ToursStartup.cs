@@ -5,6 +5,7 @@ using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.Personalization;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.Mappers;
 using Explorer.Tours.Core.UseCases;
 using Explorer.Tours.Core.UseCases.Administration;
@@ -32,7 +33,6 @@ public static class ToursStartup
     {
         services.AddScoped<IEquipmentService, EquipmentService>();
         services.AddScoped<IProblemService, ProblemService>();
-        services.AddScoped<IPointsService, PointsService>();
         services.AddScoped<ITouristEquipmentService, TouristEquipmentService>();
         services.AddScoped<IPreferenceService, PreferenceService>();
         services.AddScoped<ITourService, TourService>();
@@ -46,15 +46,13 @@ public static class ToursStartup
     {
         services.AddScoped(typeof(ICrudRepository<Equipment>), typeof(CrudDatabaseRepository<Equipment, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Problem>), typeof(CrudDatabaseRepository<Problem, ToursContext>));
-        services.AddScoped(typeof(ICrudRepository<Points>), typeof(CrudDatabaseRepository<Points, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TouristEquipment>), typeof(CrudDatabaseRepository<TouristEquipment, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Preference>), typeof(CrudDatabaseRepository<Preference, ToursContext>));
-        services.AddScoped(typeof(ICrudRepository<Tour>), typeof(CrudDatabaseRepository<Tour, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<Tour>), typeof(JsonCrudDatabaseRepository<Tour, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<EquipmentManagment>), typeof(CrudDatabaseRepository<EquipmentManagment, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Object>), typeof(CrudDatabaseRepository<Object, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TouristPosition>), typeof(CrudDatabaseRepository<TouristPosition, ToursContext>));
-        services.AddScoped(typeof(IPointRepository), typeof(PointRepository));
         services.AddScoped(typeof(IPreferenceRepository), typeof(PreferenceRepository));
     
         services.AddDbContext<ToursContext>(opt =>
