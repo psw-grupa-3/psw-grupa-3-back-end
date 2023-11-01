@@ -10,9 +10,10 @@ namespace Explorer.Blog.Core.Domain
         public DateTime CreationDate { get; init; } = DateTime.Now;
         public BlogStatus Status { get; init; } = BlogStatus.DRAFT;
         public string[] Images { get; init; }
+        public long UserId { get; init; }
 
         public Blog(string title, string description, DateTime creationDate,
-            BlogStatus status, string[] images)
+            BlogStatus status, string[] images, long userId)
         {
             if (string.IsNullOrEmpty(title)) throw new ArgumentException("Invalid or empty title.");
             if (string.IsNullOrEmpty(description)) throw new ArgumentException("Invalid or empty description.");
@@ -21,6 +22,7 @@ namespace Explorer.Blog.Core.Domain
             CreationDate = creationDate.ToUniversalTime();
             Status = status;
             Images = images;
+            UserId = userId;
         }
     }
 }
