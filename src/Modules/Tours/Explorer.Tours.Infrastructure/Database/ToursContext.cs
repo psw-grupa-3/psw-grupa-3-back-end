@@ -4,6 +4,7 @@ using Explorer.Tours.Core.Domain.Order;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Tours;
+using Explorer.Tours.Core.Domain.TourExecutions;
 using Microsoft.EntityFrameworkCore;
 using Object = Explorer.Tours.Core.Domain.Object;
 
@@ -43,5 +44,8 @@ public class ToursContext : DbContext
         modelBuilder.Entity<DbEntity<Guide>>().ToTable("Guides");
         modelBuilder.Entity<DbEntity<Guide>>()
             .Property(item => item.JsonObject).HasColumnType("jsonb");
+
+        modelBuilder.Entity<TourExecution>()
+            .Property(item => item.Position).HasColumnType("jsonb");
     }
 }

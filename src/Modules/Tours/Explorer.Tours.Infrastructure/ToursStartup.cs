@@ -8,6 +8,7 @@ using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Order;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.Tours;
+using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Mappers;
 using Explorer.Tours.Core.UseCases;
 using Explorer.Tours.Core.UseCases.Administration;
@@ -44,6 +45,7 @@ public static class ToursStartup
         services.AddScoped<IEquipmentManagmentService, EquipmentManagmentService>();
         services.AddScoped<IObjectService, ObjectService>();
         services.AddScoped<ITouristPositionService, TouristPositionService>();
+        services.AddScoped<ITourExecutionService, TourExecutionService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -56,9 +58,11 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<Tour>), typeof(JsonCrudDatabaseRepository<Tour, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<EquipmentManagment>), typeof(CrudDatabaseRepository<EquipmentManagment, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<TourExecution>), typeof(CrudDatabaseRepository<TourExecution, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Object>), typeof(CrudDatabaseRepository<Object, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TouristPosition>), typeof(CrudDatabaseRepository<TouristPosition, ToursContext>));
         services.AddScoped(typeof(IPreferenceRepository), typeof(PreferenceRepository));
+        services.AddScoped(typeof(ITourExecutionRepository), typeof(TourExecutionRepository));
         services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
 
         services.AddDbContext<ToursContext>(opt =>
