@@ -2,6 +2,7 @@
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Dtos.Tour.DataIn;
 using Explorer.Tours.Core.Domain;
+using Object = Explorer.Tours.Core.Domain.Object;
 
 namespace Explorer.Tours.Core.Mappers;
 
@@ -17,5 +18,6 @@ public class ToursProfile : Profile
         CreateMap<TourIn, Tour>().ReverseMap();
         CreateMap<TourReviewDto, TourReview>().ReverseMap();
         CreateMap<EquipmentManagmentDto, EquipmentManagment>().ReverseMap();
+        CreateMap<ObjectDto, Object>().ReverseMap();
     }
 }
