@@ -19,9 +19,9 @@ namespace Explorer.Tours.Core.Domain
             Longitude = longitude;
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
             Name = name;
-            if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Invalid Name.");
+            if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Invalid Description.");
             Description = description;
-            if (string.IsNullOrWhiteSpace(picture)) throw new ArgumentException("Invalid Name.");
+            if (string.IsNullOrWhiteSpace(picture)) throw new ArgumentException("Invalid Picture.");
             Picture = picture;
         }
     }
