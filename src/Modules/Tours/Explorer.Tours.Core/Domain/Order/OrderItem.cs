@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Explorer.BuildingBlocks.Core.Domain;
 using Microsoft.Extensions.Options;
@@ -15,6 +16,8 @@ namespace Explorer.Tours.Core.Domain.Order
         public int IdTour { get; init; }
         public string Name { get; init; }
         public double Price { get; init; }
+
+        [JsonConstructor]
         public OrderItem(int idTour, string name, double price)
         {
             IdTour = idTour;

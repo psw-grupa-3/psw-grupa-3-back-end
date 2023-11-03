@@ -1,4 +1,6 @@
-﻿using Explorer.Tours.Core.Domain;
+﻿using System.Reflection.Emit;
+using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.Order;
 using Microsoft.EntityFrameworkCore;
 
 namespace Explorer.Tours.Infrastructure.Database;
@@ -14,10 +16,19 @@ public class ToursContext : DbContext
     public DbSet<TourReview> TourReviews { get; set; }
     public DbSet<EquipmentManagment> EquipmentManagements { get; set; }
     public DbSet<Core.Domain.Object> Objects { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("tours");
+
+        ConfigureShoppingCarts(modelBuilder);
+    }
+
+    private static void ConfigureShoppingCarts(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ShoppingCart>().Property(item => item.Items).HasColumnType("jsonb");
     }
 }
