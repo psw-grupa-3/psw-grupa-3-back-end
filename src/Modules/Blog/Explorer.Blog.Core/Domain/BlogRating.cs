@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using Explorer.BuildingBlocks.Core.Domain;
 
 namespace Explorer.Blog.Core.Domain
@@ -12,25 +7,27 @@ namespace Explorer.Blog.Core.Domain
     public class BlogRating: ValueObject
     {
 
-        public long BlogId { get; init; }
         public long UserId { get; init; }
-        public DateTime VotingDate { get; init; }
-        public Vote Mark { get; init; }
+        public DateTime VotingDate { get; private set; }
+        public Vote Mark { get; private set; }
 
 
         [JsonConstructor]
-        public BlogRating(long blogId, long userId, DateTime votingDate, Vote mark)
+        public BlogRating(long userId, DateTime votingDate, Vote mark)
         {
-            BlogId = blogId;
             UserId = userId;
             VotingDate = votingDate;
             Mark = mark;
         }
 
+        public void UpdateRating(BlogRating newRating)
+        {
+            Mark = newRating.Mark;
+            VotingDate = newRating.VotingDate;
+        }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return BlogId;
             yield return UserId;
             yield return VotingDate;
             yield return Mark;
