@@ -12,5 +12,6 @@ namespace Explorer.Blog.API.Public
         Result<BlogDto> Update(BlogDto blog);
         Result Delete(int blogId);
         Result<BlogDto>RateBlog(int blogId, BlogRatingDto rating);
+        Result<BlogDto> PublishBlog(int blogId);
     }
 }

@@ -54,5 +54,12 @@ namespace Explorer.API.Controllers.Community
         {
             return CreateResponse(_blogService.RateBlog(blogId, rating));
         }
+
+        [Authorize(Policy = "authorOrTouristPolicy")]
+        [HttpPut("publish/{blogId:int}")]
+        public ActionResult<BlogRatingDto> Publish([FromRoute] int blogId)
+        {
+            return CreateResponse(_blogService.PublishBlog(blogId));
+        }
     }
 }

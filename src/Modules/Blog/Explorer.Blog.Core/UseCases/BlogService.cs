@@ -17,10 +17,18 @@ namespace Explorer.Blog.Core.UseCases
         public Result<BlogDto> RateBlog(int blogId, BlogRatingDto rating)
         {
             var ratingDomain = BlogRatingConverter.ToDomain(rating);
-            Domain.Blog oldBlog = CrudRepository.Get(blogId);
+            var oldBlog = CrudRepository.Get(blogId);
             oldBlog.Rate(ratingDomain);
             CrudRepository.Update(oldBlog);
             return MapToDto(oldBlog);
+        }
+
+        public Result<BlogDto> PublishBlog(int blogId)
+        {
+            var toPublish = CrudRepository.Get(blogId);
+            toPublish.PublishBlog();
+            CrudRepository.Update(toPublish);
+            return MapToDto(toPublish);
         }
     }
 }

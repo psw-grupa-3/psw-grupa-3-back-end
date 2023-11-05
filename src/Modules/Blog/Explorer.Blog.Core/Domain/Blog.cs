@@ -30,6 +30,12 @@ namespace Explorer.Blog.Core.Domain
             NetVotes = 0;
         }
 
+        public void PublishBlog()
+        {
+            if (Status != BlogStatus.DRAFT)
+                return;
+            Status = BlogStatus.PUBLISHED;
+        }   
         public void Rate(BlogRating rating)
         {
             BlogRating oldRating = Ratings.Find(x => x.UserId == rating.UserId);
@@ -37,7 +43,6 @@ namespace Explorer.Blog.Core.Domain
             CalculateNetVotes();
             UpdateBlogStatus();
         }
-
         private void UpdateRatings(BlogRating rating, BlogRating? oldRating)
         {
             if (oldRating == null)
