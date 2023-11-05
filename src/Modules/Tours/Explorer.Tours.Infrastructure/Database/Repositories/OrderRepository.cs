@@ -4,23 +4,51 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Tours.API.Dtos;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Order;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using FluentResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
     public class OrderRepository : CrudDatabaseRepository<ShoppingCart, ToursContext>, IOrderRepository
     {
-
-        public OrderRepository(ToursContext dbContext) : base(dbContext)
+        private readonly ToursContext _context;
+        private readonly DbSet<ShoppingCart> _dbSet;
+        public OrderRepository(ToursContext dbContext) : base(dbContext) 
         {
-            
+            _context = dbContext;
+            _dbSet = DbContext.Set<ShoppingCart>();
         }
-        public ShoppingCart GetById(int id)
+        public Result<ShoppingCartDto> GetByUserId(int id)
         {
-            return DbContext.ShoppingCarts.Where(i => i.Id == id).Include(b => b.Items).FirstOrDefault();
+            ShoppingCart cart = _dbSet.Where(i => i.IdUser == id).FirstOrDefault();
+
+            if (cart == null)
+            {
+                return Result.Fail("Cart is null");
+            }
+            List<OrderItemDto> list = new List<OrderItemDto>();
+            foreach(var item in cart.Items)
+            {
+                OrderItemDto itemDto = new OrderItemDto
+                {
+                    IdTour = item.IdTour,
+                    Name = item.Name,
+                    Price = item.Price
+                };
+                list.Add(itemDto);
+            }
+            ShoppingCartDto result = new ShoppingCartDto
+            {
+                IdUser = cart.IdUser,
+                Items = list,
+            };
+            return result;
         }
     }
 }

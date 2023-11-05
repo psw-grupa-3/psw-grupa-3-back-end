@@ -11,10 +11,12 @@ public class ToursProfile : Profile
 {
     public ToursProfile()
     {
-        CreateMap<ShoppingCartDto, ShoppingCart>().IncludeAllDerived()
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(item => new OrderItem(item.IdTour, item.Name, item.Price))));
-        CreateMap<ShoppingCart, ShoppingCartDto>().IncludeAllDerived()
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(h => h.Name)));
+        CreateMap<OrderItemDto, OrderItem>();
+        CreateMap<ShoppingCartDto, ShoppingCart>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(itemDto => new OrderItem(itemDto.IdTour, itemDto.Name, itemDto.Price))));
+        CreateMap<OrderItem, OrderItemDto>();
+        CreateMap<ShoppingCart, ShoppingCartDto>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(orderItem => new OrderItemDto { IdTour = orderItem.IdTour, Name = orderItem.Name, Price = orderItem.Price })));
 
         CreateMap<EquipmentDto, Equipment>().ReverseMap();
         CreateMap<ProblemDto, Problem>().ReverseMap();

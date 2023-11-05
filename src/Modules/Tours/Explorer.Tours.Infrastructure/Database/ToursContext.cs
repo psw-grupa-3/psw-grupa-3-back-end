@@ -17,13 +17,12 @@ public class ToursContext : DbContext
     public DbSet<EquipmentManagment> EquipmentManagements { get; set; }
     public DbSet<Core.Domain.Object> Objects { get; set; }
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("tours");
-
+        modelBuilder.Entity<OrderItem>().HasNoKey();
         ConfigureShoppingCarts(modelBuilder);
     }
 

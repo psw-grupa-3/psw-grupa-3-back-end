@@ -3,12 +3,15 @@ using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Tours.API.Public;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.Personalization;
+using Explorer.Tours.API.Public.Shopping;
 using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.Order;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Mappers;
 using Explorer.Tours.Core.UseCases;
 using Explorer.Tours.Core.UseCases.Administration;
 using Explorer.Tours.Core.UseCases.Personalization;
+using Explorer.Tours.Core.UseCases.Shopping;
 using Explorer.Tours.Infrastructure.Database;
 using Explorer.Tours.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +33,7 @@ public static class ToursStartup
     private static void SetupCore(IServiceCollection services)
     {
         services.AddScoped<IEquipmentService, EquipmentService>();
+        services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IProblemService, ProblemService>();
         services.AddScoped<IPointsService, PointsService>();
         services.AddScoped<ITouristEquipmentService, TouristEquipmentService>();
@@ -43,6 +47,7 @@ public static class ToursStartup
     private static void SetupInfrastructure(IServiceCollection services)
     {
         services.AddScoped(typeof(ICrudRepository<Equipment>), typeof(CrudDatabaseRepository<Equipment, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<ShoppingCart>), typeof(CrudDatabaseRepository<ShoppingCart, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Problem>), typeof(CrudDatabaseRepository<Problem, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Points>), typeof(CrudDatabaseRepository<Points, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TouristEquipment>), typeof(CrudDatabaseRepository<TouristEquipment, ToursContext>));
@@ -53,7 +58,8 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<Core.Domain.Object>), typeof(CrudDatabaseRepository<Core.Domain.Object, ToursContext>));
         services.AddScoped(typeof(IPointRepository), typeof(PointRepository));
         services.AddScoped(typeof(IPreferenceRepository), typeof(PreferenceRepository));
-    
+        services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
+
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "tours")));
