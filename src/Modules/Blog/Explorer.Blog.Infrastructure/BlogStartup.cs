@@ -1,10 +1,8 @@
 using Explorer.Blog.API.Public;
 using Explorer.Blog.Core.Domain;
-using Explorer.Blog.Core.Domain.RepositoryInterfaces;
 using Explorer.Blog.Core.Mappers;
 using Explorer.Blog.Core.UseCases;
 using Explorer.Blog.Infrastructure.Database;
-using Explorer.Blog.Infrastructure.Database.Repositories;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -31,9 +29,8 @@ public static class BlogStartup
 
     private static void SetupInfrastructure(IServiceCollection services)
     {
-        services.AddScoped(typeof(ICrudRepository<Core.Domain.Blog>), typeof(CrudDatabaseRepository<Core.Domain.Blog, BlogContext>));
+        services.AddScoped(typeof(ICrudRepository<Core.Domain.Blog>), typeof(JsonCrudDatabaseRepository<Core.Domain.Blog, BlogContext>));
         services.AddScoped(typeof(ICrudRepository<BlogComment>), typeof(CrudDatabaseRepository<BlogComment, BlogContext>));
-        services.AddScoped(typeof(IBlogRepository), typeof(BlogRepository));
 
         services.AddDbContext<BlogContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("blog"),

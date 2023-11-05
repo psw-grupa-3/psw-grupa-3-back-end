@@ -15,7 +15,7 @@ public class BlogProfile : Profile
             .ForMember(dest => dest.Ratings, opt =>
                 opt.MapFrom(src =>
                     src.Ratings.Select( x =>
-                        new BlogRating(x.BlogId, x.UserId, x.VotingDate, (Vote)x.Mark)
+                        new BlogRating(x.UserId, x.VotingDate, (Vote)x.Mark)
                         )));
 
         CreateMap<Domain.Blog, BlogDto>()
@@ -24,7 +24,6 @@ public class BlogProfile : Profile
                     src.Ratings.Select( x =>
                         new BlogRatingDto
                         {
-                            BlogId = (int)x.BlogId,
                             UserId = (int)x.UserId,
                             VotingDate = x.VotingDate,
                             Mark = (API.Dtos.Vote)x.Mark

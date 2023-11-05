@@ -9,7 +9,6 @@ namespace Explorer.Blog.API.Dtos
     public enum Vote { PLUS = 1, MINUS }
     public class BlogRatingDto
     {
-        public int BlogId { get; set; }
         public int UserId { get; set; }
         public DateTime VotingDate { get; set; }
         public Vote Mark { get; set; }
