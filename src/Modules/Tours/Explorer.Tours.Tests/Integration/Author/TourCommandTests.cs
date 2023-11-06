@@ -147,7 +147,7 @@ namespace Explorer.Tours.Tests.Integration.Author
             result.StatusCode.ShouldBe(200);
 
             // Assert - Database
-            var storedCourse = dbContext.Tours.FirstOrDefault(i => i.Id == 1);
+            var storedCourse = dbContext.Tours.FirstOrDefault(i => i.Id == -1);
             storedCourse.ShouldBeNull();
         }
 
