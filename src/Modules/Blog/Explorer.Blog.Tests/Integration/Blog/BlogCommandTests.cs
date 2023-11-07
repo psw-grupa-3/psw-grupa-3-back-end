@@ -2,8 +2,6 @@
 using Explorer.Blog.API.Dtos;
 using Explorer.Blog.API.Public;
 using Explorer.Blog.Infrastructure.Database;
-using Explorer.Tours.API.Dtos.Tour.DataIn;
-using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
