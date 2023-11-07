@@ -11,6 +11,7 @@ namespace Explorer.Blog.Core.Domain
         public BlogStatus Status { get; init; } = BlogStatus.DRAFT;
         public string[] Images { get; init; }
         public long UserId { get; init; }
+        public List<BlogComment> BlogComments { get; init; }
 
         public Blog(string title, string description, DateTime creationDate,
             BlogStatus status, string[] images, long userId)
@@ -23,6 +24,7 @@ namespace Explorer.Blog.Core.Domain
             Status = status;
             Images = images;
             UserId = userId;
+            BlogComments = new List<BlogComment>();
         }
     }
 }

@@ -13,6 +13,9 @@ namespace Explorer.Blog.Core.UseCases
 {
     public class BlogService : CrudService<BlogDto, Domain.Blog> ,IBlogService
     {
+
         public BlogService(ICrudRepository<Domain.Blog> repository, IMapper mapper) : base(repository, mapper) {}
+
+        
     }
 }

@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Explorer.Blog.Core.Domain
 {
-    public class BlogComment : Entity
+    public class BlogComment : ValueObject
     {
         public int UserId { get; init; }
         public int BlogId { get; init; }
@@ -16,6 +17,7 @@ namespace Explorer.Blog.Core.Domain
         public DateTime TimeCreated { get; init; }
         public DateTime TimeUpdated { get; init; }
 
+        [JsonConstructor]
         public BlogComment(int userId, int blogId, string comment, DateTime timeCreated, DateTime timeUpdated)
         {
 
@@ -29,5 +31,13 @@ namespace Explorer.Blog.Core.Domain
             TimeUpdated = timeUpdated;
         }
 
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return UserId;
+            yield return BlogId;
+            yield return Comment;
+            yield return TimeCreated;
+            yield return TimeUpdated;
+        }
     }
 }
