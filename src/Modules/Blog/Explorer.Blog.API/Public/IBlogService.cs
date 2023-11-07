@@ -16,5 +16,8 @@ namespace Explorer.Blog.API.Public
         Result <PagedResult<BlogDto>>GetPaged(int page, int pageSize);
         Result <BlogDto>Update(BlogDto blog);
         Result Delete(int blogId);
+        Result<BlogDto> CommentBlog(int blogId, BlogCommentDto comment);
+        Result<BlogDto> UpdateComment(int blogId, BlogCommentDto comment);
+        Result<BlogDto> DeleteComment(int blogId, BlogCommentDto comment);
     }
 }

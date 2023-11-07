@@ -26,5 +26,11 @@ namespace Explorer.Blog.Core.Domain
             UserId = userId;
             BlogComments = new List<BlogComment>();
         }
+        public void UpdateComments(BlogComment comment)
+        {
+            BlogComment oldComment = BlogComments.Find(x =>
+                x.UserId == comment.UserId && x.TimeCreated == comment.TimeCreated);
+            oldComment.UpdateComment(comment);
+        }
     }
 }

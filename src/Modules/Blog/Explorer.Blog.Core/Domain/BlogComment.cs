@@ -13,9 +13,9 @@ namespace Explorer.Blog.Core.Domain
     {
         public int UserId { get; init; }
         public int BlogId { get; init; }
-        public string Comment { get; init; }
+        public string Comment { get; private set; }
         public DateTime TimeCreated { get; init; }
-        public DateTime TimeUpdated { get; init; }
+        public DateTime TimeUpdated { get; private set; }
 
         [JsonConstructor]
         public BlogComment(int userId, int blogId, string comment, DateTime timeCreated, DateTime timeUpdated)
@@ -29,6 +29,11 @@ namespace Explorer.Blog.Core.Domain
             Comment = comment;
             TimeCreated = timeCreated;
             TimeUpdated = timeUpdated;
+        }
+        public void UpdateComment(BlogComment newComment)
+        {
+            Comment = newComment.Comment;
+            TimeUpdated = newComment.TimeUpdated;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
