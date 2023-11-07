@@ -24,6 +24,7 @@ public class ToursContext : DbContext
     public DbSet<Core.Domain.Object> Objects { get; set; }
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
+    public DbSet<DbEntity<TourExecution>> TourExecutions { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,7 +46,9 @@ public class ToursContext : DbContext
         modelBuilder.Entity<DbEntity<Guide>>()
             .Property(item => item.JsonObject).HasColumnType("jsonb");
 
-        modelBuilder.Entity<TourExecution>()
-            .Property(item => item.Position).HasColumnType("jsonb");
+        modelBuilder.Entity<DbEntity<TourExecution>>().ToTable("TourExecutions");
+        modelBuilder.Entity<DbEntity<TourExecution>>()
+            .Property(item => item.JsonObject).HasColumnType("jsonb");
+
     }
 }

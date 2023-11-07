@@ -18,6 +18,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             LastActivity = lastActivity;
         }
 
+
+        public bool IsChanged(Position currentPosition)
+        {
+            return (Latitude != currentPosition.Latitude) || (Longitude != currentPosition.Longitude);
+        }
+        
         private static void Validate(double lat, double lng, DateTime lastActivity)
         {
             if (!(lat is > -90.0 and < 90.0))
@@ -27,7 +33,6 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             if (lastActivity < DateTime.Now)
                 throw new ArgumentException("Exception! Time not acceptable!");
         }
-
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Latitude;

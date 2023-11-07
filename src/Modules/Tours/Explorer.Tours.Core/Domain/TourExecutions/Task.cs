@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.Domain;
+﻿using System.Text.Json.Serialization;
+using Explorer.BuildingBlocks.Core.Domain;
 
 namespace Explorer.Tours.Core.Domain.TourExecutions
 {
@@ -9,6 +10,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         public DateTime DoneOn { get; set; }
         public TaskType Type { get; set; }
 
+        [JsonConstructor]
         public Task(TaskType type)
         {
             Done = false;
