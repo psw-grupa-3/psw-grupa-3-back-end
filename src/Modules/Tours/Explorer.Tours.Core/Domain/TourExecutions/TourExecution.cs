@@ -1,10 +1,12 @@
 ﻿using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.Domain.Utilities;
+using static Explorer.Tours.API.Enums.TourEnums;
 
 namespace Explorer.Tours.Core.Domain.TourExecutions
 {
-    public enum TourExecutionStatus {ACTIVE = 1, COMPLETED, ABANDONED}
     public class TourExecution: Entity
     {
         private const int PointProximity = 100;
@@ -16,26 +18,28 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         [JsonConstructor]
         public TourExecution(long id, long userId, List<Task> tasks, Position position)
         {
-            Validate(id, userId);
+            Validate(userId);
             Id = id;
             UserId = userId;
             Tasks = tasks;
             Position = position;
-            Status = TourExecutionStatus.ACTIVE;
+            Status = TourExecutionStatus.Active;
         }
 
-        private static void Validate(long id, long userId)
+        public TourExecution(long userId, List<Point> points, Position position)
         {
-            if (id < 1) throw new ArgumentException("Exception! Invalid value of Id!");
-            if (userId < 1) throw new ArgumentException("Exception! Invalid value of UserId!");
+            Validate(userId);
+            UserId = userId;
+            Position = position;
+            Status = TourExecutionStatus.Active;
+            PrepareTasks(points);
         }
-
         public void UpdatePosition(Position currentPosition)
         {
-            if (Status != TourExecutionStatus.ACTIVE) return;
+            if (Status != TourExecutionStatus.Active) return;
             if (!Position.IsChanged(currentPosition)) return;
             Position = currentPosition;
-            var pointTasks = Tasks.FindAll(x => x.Type == TaskType.POINT).OfType<PointTask>().ToList();
+            var pointTasks = Tasks.FindAll(x => x.Type == TaskType.Point).OfType<PointTask>().ToList();
             var currentPoint = pointTasks.FirstOrDefault(x => !x.Done) ?? throw new Exception("Exception! All Tour Points passed!");
             var inProximity = DistanceCalculator.CalculateDistance(currentPoint, currentPosition) * 1000 <= PointProximity;
             if (inProximity)
@@ -43,11 +47,22 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
                 currentPoint.Done = true;
                 currentPoint.DoneOn = currentPosition.LastActivity;
             }
-            Status = pointTasks.TrueForAll(x => x.Done) ? TourExecutionStatus.COMPLETED : Status;
+            Status = pointTasks.TrueForAll(x => x.Done) ? TourExecutionStatus.Completed : Status;
         }
         public void QuitTourExecution()
         {
-            Status = TourExecutionStatus.ABANDONED;
+            Status = TourExecutionStatus.Abandoned;
+        }
+        private void PrepareTasks(IReadOnlyCollection<Point> points)
+        {
+            if (points.Count < 0) throw new ArgumentException("Exception! No points found!");
+            Tasks.AddRange(
+                points.Select(x => new PointTask(x, TaskType.Point)));
+        }
+
+        private static void Validate(long userId)
+        {
+            if (userId < 1) throw new ArgumentException("Exception! Invalid value of UserId!");
         }
     }
 }

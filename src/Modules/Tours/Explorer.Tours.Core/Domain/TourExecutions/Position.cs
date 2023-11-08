@@ -12,7 +12,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         [JsonConstructor]
         public Position(double lat, double lng, DateTime lastActivity)
         {
-            Validate(lat, lng, lastActivity);
+            Validate(lat, lng);
             Latitude = lat;
             Longitude = lng;
             LastActivity = lastActivity;
@@ -24,14 +24,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             return (Latitude != currentPosition.Latitude) || (Longitude != currentPosition.Longitude);
         }
         
-        private static void Validate(double lat, double lng, DateTime lastActivity)
+        private static void Validate(double lat, double lng)
         {
             if (!(lat is > -90.0 and < 90.0))
                 throw new ArgumentException("Exeception! Latitude is out of range!");
             if (!(lng is > -180.0 and < 180.0))
                 throw new ArgumentException("Exeception! Longitude is out of range!");
-            if (lastActivity < DateTime.Now)
-                throw new ArgumentException("Exception! Time not acceptable!");
         }
         protected override IEnumerable<object> GetEqualityComponents()
         {

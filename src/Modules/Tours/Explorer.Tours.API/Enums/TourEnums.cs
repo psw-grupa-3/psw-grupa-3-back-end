@@ -15,5 +15,12 @@
             Published,
             Archived
         }
+
+        public enum TourExecutionStatus 
+        { 
+            Active = 1,
+            Completed,
+            Abandoned
+        }
     }
 }

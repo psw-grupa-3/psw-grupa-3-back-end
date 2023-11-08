@@ -12,5 +12,6 @@ namespace Explorer.Tours.API.Public
     {
         Result<TourExecutionDto> QuitExecution(int  executionId);
         Result<TourExecutionDto> UpdatePosition(int executionId, PositionDto position);
+        Result<TourExecutionDto> StarExecution(int tourId, PositionDto position);
     }
 }

@@ -3,7 +3,7 @@ using Explorer.BuildingBlocks.Core.Domain;
 
 namespace Explorer.Tours.Core.Domain.TourExecutions
 {
-    public enum TaskType {POINT = 1}
+    public enum TaskType {Point = 1}
     public class Task: ValueObject
     {
         public bool Done { get; set; }
