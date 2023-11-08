@@ -61,5 +61,25 @@ namespace Explorer.API.Controllers.Community
         {
             return CreateResponse(_blogService.PublishBlog(blogId));
         }
+
+        [HttpPost("commentBlog/{blogId:int}")]
+        public ActionResult<BlogCommentDto> CommentBlog([FromRoute] int blogId, [FromBody] BlogCommentDto comment)
+        {
+            return CreateResponse(_blogService.CommentBlog(blogId, comment));
+        }
+
+        
+        [HttpPut("updateBlogComment/{blogId:int}")]
+        public ActionResult<BlogCommentDto> UpdateBlogComment([FromRoute] int blogId, [FromBody] BlogCommentDto comment)
+        {
+            return CreateResponse(_blogService.UpdateComment(blogId, comment));
+        }
+
+        
+        [HttpDelete("deleteBlogComment/{blogId:int}")]
+        public ActionResult<BlogCommentDto> DeleteBlogComment([FromRoute] int blogId, [FromBody] BlogCommentDto comment)
+        {
+            return CreateResponse(_blogService.DeleteComment(blogId, comment));
+        }
     }
 }

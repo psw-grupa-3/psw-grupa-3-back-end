@@ -13,5 +13,8 @@ namespace Explorer.Blog.API.Public
         Result Delete(int blogId);
         Result<BlogDto>RateBlog(int blogId, BlogRatingDto rating);
         Result<BlogDto> PublishBlog(int blogId);
+        Result<BlogDto> CommentBlog(int blogId, BlogCommentDto comment);
+        Result<BlogDto> UpdateComment(int blogId, BlogCommentDto comment);
+        Result<BlogDto> DeleteComment(int blogId, BlogCommentDto comment);
     }
 }
