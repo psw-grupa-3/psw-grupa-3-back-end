@@ -17,7 +17,11 @@ public class BlogProfile : Profile
                 opt.MapFrom(src =>
                     src.Ratings.Select( x =>
                         new BlogRating(x.UserId, x.VotingDate, (Vote)x.Mark)
-                        )));
+                        )))
+            .ForMember(dest => dest.BlogComments, opt =>
+                opt.MapFrom(src =>
+                    src.BlogComments.Select(x =>
+                        new BlogComment(x.UserId, x.BlogId, x.Comment, x.TimeCreated, x.TimeUpdated))));
 
         CreateMap<Domain.Blog, BlogDto>()
             .ForMember(dest => dest.Ratings, opt =>
@@ -29,16 +33,11 @@ public class BlogProfile : Profile
                             VotingDate = x.VotingDate,
                             Mark = (API.Dtos.Vote)x.Mark
                         }
-                    )));
-        CreateMap<BlogDto, Domain.Blog>()
-            .ForMember(dest => dest.BlogComments, opt => 
-                opt.MapFrom(src => 
-                    src.BlogComments.Select(x => 
-                        new BlogComment(x.UserId, x.BlogId, x.Comment, x.TimeCreated, x.TimeUpdated)))); 
-        CreateMap <Domain.Blog, BlogDto>()
-            .ForMember(dest => dest.BlogComments, opt => 
-                opt.MapFrom(src => 
-                    src.BlogComments.Select(x => 
-                        new BlogCommentDto() { UserId = (int)x.UserId, BlogId = (int)x.BlogId,  Comment = x.Comment, TimeCreated = x.TimeCreated, TimeUpdated = x.TimeUpdated })));
+                    )))
+            .ForMember(dest => dest.BlogComments, opt =>
+                opt.MapFrom(src =>
+                    src.BlogComments.Select(x =>
+                        new BlogCommentDto { UserId = (int)x.UserId, BlogId = (int)x.BlogId, Comment = x.Comment, TimeCreated = x.TimeCreated, TimeUpdated = x.TimeUpdated })));
+       
     }
 }

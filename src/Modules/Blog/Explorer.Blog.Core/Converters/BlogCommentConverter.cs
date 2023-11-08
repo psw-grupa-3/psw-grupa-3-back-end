@@ -16,9 +16,8 @@ namespace Explorer.Blog.Core.Converters
             {
                 return null;
             }
-            return new BlogCommentDto()
+            return new BlogCommentDto
             {
-                
                 UserId = (int)blogComment.UserId,
                 BlogId = (int)blogComment.BlogId,
                 Comment = blogComment.Comment,

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.RegularExpressions;
 using Explorer.BuildingBlocks.Core.Domain;
 
 namespace Explorer.BuildingBlocks.Infrastructure.Database
@@ -24,7 +25,8 @@ namespace Explorer.BuildingBlocks.Infrastructure.Database
         }
         public TEntity FromJson()
         {
-            return JsonSerializer.Deserialize<TEntity>(JsonObject) ?? throw new JsonException("Exception! Cannot deserialize object!");
+            var objectToDeserialize = Regex.Replace(JsonObject, "\"Id\":\\s*0", "\"Id\":" + Id.ToString());
+            return JsonSerializer.Deserialize<TEntity>(objectToDeserialize) ?? throw new JsonException("Exception! Cannot deserialize object!");
         }
     }
 }

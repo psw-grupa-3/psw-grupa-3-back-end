@@ -15,7 +15,7 @@ namespace Explorer.Blog.Core.Domain
         public long UserId { get; init; }
         public List<BlogRating>? Ratings { get; init; }
         public int NetVotes { get; private set; }
-        public List<BlogComment> BlogComments { get; init; }
+        public List<BlogComment>? BlogComments { get; init; }
 
         [JsonConstructor]
         public Blog(long id, string title, string description, DateTime creationDate,
@@ -30,7 +30,6 @@ namespace Explorer.Blog.Core.Domain
             Images = images;
             UserId = userId;
             NetVotes = 0;
-            BlogComments = new List<BlogComment>();
         }
 
         public void PublishBlog()
