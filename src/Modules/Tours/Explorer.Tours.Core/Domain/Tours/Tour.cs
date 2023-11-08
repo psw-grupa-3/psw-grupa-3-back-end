@@ -1,4 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Microsoft.Spatial;
 using System.Text.Json.Serialization;
 using static Explorer.Tours.API.Enums.TourEnums;
 
@@ -87,6 +88,21 @@ namespace Explorer.Tours.Core.Domain.Tours
                 return;
             }
             throw new ArgumentException("Tour needs to be published first!");
+        }
+
+        public bool HasPointsWithinDistance(double longitude, double latitude, int distance)
+        {
+            if (Status != TourStatus.Published || Points == null) return false;
+
+            var centerPoint = GeographyPoint.Create(latitude, longitude);
+            foreach (var point in Points)
+            {
+                if (centerPoint.Distance(GeographyPoint.Create(point.Latitude, point.Longitude)) / 1000 <= distance)
+                {
+                    return true;     
+                }
+            }
+            return false;
         }
     }
 }

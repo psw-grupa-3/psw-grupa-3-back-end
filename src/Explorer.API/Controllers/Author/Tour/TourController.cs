@@ -53,5 +53,12 @@ namespace Explorer.API.Controllers.Author.Tour
         {
             return CreateResponse(_tourService.ArhiveTour(id));
         }
+
+        [AllowAnonymous]
+        [HttpGet("searchByPointDistance")]
+        public ActionResult<TourDto> SearchByPointDistance([FromQuery] double longitude, [FromQuery] double latitude, [FromQuery] int distance)
+        {
+            return CreateResponse(_tourService.SearchByPointDistance(longitude, latitude, distance));
+        }
     }
 }
