@@ -1,6 +1,5 @@
 ﻿using Explorer.API.Controllers.Author.Tour;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos.Tour.DataIn;
 using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;

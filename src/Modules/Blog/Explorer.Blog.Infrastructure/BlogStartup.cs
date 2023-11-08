@@ -29,9 +29,8 @@ public static class BlogStartup
 
     private static void SetupInfrastructure(IServiceCollection services)
     {
-        services.AddScoped(typeof(ICrudRepository<Core.Domain.Blog>), typeof(CrudDatabaseRepository<Core.Domain.Blog, BlogContext>));
+        services.AddScoped(typeof(ICrudRepository<Core.Domain.Blog>), typeof(JsonCrudDatabaseRepository<Core.Domain.Blog, BlogContext>));
         services.AddScoped(typeof(ICrudRepository<BlogComment>), typeof(CrudDatabaseRepository<BlogComment, BlogContext>));
-
 
         services.AddDbContext<BlogContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("blog"),

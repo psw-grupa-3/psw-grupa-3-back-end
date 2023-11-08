@@ -3,11 +3,11 @@ using Explorer.Blog.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Explorer.API.Controllers.Stakeholder.Blogging
+namespace Explorer.API.Controllers.Community
 {
     [Authorize(Policy = "authorOrTouristPolicy")]
     [Route("api/blog")]
-    public class BlogController: BaseApiController
+    public class BlogController : BaseApiController
     {
         private readonly IBlogService _blogService;
         public BlogController(IBlogService blogService)
@@ -23,10 +23,10 @@ namespace Explorer.API.Controllers.Stakeholder.Blogging
         }
 
         [AllowAnonymous]
-        [HttpGet("get/{id:int}")]
-        public ActionResult<BlogDto> Get([FromRoute] int id)
+        [HttpGet("get/{blogId:int}")]
+        public ActionResult<BlogDto> Get([FromRoute] int blogId)
         {
-            return CreateResponse(_blogService.Get(id));
+            return CreateResponse(_blogService.Get(blogId));
         }
 
         [AllowAnonymous]
@@ -46,6 +46,20 @@ namespace Explorer.API.Controllers.Stakeholder.Blogging
         public ActionResult Delete(int blogId)
         {
             return CreateResponse(_blogService.Delete(blogId));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("rate/{blogId:int}")]
+        public ActionResult<BlogRatingDto> Rate([FromRoute] int blogId,[FromBody] BlogRatingDto rating)
+        {
+            return CreateResponse(_blogService.RateBlog(blogId, rating));
+        }
+
+        [Authorize(Policy = "authorOrTouristPolicy")]
+        [HttpPut("publish/{blogId:int}")]
+        public ActionResult<BlogRatingDto> Publish([FromRoute] int blogId)
+        {
+            return CreateResponse(_blogService.PublishBlog(blogId));
         }
     }
 }
