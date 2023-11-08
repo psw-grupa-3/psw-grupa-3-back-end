@@ -15,5 +15,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<PublicRegistrationRequestDto> Create(PublicRegistrationRequestDto publicRegistrationRequest);
         Result<PublicRegistrationRequestDto> Update(PublicRegistrationRequestDto publicRegistrationRequest);
         Result Delete(int id);
+        Result<List<PublicRegistrationRequestDto>> GetAllPendingRequests();
     }
 }

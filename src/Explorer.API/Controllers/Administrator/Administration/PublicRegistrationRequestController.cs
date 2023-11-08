@@ -27,6 +27,13 @@ namespace Explorer.API.Controllers.Administrator.Administration
             var result = _publicRegistrationRequestService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
+        [HttpGet("getAllPending")]
+        [Authorize(Policy = "administratorPolicy")]
+        public ActionResult<List<PublicRegistrationRequestDto>> GetAllPendingRequests()
+        {
+            var result = _publicRegistrationRequestService.GetAllPendingRequests();
+            return CreateResponse(result);
+        }
 
         [HttpPost]
         [Authorize(Policy = "authorPolicy")]

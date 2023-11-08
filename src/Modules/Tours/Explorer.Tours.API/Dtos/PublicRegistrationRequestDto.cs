@@ -8,7 +8,7 @@ namespace Explorer.Tours.API.Dtos
 {
     public class PublicRegistrationRequestDto
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public int ObjectId { get; set; }
         public string ObjectName { get; set; }
         public int TourId { get; set; }
@@ -18,9 +18,4 @@ namespace Explorer.Tours.API.Dtos
 
     }
 }
-public enum RequestStatus
-{
-    Pending,
-    Rejected,
-    Approved
-}
+
