@@ -28,9 +28,9 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             ShoppingCart cart = _dbSet.Where(i => i.IdUser == id).FirstOrDefault();
 
-            if (cart == null)
+            if(cart == null)
             {
-                return Result.Fail("Cart is null");
+                return null;
             }
             List<OrderItemDto> list = new List<OrderItemDto>();
             foreach(var item in cart.Items)

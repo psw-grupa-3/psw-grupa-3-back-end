@@ -3,10 +3,11 @@ using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Shopping;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Explorer.Tours.Core.UseCases.Shopping;
 
 namespace Explorer.API.Controllers.Shopping
 {
-    //[Authorize(Policy = "touristPolicy")]
+    [Authorize(Policy = "touristPolicy")]
     [Route("api/tourist/order")]
     public class OrderController : BaseApiController
     {
@@ -40,6 +41,13 @@ namespace Explorer.API.Controllers.Shopping
         [HttpPut]
         public ActionResult<ShoppingCartDto> Update([FromBody] ShoppingCartDto cart)
         {
+            var result = _orderService.Update(cart);
+            return CreateResponse(result);
+        }
+        [HttpPut("buy")]
+        public ActionResult<ShoppingCartDto> BuyUpdate([FromBody] ShoppingCartDto cart)
+        {
+            //u servisu treba implementirati funkciju koja isprazni korpu i napravi tokene
             var result = _orderService.Update(cart);
             return CreateResponse(result);
         }
