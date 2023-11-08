@@ -12,5 +12,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result Delete(int id);
         Result<TourDto> PublishTour(long id);
         Result<TourDto> ArhiveTour(long id);
+        Result<List<TourDto>> SearchByPointDistance(double longitude, double latitude, int distance);
     }
 }

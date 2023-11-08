@@ -29,5 +29,15 @@ namespace Explorer.Tours.Core.UseCases.Administration
             CrudRepository.Update(tourDb);
             return MapToDto(tourDb);
         }
+
+        public Result<List<TourDto>> SearchByPointDistance(double longitude, double latitude, int distance)
+        {
+            var searchResults = new List<TourDto>();
+            foreach (var tour in CrudRepository.GetPaged(0, 0).Results.Where(x => x.HasPointsWithinDistance(longitude, latitude, distance)))
+            {
+                searchResults.Add(MapToDto(tour));
+            }
+            return searchResults;
+        }
     }
 }
