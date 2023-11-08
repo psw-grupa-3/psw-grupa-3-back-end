@@ -33,13 +33,26 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpPut("{followerId:int}/follow/{userToFollowId:int}")]
-        public ActionResult<UserProfileDto> Follow(int followerId, int userToFollowId)
+        [HttpPut("followers/{userId:int}/follow/{userToFollowId:int}")]
+        public ActionResult<UserProfileDto> Follow(int userId, int userToFollowId)
         {
-            var result = _userFollowerService.Follow(followerId, userToFollowId);
+            var result = _userFollowerService.Follow(userId, userToFollowId);
             return CreateResponse(result);
         }
 
+        [HttpGet("followers/{userId:int}")]
+        public ActionResult<List<FollowerDto>> GetFollowers(int userId)
+        {
+            var result = _userFollowerService.GetFollowers(userId);
+            return CreateResponse(result);
+        }
+
+        [HttpPut("followers/{userId:int}/unfollow/{userToUnfollowId:int}")]
+        public ActionResult<UserProfileDto> Unfollow(int userId, int userToUnfollowId)
+        {
+            var result = _userFollowerService.Unfollow(userId, userToUnfollowId);
+            return CreateResponse(result);
+        }
 
     }
 }

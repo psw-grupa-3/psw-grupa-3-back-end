@@ -43,6 +43,59 @@ namespace Explorer.Stakeholders.Core.UseCases
 
         }
 
+        public Result<List<FollowerDto>> GetFollowers(int userId)
+        {
+            var user = CrudRepository.Get(userId);
 
+            if (user is null)
+            {
+                return Result.Fail<List<FollowerDto>>($"User not found ({FailureCode.NotFound}).");
+            }
+
+            try
+            {
+                var followers = user.Followers.ToList();
+                List<FollowerDto> result = new List<FollowerDto>();
+
+                foreach (var follower in followers)
+                {
+                    result.Add(new()
+                    {
+                        UserId = follower.UserId,
+                        Username = follower.Username,
+                        Date = follower.Date,
+                    });
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<List<FollowerDto>>(ex.Message);
+            }
+        }
+
+        public Result<UserDto> Unfollow(int userId, int userToUnfollowId)
+        {
+            var user = CrudRepository.Get(userId);
+            var userToUnfollow = CrudRepository.Get(userToUnfollowId);
+
+            if (user is null || userToUnfollow is null)
+            {
+                return Result.Fail<UserDto>($"User not found ({FailureCode.NotFound}).");
+            }
+
+            try
+            {
+                user.RemoveFollower(userToUnfollow);
+                CrudRepository.Update(user);
+
+                return MapToDto(user);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<UserDto>(ex.Message);
+            }
+        }
     }
 }
