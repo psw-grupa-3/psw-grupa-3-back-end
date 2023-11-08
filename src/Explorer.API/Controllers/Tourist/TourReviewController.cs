@@ -31,5 +31,41 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tourReviewService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
+
+        [HttpGet("average-rating/{tourId:int}")]
+        public ActionResult<double> GetAverageRating(int tourId)
+        {
+       
+            var reviewsResult = _tourReviewService.GetPaged(1, int.MaxValue); 
+
+            if (reviewsResult.IsFailed)
+            {
+                
+                return BadRequest(".");
+            }
+
+            var reviews = reviewsResult.Value.Results;
+
+            
+            var reviewsForTour = reviews.Where(r => r.TourId == tourId).ToList();
+
+            
+            if (reviewsForTour.Any())
+            {
+                
+                double averageRating = reviewsForTour.Average(r => r.Rating);
+                return Ok(averageRating);
+            }
+            else
+            {
+               
+                return NotFound();
+            }
+        }
+
+
+
+
+
     }
 }

@@ -10,6 +10,7 @@
         public DateTime CreationDate { get; set; }
         public BlogStatus Status { get; set; } = BlogStatus.DRAFT;
         public string[] Images { get; set; }
+        public List<BlogRatingDto>? Ratings { get; set; }
         public List<BlogCommentDto>? BlogComments { get; set; }
     }
 }
