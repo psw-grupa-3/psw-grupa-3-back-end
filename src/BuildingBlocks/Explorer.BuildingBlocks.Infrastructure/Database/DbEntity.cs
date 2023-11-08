@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using Explorer.BuildingBlocks.Core.Domain;
 using Newtonsoft.Json;
 
@@ -13,7 +15,6 @@ namespace Explorer.BuildingBlocks.Infrastructure.Database
 
         public DbEntity(TEntity entity)
         {
-            Id = entity.Id;
             JsonObject = ToJson(entity);
         }
         private string ToJson(TEntity entity)

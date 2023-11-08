@@ -21,7 +21,7 @@ namespace Explorer.Blog.Core.Domain
         public Blog(long id, string title, string description, DateTime creationDate,
             BlogStatus status, string[] images, long userId)
         {
-            Validate(id, title, description);
+            Validate(title, description);
             Id = id;
             Title = title;
             Description = description;
@@ -79,9 +79,8 @@ namespace Explorer.Blog.Core.Domain
                     Status = BlogStatus.FAMOUS; break;
             }
         }
-        private static void Validate(long id,string title, string description)
+        private static void Validate(string title, string description)
         {
-            if(id < 1) throw new ArgumentException("Invalid value of Id.");
             if (string.IsNullOrEmpty(title)) throw new ArgumentException("Invalid or empty title.");
             if (string.IsNullOrEmpty(description)) throw new ArgumentException("Invalid or empty description.");
             
