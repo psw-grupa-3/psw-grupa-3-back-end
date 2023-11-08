@@ -5,10 +5,15 @@ namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Point : ValueObject
     {
+        [JsonPropertyName("Latitude")]
         public double Latitude { get; }
+        [JsonPropertyName("Longitude")]
         public double Longitude { get; }
+        [JsonPropertyName("Name")]
         public string Name { get; }
+        [JsonPropertyName("Description")]
         public string Description { get; }
+        [JsonPropertyName("Picture")]
         public string Picture { get; }
 
         [JsonConstructor]

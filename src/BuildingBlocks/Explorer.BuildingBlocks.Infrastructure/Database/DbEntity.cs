@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
-using System.Text.RegularExpressions;
 using Explorer.BuildingBlocks.Core.Domain;
+using Newtonsoft.Json;
 
 namespace Explorer.BuildingBlocks.Infrastructure.Database
 {
@@ -18,15 +18,11 @@ namespace Explorer.BuildingBlocks.Infrastructure.Database
         }
         private string ToJson(TEntity entity)
         {
-            return JsonSerializer.Serialize(entity, new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            });
+            return JsonConvert.SerializeObject(entity);
         }
         public TEntity FromJson()
         {
-            var objectToDeserialize = Regex.Replace(JsonObject, "\"Id\":\\s*0", "\"Id\":" + Id.ToString());
-            return JsonSerializer.Deserialize<TEntity>(objectToDeserialize) ?? throw new JsonException("Exception! Cannot deserialize object!");
+            return JsonConvert.DeserializeObject<TEntity>(JsonObject) ?? throw new Newtonsoft.Json.JsonException("Exception! Cannot deserialize object!");
         }
     }
 }

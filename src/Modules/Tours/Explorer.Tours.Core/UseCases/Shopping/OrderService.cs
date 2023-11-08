@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.API.Public.Shopping;
-using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Order;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
