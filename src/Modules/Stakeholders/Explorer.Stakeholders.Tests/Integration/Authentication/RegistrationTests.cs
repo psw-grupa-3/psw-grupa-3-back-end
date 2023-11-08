@@ -7,6 +7,7 @@ using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
 using Explorer.Stakeholders.Core.Domain;
+using static Explorer.Stakeholders.API.Enums.UserEnums;
 
 namespace Explorer.Stakeholders.Tests.Integration.Authentication;
 
@@ -47,7 +48,7 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
         var storedAccount = dbContext.Users.FirstOrDefault(u => u.Username == account.Email);
         storedAccount.ShouldNotBeNull();
 
-        storedAccount.Role.ShouldBe(Core.Domain.UserRole.Tourist);
+        storedAccount.Role.ShouldBe(UserRole.Tourist);
         var storedPerson = dbContext.People.FirstOrDefault(i => i.Email == account.Email);
         storedPerson.ShouldNotBeNull();
         storedPerson.UserId.ShouldBe(storedAccount.Id);

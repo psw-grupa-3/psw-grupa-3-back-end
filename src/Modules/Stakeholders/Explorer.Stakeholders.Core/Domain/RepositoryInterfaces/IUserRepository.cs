@@ -1,4 +1,5 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
+using Explorer.Stakeholders.Core.Domain.Users;
 
 namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
 {
