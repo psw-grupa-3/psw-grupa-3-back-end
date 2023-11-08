@@ -3,7 +3,9 @@ using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Explorer.Stakeholders.Core.Domain.Users;
 using FluentResults;
+using static Explorer.Stakeholders.API.Enums.UserEnums;
 
 namespace Explorer.Stakeholders.Core.UseCases;
 
@@ -45,7 +47,7 @@ public class AuthenticationService : IAuthenticationService
 
         try
         {
-            var user = _userRepository.Create(new User(account.Username, account.Password, Domain.UserRole.Tourist, true));
+            var user = _userRepository.Create(new User(account.Username, account.Password, UserRole.Tourist, true, new()));
             var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, account.Email, " ", " ", " "));
 
             return _tokenGenerator.GenerateAccessToken(user, person.Id);

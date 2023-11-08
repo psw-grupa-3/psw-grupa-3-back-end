@@ -12,10 +12,12 @@ namespace Explorer.API.Controllers
     public class UserProfileController : BaseApiController
     {
         private readonly IUserProfileService _userProfileService;
+        private readonly IUserFollowerService _userFollowerService;
 
-        public UserProfileController(IUserProfileService userProfileService)
+        public UserProfileController(IUserProfileService userProfileService, IUserFollowerService userFollowerService)
         {
             _userProfileService = userProfileService;
+            _userFollowerService = userFollowerService;
         }
 
         [HttpGet("{id:int}")]
@@ -30,5 +32,14 @@ namespace Explorer.API.Controllers
             var result = _userProfileService.Update(profile);
             return CreateResponse(result);
         }
+
+        [HttpPut("{followerId:int}/follow/{userToFollowId:int}")]
+        public ActionResult<UserProfileDto> Follow(int followerId, int userToFollowId)
+        {
+            var result = _userFollowerService.Follow(followerId, userToFollowId);
+            return CreateResponse(result);
+        }
+
+
     }
 }
