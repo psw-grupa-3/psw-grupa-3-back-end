@@ -18,5 +18,6 @@ namespace Explorer.Tours.API.Dtos.Tours
         public float? Length { get; set; }
         public DateTime? PublishTime { get; set; }
         public DateTime? ArhiveTime { get; set; }
+        public List<ProblemDto>? Problems { get; set; }
     }
 }

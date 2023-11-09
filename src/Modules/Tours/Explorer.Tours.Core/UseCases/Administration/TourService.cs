@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.Core.Domain.Users;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Core.Converters;
@@ -34,6 +35,35 @@ namespace Explorer.Tours.Core.UseCases.Administration
             CrudRepository.Update(tourDb);
             return MapToDto(tourDb);
         }
+
+        public Result<TourDto> AddProblem(int tourId, ProblemDto problem)
+        {
+            var tour = CrudRepository.Get(tourId);
+            if (tour is null)
+            {
+                return Result.Fail<TourDto>($"Tour not found ({FailureCode.NotFound}).");
+            }
+            try
+            {
+                tour.AddNewProblem(problem);
+                CrudRepository.Update(tour);
+
+                return MapToDto(tour);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<TourDto>(ex.Message);
+            }
+        }
+        /*public Result<TourDto> RespondToProblem(int tourId, ProblemDto problem)
+        {
+           var problemDomain = ProblemConverter.ToDomain(problem);
+           var oldTour = CrudRepository.Get(tourId);
+           oldTour.RespondToProblem(problemDomain);
+           CrudRepository.Update(oldTour);
+           return MapToDto(oldTour);
+        }*/
+        //za update
 
         public Result<List<TourDto>> GetAllPublic()
         {

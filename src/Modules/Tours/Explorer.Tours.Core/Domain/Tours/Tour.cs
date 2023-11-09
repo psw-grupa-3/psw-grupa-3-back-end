@@ -39,6 +39,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         public DateTime? PublishTime { get; private set; }
         [NotMapped][JsonProperty]
         public DateTime? ArhiveTime { get; private set; }
+        public List<Problem>? Problems { get; init; }
 
         public Tour() {}
 

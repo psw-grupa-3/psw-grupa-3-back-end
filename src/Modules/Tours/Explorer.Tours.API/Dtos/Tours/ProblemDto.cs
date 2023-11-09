@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Explorer.Tours.API.Dtos
+namespace Explorer.Tours.API.Dtos.Tours
 {
     public class ProblemDto
     {
@@ -15,5 +15,8 @@ namespace Explorer.Tours.API.Dtos
         public DateTime Time { get; set; }
         public int TourId { get; set; }
         public int TouristId { get; set; }
+        public bool IsSolved { get; set; }
+        public string UnsolvedProblemComment { get; set; }
+        public DateTime Deadline { get; set; }
     }
 }

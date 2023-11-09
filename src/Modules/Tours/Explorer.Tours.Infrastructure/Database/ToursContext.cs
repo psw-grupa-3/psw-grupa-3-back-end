@@ -1,6 +1,8 @@
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Order;
 using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Stakeholders.Core.Domain;
+using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +12,7 @@ namespace Explorer.Tours.Infrastructure.Database;
 public class ToursContext : DbContext
 {
     public DbSet<Equipment> Equipment { get; set; }
-    public DbSet<Problem> Problems { get; set; }
+    public DbSet<DbEntity<Problem>> Problems { get; set; }
     public DbSet<TouristEquipment> TouristEquipment { get; set; }
     public DbSet<Preference> Preferences { get; set; }
     public DbSet<Tour> Tours { get; set; }
