@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Explorer.Tours.API.Dtos.TourExecutions;
+﻿using Explorer.Tours.API.Dtos.TourExecutions;
 using FluentResults;
 
 namespace Explorer.Tours.API.Public
@@ -12,6 +7,6 @@ namespace Explorer.Tours.API.Public
     {
         Result<TourExecutionDto> QuitExecution(int  executionId);
         Result<TourExecutionDto> UpdatePosition(int executionId, PositionDto position);
-        Result<TourExecutionDto> StarExecution(int tourId, PositionDto position);
+        Result<TourExecutionDto> StartExecution(int tourId);
     }
 }

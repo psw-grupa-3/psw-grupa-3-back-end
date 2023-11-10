@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
+﻿using AutoMapper;
 using Explorer.Blog.API.Dtos;
 using Explorer.Blog.Core.Domain;
-using System.Linq;
 using Vote = Explorer.Blog.Core.Domain.Vote;
 
 namespace Explorer.Blog.Core.Mappers;

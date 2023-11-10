@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist.TourExecution
 {
+    [Authorize(Policy = "touristPolicy")]
     [Microsoft.AspNetCore.Components.Route("api/tourist/tourExecution")]
     public class TourExecutionController: BaseApiController
     {
@@ -14,10 +15,10 @@ namespace Explorer.API.Controllers.Tourist.TourExecution
             _service = service;
         }
 
-        [HttpPost("execute/{tourId:int}")]
-        public ActionResult<TourExecutionDto> StartExecution([FromRoute] int tourId, [FromBody] PositionDto positionDto)
+        [HttpPost("start-execution/{tourId:int}")]
+        public ActionResult<TourExecutionDto> StartExecution([FromRoute] int tourId)
         {
-            return CreateResponse(_service.StarExecution(tourId, positionDto));
+            return CreateResponse(_service.StartExecution(tourId));
         }
 
         [HttpPatch("quit/{tourExecutionId:int}")]

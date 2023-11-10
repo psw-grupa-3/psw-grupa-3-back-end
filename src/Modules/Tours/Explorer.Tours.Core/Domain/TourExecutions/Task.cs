@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 using Explorer.BuildingBlocks.Core.Domain;
+using static Explorer.Tours.API.Enums.TourEnums;
 
 namespace Explorer.Tours.Core.Domain.TourExecutions
 {
-    public enum TaskType {Point = 1}
     public class Task: ValueObject
     {
         public bool Done { get; set; }

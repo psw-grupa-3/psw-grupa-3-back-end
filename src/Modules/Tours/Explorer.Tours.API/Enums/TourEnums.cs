@@ -22,5 +22,10 @@
             Completed,
             Abandoned
         }
+
+        public enum TaskType
+        {
+            Point = 1
+        }
     }
 }

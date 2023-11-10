@@ -16,7 +16,6 @@ namespace Explorer.Tours.Core.UseCases
         {
             _tourRepository = tourRepository;
         }
-
         public Result<TourExecutionDto> QuitExecution(int executionId)
         {
             var execution = CrudRepository.Get(executionId);
@@ -24,7 +23,6 @@ namespace Explorer.Tours.Core.UseCases
             CrudRepository.Update(execution);
             return MapToDto(execution);
         }
-
         public Result<TourExecutionDto> UpdatePosition(int executionId, PositionDto position)
         {
             var positionDomain = PositionConverter.ToDomain(position);
@@ -33,12 +31,10 @@ namespace Explorer.Tours.Core.UseCases
             CrudRepository.Update(execution);
             return MapToDto(execution);
         }
-
-        public Result<TourExecutionDto> StarExecution(int tourId, PositionDto position)
+        public Result<TourExecutionDto> StartExecution(int tourId)
         {
-            var positionDomain = PositionConverter.ToDomain(position);
             var tour = _tourRepository.Get(tourId);
-            var tourExecution = new TourExecution(1000, tour.Points, positionDomain);
+            var tourExecution = new TourExecution(tour.Points);
             CrudRepository.Create(tourExecution);
             return MapToDto(tourExecution);
         }

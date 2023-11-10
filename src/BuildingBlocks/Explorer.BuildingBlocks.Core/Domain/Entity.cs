@@ -1,8 +1,11 @@
-﻿namespace Explorer.BuildingBlocks.Core.Domain;
+﻿using System.Text.Json.Serialization;
+
+namespace Explorer.BuildingBlocks.Core.Domain;
 
 public abstract class Entity
 {
-    public long Id { get; protected set; }
+    [JsonInclude]
+    public long Id { get; init; }
 
     public override bool Equals(object? obj)
     {

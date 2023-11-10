@@ -10,11 +10,11 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         public DateTime LastActivity { get; set; }
 
         [JsonConstructor]
-        public Position(double lat, double lng, DateTime lastActivity)
+        public Position(double latitude, double longitude, DateTime lastActivity)
         {
-            Validate(lat, lng);
-            Latitude = lat;
-            Longitude = lng;
+            Validate(latitude, longitude);
+            Latitude = latitude;
+            Longitude = longitude;
             LastActivity = lastActivity;
         }
 

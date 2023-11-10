@@ -21,7 +21,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         [JsonPropertyName("price")]
         public double Price { get; init; }
         [JsonPropertyName("points")]
-        public List<Point>? Points { get; init; }
+        public List<Point>? Points { get; set; }
         [JsonPropertyName("tags")]
         public List<Tag>? Tags { get; init; }
         [JsonPropertyName("requiredTimes")]
@@ -35,6 +35,12 @@ namespace Explorer.Tours.Core.Domain.Tours
         [JsonPropertyName("arhiveTime")]
         public DateTime? ArhiveTime { get; private set; }
 
+        [JsonConstructor]
+        public Tour()
+        {
+            
+        }
+        
         [JsonConstructor]
         public Tour(long tourId, string name, string description, int difficult, TourStatus status, double price, Guide guide, float length, DateTime? publishTime, DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes)
         {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Explorer.Tours.API.Dtos.TourExecutions;
+﻿using Explorer.Tours.API.Dtos.TourExecutions;
 using Explorer.Tours.Core.Domain.TourExecutions;
 
 namespace Explorer.Tours.Core.Converters
