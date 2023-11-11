@@ -5,6 +5,7 @@ namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Tag : ValueObject
     {
+        [JsonPropertyName("Name")]
         public string Name { get; }
 
         [JsonConstructor]

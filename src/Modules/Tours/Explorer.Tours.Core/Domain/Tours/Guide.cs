@@ -5,8 +5,11 @@ namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Guide : Entity
     {
+        [JsonPropertyName("Name")]
         public string Name { get; init; }
+        [JsonPropertyName("Surname")]
         public string Surname { get; init; }
+        [JsonPropertyName("Email")]
         public string Email { get; init; }
 
         [JsonConstructor]

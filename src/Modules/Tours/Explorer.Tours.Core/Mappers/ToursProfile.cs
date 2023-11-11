@@ -2,6 +2,7 @@
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.Core.Domain;
+using Explorer.Tours.Core.Domain.Order;
 using Object = Explorer.Tours.Core.Domain.Object;
 using Explorer.Tours.Core.Domain.Tours;
 
@@ -11,6 +12,13 @@ public class ToursProfile : Profile
 {
     public ToursProfile()
     {
+        CreateMap<OrderItemDto, OrderItem>();
+        CreateMap<ShoppingCartDto, ShoppingCart>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(itemDto => new OrderItem(itemDto.IdTour, itemDto.Name, itemDto.Price))));
+        CreateMap<OrderItem, OrderItemDto>();
+        CreateMap<ShoppingCart, ShoppingCartDto>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(orderItem => new OrderItemDto { IdTour = orderItem.IdTour, Name = orderItem.Name, Price = orderItem.Price })));
+
         CreateMap<EquipmentDto, Equipment>().ReverseMap();
         CreateMap<ProblemDto, Problem>().ReverseMap();
         CreateMap<TouristEquipmentDto, TouristEquipment>().ReverseMap();

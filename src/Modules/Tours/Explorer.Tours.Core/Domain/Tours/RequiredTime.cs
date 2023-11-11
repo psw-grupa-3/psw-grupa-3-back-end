@@ -6,7 +6,9 @@ namespace Explorer.Tours.Core.Domain.Tours
 {
     public class RequiredTime : ValueObject
     {
+        [JsonPropertyName("TransportType")]
         public TransportType TransportType { get; private set; }
+        [JsonPropertyName("Minutes")]
         public int Minutes { get; private set; }
 
         [JsonConstructor]
