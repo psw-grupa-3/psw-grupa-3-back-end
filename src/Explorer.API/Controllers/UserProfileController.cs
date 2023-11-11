@@ -33,7 +33,7 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpPut("followers/{userId:int}/follow/{userToFollowId:int}")]
+        [HttpPatch("followers/{userId:int}/follow/{userToFollowId:int}")]
         public ActionResult<UserProfileDto> Follow(int userId, int userToFollowId)
         {
             var result = _userFollowerService.Follow(userId, userToFollowId);
@@ -47,7 +47,7 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpPut("followers/{userId:int}/unfollow/{userToUnfollowId:int}")]
+        [HttpPatch("followers/{userId:int}/unfollow/{userToUnfollowId:int}")]
         public ActionResult<UserProfileDto> Unfollow(int userId, int userToUnfollowId)
         {
             var result = _userFollowerService.Unfollow(userId, userToUnfollowId);
