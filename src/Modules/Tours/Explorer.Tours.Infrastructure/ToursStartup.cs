@@ -45,6 +45,7 @@ public static class ToursStartup
         services.AddScoped<IEquipmentManagmentService, EquipmentManagmentService>();
         services.AddScoped<IObjectService, ObjectService>();
         services.AddScoped<ITouristPositionService, TouristPositionService>();
+        services.AddScoped<IPublicRegistrationRequestService, PublicRegistrationRequestService>();
         services.AddScoped<ITourExecutionService, TourExecutionService>();
     }
 
@@ -60,8 +61,11 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<EquipmentManagment>), typeof(CrudDatabaseRepository<EquipmentManagment, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TourExecution>), typeof(JsonCrudDatabaseRepository<TourExecution, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Object>), typeof(CrudDatabaseRepository<Object, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<PublicRegistrationRequest>), typeof(CrudDatabaseRepository<PublicRegistrationRequest, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TouristPosition>), typeof(CrudDatabaseRepository<TouristPosition, ToursContext>));
         services.AddScoped(typeof(IPreferenceRepository), typeof(PreferenceRepository));
+        services.AddScoped(typeof(IObjectRepository), typeof(ObjectRepository));
+        services.AddScoped(typeof(IPublicRegistrationRequestRepository), typeof(PublicRegistrationRequestRepository));
         services.AddScoped(typeof(ITourExecutionRepository), typeof(TourExecutionRepository));
         services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
 
