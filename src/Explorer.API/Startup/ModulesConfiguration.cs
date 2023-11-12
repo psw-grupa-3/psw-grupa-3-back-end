@@ -1,7 +1,6 @@
 using Explorer.Blog.Infrastructure;
 using Explorer.Stakeholders.Infrastructure;
 using Explorer.Tours.Infrastructure;
-using Explorer.Blog.Infrastructure;
 
 namespace Explorer.API.Startup;
 
@@ -12,8 +11,6 @@ public static class ModulesConfiguration
         services.ConfigureStakeholdersModule();
         services.ConfigureBlogModule();
         services.ConfigureToursModule();
-        services.ConfigureBlogModule();
-
         return services;
     }
 }

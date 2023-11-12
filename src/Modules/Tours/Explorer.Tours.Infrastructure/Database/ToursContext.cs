@@ -1,12 +1,9 @@
-using System.Reflection.Emit;
 using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Order;
 using Explorer.BuildingBlocks.Infrastructure.Database;
-using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Microsoft.EntityFrameworkCore;
-using Object = Explorer.Tours.Core.Domain.Object;
 
 namespace Explorer.Tours.Infrastructure.Database;
 
@@ -25,7 +22,7 @@ public class ToursContext : DbContext
     public DbSet<Core.Domain.Object> Objects { get; set; }
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
-    public DbSet<DbEntity<TourExecution>> TourExecutions { get; set; }
+    public DbSet<TourExecution> TourExecutions { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,8 +44,8 @@ public class ToursContext : DbContext
         modelBuilder.Entity<DbEntity<Guide>>()
             .Property(item => item.JsonObject).HasColumnType("jsonb");
 
-        modelBuilder.Entity<DbEntity<TourExecution>>().ToTable("TourExecutions");
-        modelBuilder.Entity<DbEntity<TourExecution>>()
+        modelBuilder.Entity<TourExecution>().ToTable("TourExecutions");
+        modelBuilder.Entity<TourExecution>()
             .Property(item => item.JsonObject).HasColumnType("jsonb");
 
     }
