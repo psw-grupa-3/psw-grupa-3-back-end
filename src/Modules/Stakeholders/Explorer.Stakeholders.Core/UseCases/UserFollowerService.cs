@@ -31,10 +31,10 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             try
             { 
-                user.AddFollower(userToFollow);
-                CrudRepository.Update(user);
+                userToFollow.AddFollower(user);
+                CrudRepository.Update(userToFollow);
 
-                return MapToDto(user);
+                return MapToDto(userToFollow);
             }
             catch (Exception ex)
             {
@@ -118,10 +118,10 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             try
             {
-                user.RemoveFollower(userToUnfollow);
-                CrudRepository.Update(user);
+                userToUnfollow.RemoveFollower(user);
+                CrudRepository.Update(userToUnfollow);
 
-                return MapToDto(user);
+                return MapToDto(userToUnfollow);
             }
             catch (Exception ex)
             {

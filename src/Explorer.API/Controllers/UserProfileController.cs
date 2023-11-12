@@ -36,7 +36,6 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-
         [HttpPut("{id:int}")]
         public ActionResult<UserProfileDto> Update([FromBody] UserProfileDto profile)
         {
