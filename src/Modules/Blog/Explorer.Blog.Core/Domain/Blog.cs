@@ -5,28 +5,29 @@ using Newtonsoft.Json;
 namespace Explorer.Blog.Core.Domain
 {
     public enum BlogStatus { DRAFT = 1, PUBLISHED, CLOSED, ACTIVE, FAMOUS };
+    [JsonObject(MemberSerialization.OptIn)]
     public class Blog : JsonEntity
     {
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public string Title { get; set; }
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public string Description { get; set; }
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public DateTime CreationDate { get; private set; } = DateTime.Now;
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public BlogStatus Status { get; private set; } = BlogStatus.DRAFT;
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public string[]? Images { get; set; }
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public long UserId { get; private set; }
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public List<BlogRating>? Ratings { get; private set; } = new List<BlogRating>();
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public int NetVotes { get; private set; }
-        [NotMapped]
+        [NotMapped][JsonProperty]
         public List<BlogComment>? BlogComments { get; private set; } = new List<BlogComment>();
 
-        public Blog() {}
+        public Blog(){}
 
         [JsonConstructor]
         public Blog(string title, string description, DateTime creationDate,

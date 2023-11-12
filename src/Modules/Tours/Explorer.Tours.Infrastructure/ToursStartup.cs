@@ -28,6 +28,7 @@ public static class ToursStartup
     {
         // Registers all profiles since it works on the assembly
         services.AddAutoMapper(typeof(ToursProfile).Assembly);
+        services.AddAutoMapper(typeof(TourExecutionProfile).Assembly);
         SetupCore(services);
         SetupInfrastructure(services);
         return services;
@@ -59,7 +60,7 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<Tour>), typeof(JsonCrudDatabaseRepository<Tour, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<EquipmentManagment>), typeof(CrudDatabaseRepository<EquipmentManagment, ToursContext>));
-        services.AddScoped(typeof(ICrudRepository<TourExecution>), typeof(JsonCrudDatabaseRepository<TourExecution, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<TourExecution>), typeof(JsonCrudRepo<TourExecution, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Object>), typeof(CrudDatabaseRepository<Object, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<PublicRegistrationRequest>), typeof(CrudDatabaseRepository<PublicRegistrationRequest, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TouristPosition>), typeof(CrudDatabaseRepository<TouristPosition, ToursContext>));
