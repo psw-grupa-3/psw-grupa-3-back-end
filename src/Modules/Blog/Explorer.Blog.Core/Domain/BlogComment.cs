@@ -1,11 +1,4 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Explorer.Blog.Core.Domain
 {
@@ -17,7 +10,7 @@ namespace Explorer.Blog.Core.Domain
         public DateTime TimeCreated { get; init; }
         public DateTime TimeUpdated { get; private set; }
 
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
         public BlogComment(int userId, int blogId, string comment, DateTime timeCreated, DateTime timeUpdated)
         {
 

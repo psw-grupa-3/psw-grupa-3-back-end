@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using Explorer.BuildingBlocks.Core.Domain;
-using Microsoft.Extensions.Options;
+﻿using Explorer.BuildingBlocks.Core.Domain;
 
 namespace Explorer.Blog.Core.Domain
 {
@@ -12,7 +10,7 @@ namespace Explorer.Blog.Core.Domain
         public Vote Mark { get; private set; }
 
 
-        [JsonConstructor]
+        [Newtonsoft.Json.JsonConstructor]
         public BlogRating(long userId, DateTime votingDate, Vote mark)
         {
             Validate(userId, votingDate);

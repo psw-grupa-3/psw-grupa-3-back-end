@@ -1,35 +1,59 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Explorer.BuildingBlocks.Core.Domain;
+using Newtonsoft.Json;
 
 namespace Explorer.Blog.Core.Domain
 {
     public enum BlogStatus { DRAFT = 1, PUBLISHED, CLOSED, ACTIVE, FAMOUS };
-    public class Blog : Entity
+    public class Blog : JsonEntity
     {
+        [NotMapped]
         public string Title { get; set; }
+        [NotMapped]
         public string Description { get; set; }
-        public DateTime CreationDate { get; init; } = DateTime.Now;
+        [NotMapped]
+        public DateTime CreationDate { get; private set; } = DateTime.Now;
+        [NotMapped]
         public BlogStatus Status { get; private set; } = BlogStatus.DRAFT;
-        public string[] Images { get; set; }
-        public long UserId { get; init; }
-        public List<BlogRating>? Ratings { get; init; }
+        [NotMapped]
+        public string[]? Images { get; set; }
+        [NotMapped]
+        public long UserId { get; private set; }
+        [NotMapped]
+        public List<BlogRating>? Ratings { get; private set; } = new List<BlogRating>();
+        [NotMapped]
         public int NetVotes { get; private set; }
-        public List<BlogComment>? BlogComments { get; init; }
+        [NotMapped]
+        public List<BlogComment>? BlogComments { get; private set; } = new List<BlogComment>();
+
+        public Blog() {}
 
         [JsonConstructor]
-        public Blog(long id, string title, string description, DateTime creationDate,
-            BlogStatus status, string[] images, long userId)
+        public Blog(string title, string description, DateTime creationDate,
+            BlogStatus status, string[] images, long userId, int netVotes, List<BlogRating> ratings, List<BlogComment> blogComments)
         {
             Validate(title, description);
-            Id = id;
             Title = title;
             Description = description;
-            CreationDate = creationDate.ToUniversalTime();
+            CreationDate = creationDate;
             Status = status;
             Images = images;
             UserId = userId;
-            NetVotes = 0;
+            NetVotes = netVotes;
+            Ratings = ratings;
+            BlogComments = blogComments;
+        }
+
+        public Blog(string title, string description, DateTime creationDate,
+            BlogStatus status, string[] images, long userId)
+        {
+            Validate(title, description);
+            Title = title;
+            Description = description;
+            CreationDate = creationDate;
+            Status = status;
+            Images = images;
+            UserId = userId;
         }
 
         public void PublishBlog()
@@ -90,6 +114,28 @@ namespace Explorer.Blog.Core.Domain
             BlogComment oldComment = BlogComments.Find(x =>
                 x.UserId == comment.UserId && x.TimeCreated == comment.TimeCreated);
             oldComment.UpdateComment(comment);
+        }
+
+        public override void ToJson()
+        {
+            JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ?? 
+                         throw new JsonSerializationException("Exception! Could not serialize object!");
+        }
+        public override void FromJson()
+        {
+            var blog = JsonConvert.DeserializeObject<Blog>(JsonObject ??
+                                                           throw new NullReferenceException(
+                                                               "Exception! No object to deserialize!")) ??
+                       throw new NullReferenceException("Exception! Blog is null!");
+            Title = blog.Title;
+            Description = blog.Description;
+            CreationDate = blog.CreationDate;
+            Status = blog.Status;
+            Images = blog.Images;
+            UserId = blog.UserId;
+            Ratings = blog.Ratings;
+            NetVotes = blog.NetVotes;
+            BlogComments = blog.BlogComments;
         }
     }
 }
