@@ -20,9 +20,10 @@ namespace Explorer.API.Controllers.Admin
         [HttpGet]
         public ActionResult<IEnumerable<UserAdminDto>> GetAllUsers()
         {
-            var users = _userService.GetAll(); // Replace with your actual GetAllUsers method
+            var users = _userService.GetAll();
             return Ok(users);
         }
+
 
         [HttpPost("block-users")]
         public IActionResult BlockUsers([FromBody] List<string> usernames)

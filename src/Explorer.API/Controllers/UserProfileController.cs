@@ -1,6 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,13 @@ namespace Explorer.API.Controllers
     {
         private readonly IUserProfileService _userProfileService;
         private readonly IUserFollowerService _userFollowerService;
+        private readonly IUserService _userService;
 
-        public UserProfileController(IUserProfileService userProfileService, IUserFollowerService userFollowerService)
+        public UserProfileController(IUserProfileService userProfileService, IUserFollowerService userFollowerService, IUserService userService)
         {
             _userProfileService = userProfileService;
             _userFollowerService = userFollowerService;
+            _userService = userService;
         }
 
         [HttpGet("{id:int}")]
@@ -25,6 +28,14 @@ namespace Explorer.API.Controllers
             var result = _userProfileService.GetPersonByUserId(id);
             return CreateResponse(result);
         }
+
+        [HttpGet("allUsers")]
+        public ActionResult<IEnumerable<UserDto>> GetAllUsers()
+        {
+            var result = _userFollowerService.GetAll();
+            return CreateResponse(result);
+        }
+
 
         [HttpPut("{id:int}")]
         public ActionResult<UserProfileDto> Update([FromBody] UserProfileDto profile)
