@@ -7,9 +7,6 @@ namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Tour : Entity
     {
-        [JsonPropertyName("Id")]
-        public long TourId => base.Id;
-
         [JsonPropertyName("name")]
         public string Name { get; init; }
         [JsonPropertyName("description")]
@@ -21,11 +18,11 @@ namespace Explorer.Tours.Core.Domain.Tours
         [JsonPropertyName("price")]
         public double Price { get; init; }
         [JsonPropertyName("points")]
-        public List<Point>? Points { get; set; }
+        public List<Point>? Points { get; set; } = new List<Point>();
         [JsonPropertyName("tags")]
-        public List<Tag>? Tags { get; init; }
+        public List<Tag>? Tags { get; init; } = new List<Tag>();
         [JsonPropertyName("requiredTimes")]
-        public List<RequiredTime>? RequiredTimes { get; init; }
+        public List<RequiredTime>? RequiredTimes { get; init; } = new List<RequiredTime>();
         [JsonPropertyName("guide")]
         public Guide Guide { get; init; }
         [JsonPropertyName("length")]
@@ -36,23 +33,17 @@ namespace Explorer.Tours.Core.Domain.Tours
         public DateTime? ArhiveTime { get; private set; }
 
         [JsonConstructor]
-        public Tour()
+        public Tour(long id, string name, string description, int difficult, TourStatus status, double price, Guide guide, float length, DateTime? publishTime, DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes)
         {
-            
-        }
-        
-        [JsonConstructor]
-        public Tour(long tourId, string name, string description, int difficult, TourStatus status, double price, Guide guide, float length, DateTime? publishTime, DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes)
-        {
-            Id = TourId;
+            Id = id;
             Name = name;
             Description = description;
             Difficult = difficult;
             Status = status;
             Price = price;
-            List<Point> Points = points;
-            List<Tag> Tags = tags;
-            List<RequiredTime> RequiredTimes = requiredTimes;
+            Points = points;
+            Tags = tags;
+            RequiredTimes = requiredTimes;
             Guide = new Guide(guide.Id, guide.Name, guide.Surname, guide.Email);
             Length = length;
             PublishTime = publishTime;
