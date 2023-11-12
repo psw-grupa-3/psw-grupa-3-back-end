@@ -31,16 +31,47 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             try
             { 
-                user.AddFollower(userToFollow);
-                CrudRepository.Update(user);
+                userToFollow.AddFollower(user);
+                CrudRepository.Update(userToFollow);
 
-                return MapToDto(user);
+                return MapToDto(userToFollow);
             }
             catch (Exception ex)
             {
                 return Result.Fail<UserDto>(ex.Message);
             }
 
+        }
+
+        public Result<List<UserDto>> GetAll()
+        {
+            try
+            {
+                var users = CrudRepository.GetPaged(1, int.MaxValue);
+                List<UserDto> result = new List<UserDto>();
+                foreach (var user in users.Results)
+                {
+                       result.Add(new()
+                       {
+                        Id = user.Id,
+                        Username = user.Username,
+                        Password = user.Password,
+                        Role = user.Role,
+                        IsActive = user.IsActive,
+                        Followers = user.Followers.Select(f => new FollowerDto
+                        {
+                            UserId = f.UserId,
+                            Username = f.Username,
+                            Date = f.Date
+                        }).ToList()
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<List<UserDto>>(ex.Message);
+            }
         }
 
         public Result<List<FollowerDto>> GetFollowers(int userId)
@@ -87,10 +118,10 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             try
             {
-                user.RemoveFollower(userToUnfollow);
-                CrudRepository.Update(user);
+                userToUnfollow.RemoveFollower(user);
+                CrudRepository.Update(userToUnfollow);
 
-                return MapToDto(user);
+                return MapToDto(userToUnfollow);
             }
             catch (Exception ex)
             {

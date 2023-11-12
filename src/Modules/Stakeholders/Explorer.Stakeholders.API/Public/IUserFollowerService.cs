@@ -13,5 +13,6 @@ namespace Explorer.Stakeholders.API.Public
         public Result<UserDto> Follow(int followerId, int userToFollowId);
         public Result<List<FollowerDto>> GetFollowers(int userId);
         public Result<UserDto> Unfollow(int userId, int userToUnfollowId);
+        public Result<List<UserDto>> GetAll();
     }
 }

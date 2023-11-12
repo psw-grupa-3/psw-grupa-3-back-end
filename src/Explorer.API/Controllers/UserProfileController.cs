@@ -1,6 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +14,25 @@ namespace Explorer.API.Controllers
     {
         private readonly IUserProfileService _userProfileService;
         private readonly IUserFollowerService _userFollowerService;
+        private readonly IUserService _userService;
 
-        public UserProfileController(IUserProfileService userProfileService, IUserFollowerService userFollowerService)
+        public UserProfileController(IUserProfileService userProfileService, IUserFollowerService userFollowerService, IUserService userService)
         {
             _userProfileService = userProfileService;
             _userFollowerService = userFollowerService;
+            _userService = userService;
         }
 
         [HttpGet("{id:int}")]
         public ActionResult<PagedResult<UserProfileDto>> GetUser(int id) {
             var result = _userProfileService.GetPersonByUserId(id);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("allUsers")]
+        public ActionResult<IEnumerable<UserDto>> GetAllUsers()
+        {
+            var result = _userFollowerService.GetAll();
             return CreateResponse(result);
         }
 
@@ -33,7 +43,7 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpPut("followers/{userId:int}/follow/{userToFollowId:int}")]
+        [HttpPatch("followers/{userId:int}/follow/{userToFollowId:int}")]
         public ActionResult<UserProfileDto> Follow(int userId, int userToFollowId)
         {
             var result = _userFollowerService.Follow(userId, userToFollowId);
@@ -47,7 +57,7 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpPut("followers/{userId:int}/unfollow/{userToUnfollowId:int}")]
+        [HttpPatch("followers/{userId:int}/unfollow/{userToUnfollowId:int}")]
         public ActionResult<UserProfileDto> Unfollow(int userId, int userToUnfollowId)
         {
             var result = _userFollowerService.Unfollow(userId, userToUnfollowId);
