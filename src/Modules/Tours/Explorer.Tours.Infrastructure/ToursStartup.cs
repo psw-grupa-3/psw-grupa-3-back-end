@@ -70,9 +70,13 @@ public static class ToursStartup
         services.AddScoped(typeof(ITourExecutionRepository), typeof(TourExecutionRepository));
         services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
         services.AddScoped(typeof(ITourPurchaseTokenRepository), typeof(TourPurchaseTokenRepository));
+        services.AddScoped(typeof(IProblemRepository), typeof(ProblemRepository));
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "tours")));
+        services.AddDbContext<ToursContext>(opt =>
+            opt.UseNpgsql(DbConnectionStringBuilder.Build("problems"),
+                x => x.MigrationsHistoryTable("__EFMigrationsHistory", "problems")));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Users;
+using Explorer.Tours.API.Dtos.Tours;
 using Microsoft.Spatial;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -39,6 +40,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         public DateTime? PublishTime { get; private set; }
         [NotMapped][JsonProperty]
         public DateTime? ArhiveTime { get; private set; }
+        [JsonPropertyName("problems")]
         public List<Problem>? Problems { get; init; }
 
         public Tour() {}
@@ -127,6 +129,14 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public void PublishPoint(string pointName)
         {
+            Problem currentProblem = Problems.Find(p => p.TourId == problem.TourId);
+            UpdateProblem(problem, currentProblem);
+        }
+        public void UpdateProblem(Problem problem, Problem currentProblem)
+        {
+           /* if (currentProblem == null)
+            {
+                //Problems.Add(problem); treba da bdue greska
             if (Points == null)
             {
                 throw new InvalidOperationException("Points list is not initialized.");
@@ -159,6 +169,9 @@ namespace Explorer.Tours.Core.Domain.Tours
 
             double averageRating = sumOfRatings / Reviews.Count;
             return averageRating;
+            //Problem newProblem = new(problem.Category, problem.Priority, problem.Description, problem.Time, problem.TourId, problem.TouristId, problem.IsSolved, problem.UnsolvedProblemComment, problem.Deadline);
+            //Problems.Add());
+            
         }
 
 

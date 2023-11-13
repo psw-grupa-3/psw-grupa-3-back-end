@@ -9,15 +9,19 @@ using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
+using System.Xml.Linq;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
     public class TourService : CrudService<TourDto,Tour>, ITourService
     {
+
+        private readonly IProblemRepository _problemRepository;
         private readonly ICrudRepository<TourExecution> _tourExecutionRepository;
-        public TourService(ICrudRepository<Tour> repository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
+        public TourService(ICrudRepository<Tour> repository, ICrudRepository<TourExecution> tourExecutionRepository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
         {
             _tourExecutionRepository = tourExecutionRepository;
+            _problemRepository = problemRepository;
         }
 
         public Result<TourDto> PublishTour(long id)
@@ -36,7 +40,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return MapToDto(tourDb);
         }
 
-        public Result<TourDto> AddProblem(int tourId, ProblemDto problem)
+        public Result<TourDto> AddProblem(long tourId,ProblemDto problem)
         {
             var tour = CrudRepository.Get(tourId);
             if (tour is null)
@@ -45,7 +49,9 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
             try
             {
-                tour.AddNewProblem(problem);
+
+                var currentProblem = ProblemConverter.ToDomain(problem);
+                tour.Problems.Add(currentProblem);
                 CrudRepository.Update(tour);
 
                 return MapToDto(tour);

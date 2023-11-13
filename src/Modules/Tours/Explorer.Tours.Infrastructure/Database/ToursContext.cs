@@ -49,5 +49,8 @@ public class ToursContext : DbContext
         modelBuilder.Entity<TourExecution>()
             .Property(item => item.JsonObject).HasColumnType("jsonb");
 
+        modelBuilder.Entity<DbEntity<Problem>>().ToTable("Problems");
+        modelBuilder.Entity<DbEntity<Problem>>()
+            .Property(item => item.JsonObject).HasColumnType("jsonb"); 
     }
 }

@@ -3,7 +3,6 @@ using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.Shopping;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Explorer.Tours.Core.UseCases.Shopping;
 
 namespace Explorer.API.Controllers.Shopping
 {
