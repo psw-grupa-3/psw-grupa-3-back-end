@@ -21,8 +21,8 @@ public class ToursContext : DbContext
     public DbSet<PublicRegistrationRequest> PublicRegistrationRequests { get; set; }
     public DbSet<Core.Domain.Object> Objects { get; set; }
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-
-    public DbSet<TourExecution> TourExecutions { get; set; }
+    public DbSet<TourPurchaseToken> TourPurchaseTokens { get; set; }
+    public DbSet<DbEntity<TourExecution>> TourExecutions { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
