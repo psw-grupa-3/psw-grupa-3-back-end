@@ -78,25 +78,5 @@ namespace Explorer.Tours.Core.Domain.Tours
         {
             IsSolved = true;
         }
-        /*protected override IEnumerable<object> GetEqualityComponents()
-{
-yield return Category;
-yield return Priority;
-yield return Description;
-yield return Time;
-yield return TourId;
-yield return TouristId;
-yield return IsSolved;
-yield return UnsolvedProblemComment;
-yield return Deadline;
-}
-public static List<Problem> GetUnresolvedProblemsWithDeadline(List<Problem> problems)
-{
-
-
-return problems
-.Where(problem => !problem.IsSolved && problem.Deadline < problem.Time)
-.ToList();
-}*/
     }
 }

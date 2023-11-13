@@ -17,6 +17,5 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
         public int GetProblemCount();
         public List<ProblemDto> GetUnresolvedProblemsWithDeadline(List<ProblemDto> problems);
         void SaveChanges(Problem problem);
-        //public static ExtractProblem
     }
 }
