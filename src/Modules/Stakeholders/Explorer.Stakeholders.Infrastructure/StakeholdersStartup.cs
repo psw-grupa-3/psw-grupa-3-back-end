@@ -31,6 +31,7 @@ public static class StakeholdersStartup
         services.AddScoped<IUserProfileService, UserProfileService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserFollowerService, UserFollowerService>();
+        services.AddScoped<IUserNotificationService, UserNotificationService>();
         services.AddScoped<IAppRatingService, AppRatingService>();
         services.AddScoped<IClubService, ClubService>();
         services.AddScoped<IClubInvitationService, ClubInvitationService>();

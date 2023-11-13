@@ -15,5 +15,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public UserRole Role { get; set; }
         public bool IsActive { get; set; }
         public List<FollowerDto> Followers { get; set; }
+        public List<NotificationDto> Notifications { get; set; }
     }
 }
