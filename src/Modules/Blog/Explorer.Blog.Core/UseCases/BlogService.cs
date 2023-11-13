@@ -1,16 +1,33 @@
 ﻿using AutoMapper;
 using Explorer.Blog.API.Dtos;
+using Explorer.Blog.API.Enums;
 using Explorer.Blog.API.Public;
 using Explorer.Blog.Core.Converters;
 using Explorer.BuildingBlocks.Core.UseCases;
 using FluentResults;
+using static Explorer.Blog.API.Enums.BlogEnums;
 
 namespace Explorer.Blog.Core.UseCases
 {
     public class BlogService : CrudService<BlogDto, Domain.Blog> ,IBlogService
     {
         public BlogService(ICrudRepository<Domain.Blog> repository, IMapper mapper): base(repository, mapper) { }
-        
+
+        public Result<List<BlogDto>> GetFiltered(BlogStatus filter)
+        {
+            var filtered = new List<Domain.Blog>();
+            switch (filter)
+            {
+                case BlogStatus.Active: filtered = CrudRepository.GetFiltered(isActive);
+                    break;
+                case BlogStatus.Famous: filtered = CrudRepository.GetFiltered(isFamous);
+                    break;
+                default: filtered = CrudRepository.GetFiltered(isPublished);
+                    break;
+            }
+            return MapToDto(filtered);
+        }
+
         public Result<BlogDto> RateBlog(int blogId, BlogRatingDto rating)
         {
             var ratingDomain = BlogRatingConverter.ToDomain(rating);
@@ -50,9 +67,10 @@ namespace Explorer.Blog.Core.UseCases
             CrudRepository.Update(blog);
             return MapToDto(blog);
         }
-        public Result<List<BlogDto>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+
+        private Predicate<Domain.Blog> isFamous = blog => blog.Status == BlogEnums.BlogStatus.Famous;
+        private Predicate<Domain.Blog> isActive = blog => blog.Status == BlogEnums.BlogStatus.Active;
+        private Predicate<Domain.Blog> isPublished = blog => blog.Status != BlogStatus.Closed && blog.Status != BlogStatus.Draft;
+
     }
 }

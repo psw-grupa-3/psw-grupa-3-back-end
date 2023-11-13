@@ -57,6 +57,13 @@ public class JsonCrudRepo<TEntity, TDbContext> : ICrudRepository<TEntity>
         return entity;
     }
 
+    public List<TEntity> GetFiltered(Predicate<TEntity> predicate)
+    {
+        var entities = _dbSet.ToList();
+        entities.ForEach(x => x.FromJson());
+        return entities.FindAll(predicate);
+    }
+
     public void Delete(long id)
     {
         var entity = Get(id);

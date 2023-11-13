@@ -8,5 +8,6 @@ public interface ICrudRepository<TEntity> where TEntity : Entity
     TEntity Get(long id);
     TEntity Create(TEntity entity);
     TEntity Update(TEntity entity);
+    List<TEntity> GetFiltered(Predicate<TEntity> predicate);
     void Delete(long id);
 }

@@ -53,6 +53,7 @@ namespace Explorer.BuildingBlocks.Infrastructure.Database
             }
             return entity;
         }
+
         public void Delete(long id)
         {
             var dbEntity = _dbSet.Find(id);
@@ -65,6 +66,11 @@ namespace Explorer.BuildingBlocks.Infrastructure.Database
             var task = _dbSet.GetPaged(page, pageSize);
             return new PagedResult<TEntity>(task.Result.Results.Select(x => x.FromJson()).ToList(),
                     task.Result.TotalCount);
+        }
+
+        public List<TEntity> GetFiltered(Predicate<TEntity> predicate)
+        {
+            throw new NotImplementedException();
         }
     }
 }
