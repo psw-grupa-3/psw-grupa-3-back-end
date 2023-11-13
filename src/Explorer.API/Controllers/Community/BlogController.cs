@@ -85,7 +85,7 @@ namespace Explorer.API.Controllers.Community
         }
 
         
-        [HttpDelete("deleteBlogComment/{blogId:int}")]
+        [HttpPut("deleteBlogComment/{blogId:int}")]
         public ActionResult<BlogCommentDto> DeleteBlogComment([FromRoute] int blogId, [FromBody] BlogCommentDto comment)
         {
             return CreateResponse(_blogService.DeleteComment(blogId, comment));
