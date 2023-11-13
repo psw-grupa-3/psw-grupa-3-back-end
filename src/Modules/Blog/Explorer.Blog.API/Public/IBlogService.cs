@@ -1,6 +1,7 @@
 ﻿using Explorer.Blog.API.Dtos;
 using Explorer.BuildingBlocks.Core.UseCases;
 using FluentResults;
+using static Explorer.Blog.API.Enums.BlogEnums;
 
 namespace Explorer.Blog.API.Public
 {
@@ -9,6 +10,7 @@ namespace Explorer.Blog.API.Public
         Result<BlogDto> Get(int id);
         Result<BlogDto> Create(BlogDto blog);
         Result<PagedResult<BlogDto>> GetPaged(int page, int pageSize);
+        Result<List<BlogDto>> GetFiltered(BlogStatus filter);
         Result<BlogDto> Update(BlogDto blog);
         Result Delete(int blogId);
         Result<BlogDto>RateBlog(int blogId, BlogRatingDto rating);

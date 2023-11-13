@@ -1,4 +1,5 @@
 ﻿using Explorer.Blog.API.Dtos;
+using static Explorer.Blog.API.Enums.BlogEnums;
 using Explorer.Blog.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,14 @@ namespace Explorer.API.Controllers.Community
         {
             return CreateResponse(_blogService.GetPaged(page, pageSize));
         }
+
+        [AllowAnonymous]
+        [HttpGet("getFiltered")]
+        public ActionResult<BlogDto> GetFiltered([FromQuery] BlogStatus filter)
+        {
+            return CreateResponse(_blogService.GetFiltered(filter));
+        }
+
 
         [HttpPut("{blogId:int}")]
         public ActionResult<BlogDto> Update([FromBody] BlogDto blog)

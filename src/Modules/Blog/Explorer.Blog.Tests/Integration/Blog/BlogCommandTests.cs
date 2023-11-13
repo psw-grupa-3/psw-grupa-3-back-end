@@ -5,6 +5,7 @@ using Explorer.Blog.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
+using static Explorer.Blog.API.Enums.BlogEnums;
 
 namespace Explorer.Blog.Tests.Integration.Blog
 {
@@ -44,8 +45,8 @@ namespace Explorer.Blog.Tests.Integration.Blog
 
             // Assert - Database
             var storedEntites = dbContext.Blogs.ToList();
-            var storedEntity = storedEntites.Select(i => i.FromJson()).
-                FirstOrDefault(i => i.Title == newEntity.Title);
+            storedEntites.ForEach(x =>  x.FromJson());
+            var storedEntity = storedEntites.FirstOrDefault(x => x.Title == newEntity.Title);
             
             storedEntity.ShouldNotBeNull();
             storedEntity.Id.ShouldBe(result.Id);
@@ -58,9 +59,8 @@ namespace Explorer.Blog.Tests.Integration.Blog
             using var scope = Factory.Services.CreateScope();
             var controller = CreateController(scope);
             var updatedEntity = new API.Dtos.BlogDto
-            {
-                Title = "Test",
-                UserId = 1,
+            { 
+                UserId = -1,
                 Description = "Test",
                 CreationDate = DateTime.Now,
                 Images = new string[] {},
@@ -86,12 +86,11 @@ namespace Explorer.Blog.Tests.Integration.Blog
             //Assert
             result.ShouldNotBeNull();
             result.Id.ShouldBe(2);
-            result.Status.ShouldBe(BlogStatus.PUBLISHED);
+            result.Status.ShouldBe(BlogStatus.Published);
 
             //    Assert - Database
             var storedEntites = dbContext.Blogs.ToList();
-            var storedEntity = storedEntites.Select(i => i.FromJson()).
-                FirstOrDefault(i => i.Id == 2);
+            var storedEntity = storedEntites.FirstOrDefault(x => x.Id == 2);
             storedEntity.ShouldNotBeNull();
         }
 
@@ -125,8 +124,8 @@ namespace Explorer.Blog.Tests.Integration.Blog
 
             //    Assert - Database
             var storedEntites = dbContext.Blogs.ToList();
-            var storedEntity = storedEntites.Select(i => i.FromJson()).
-                FirstOrDefault(i => i.Title == updatedEntity.Title);
+            storedEntites.ForEach(x => x.FromJson());
+            var storedEntity = storedEntites.FirstOrDefault(i => i.Title == updatedEntity.Title);
 
             storedEntity.ShouldNotBeNull();
             storedEntity.Id.ShouldBe(result.Id);
@@ -140,8 +139,7 @@ namespace Explorer.Blog.Tests.Integration.Blog
             var controller = CreateController(scope);
             var updatedEntity = new BlogDto
             {
-                Id = -1000,
-                Title = "From update test",
+                Id = 2,
                 Description = "From update test"
             };
 

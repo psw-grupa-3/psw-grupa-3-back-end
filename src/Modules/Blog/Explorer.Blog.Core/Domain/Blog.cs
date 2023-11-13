@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Explorer.BuildingBlocks.Core.Domain;
+using static Explorer.Blog.API.Enums.BlogEnums;
 using Newtonsoft.Json;
 
 namespace Explorer.Blog.Core.Domain
 {
-    public enum BlogStatus { DRAFT = 1, PUBLISHED, CLOSED, ACTIVE, FAMOUS };
     [JsonObject(MemberSerialization.OptIn)]
     public class Blog : JsonEntity
     {
@@ -15,7 +15,7 @@ namespace Explorer.Blog.Core.Domain
         [NotMapped][JsonProperty]
         public DateTime CreationDate { get; private set; } = DateTime.Now;
         [NotMapped][JsonProperty]
-        public BlogStatus Status { get; private set; } = BlogStatus.DRAFT;
+        public BlogStatus Status { get; private set; } = BlogStatus.Draft;
         [NotMapped][JsonProperty]
         public string[]? Images { get; set; }
         [NotMapped][JsonProperty]
@@ -59,9 +59,9 @@ namespace Explorer.Blog.Core.Domain
 
         public void PublishBlog()
         {
-            if (Status != BlogStatus.DRAFT)
+            if (Status != BlogStatus.Draft)
                 return;
-            Status = BlogStatus.PUBLISHED;
+            Status = BlogStatus.Published;
         }   
         public void Rate(BlogRating rating)
         {
@@ -97,11 +97,11 @@ namespace Explorer.Blog.Core.Domain
             switch (NetVotes)
             {
                 case -10:
-                    Status = BlogStatus.CLOSED; break;
+                    Status = BlogStatus.Closed; break;
                 case var n when n > 100:
-                    Status = BlogStatus.ACTIVE; break;
+                    Status = BlogStatus.Active; break;
                 case var n when n > 500:
-                    Status = BlogStatus.FAMOUS; break;
+                    Status = BlogStatus.Famous; break;
             }
         }
         private static void Validate(string title, string description)
