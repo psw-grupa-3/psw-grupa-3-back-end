@@ -48,6 +48,7 @@ public static class ToursStartup
         services.AddScoped<ITouristPositionService, TouristPositionService>();
         services.AddScoped<IPublicRegistrationRequestService, PublicRegistrationRequestService>();
         services.AddScoped<ITourExecutionService, TourExecutionService>();
+        services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -64,11 +65,13 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<Object>), typeof(CrudDatabaseRepository<Object, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<PublicRegistrationRequest>), typeof(CrudDatabaseRepository<PublicRegistrationRequest, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TouristPosition>), typeof(CrudDatabaseRepository<TouristPosition, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<TourPurchaseToken>), typeof(CrudDatabaseRepository<TourPurchaseToken, ToursContext>));
         services.AddScoped(typeof(IPreferenceRepository), typeof(PreferenceRepository));
         services.AddScoped(typeof(IObjectRepository), typeof(ObjectRepository));
         services.AddScoped(typeof(IPublicRegistrationRequestRepository), typeof(PublicRegistrationRequestRepository));
         services.AddScoped(typeof(ITourExecutionRepository), typeof(TourExecutionRepository));
         services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
+        services.AddScoped(typeof(ITourPurchaseTokenRepository), typeof(TourPurchaseTokenRepository));
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),
