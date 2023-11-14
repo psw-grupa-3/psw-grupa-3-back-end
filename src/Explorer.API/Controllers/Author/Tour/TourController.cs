@@ -42,13 +42,13 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.Delete(id));
         }
 
-        [HttpPatch("publishTour/{id}")]
+        [HttpGet("publishTour/{id}")]
         public ActionResult PublishTour(long id)
         {
             return CreateResponse(_tourService.PublishTour(id));
         }
 
-        [HttpPatch("arhiveTour/{id}")]
+        [HttpGet("arhiveTour/{id}")]
         public ActionResult ArhiveTour(long id)
         {
             return CreateResponse(_tourService.ArhiveTour(id));
