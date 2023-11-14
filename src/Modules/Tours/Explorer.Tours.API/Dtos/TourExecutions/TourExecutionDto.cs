@@ -9,6 +9,6 @@ namespace Explorer.Tours.API.Dtos.TourExecutions
         public TourExecutionStatus Status { get; set; }
         public PositionDto? Position { get; set; }
         public List<PointTaskDto>? Tasks { get; set; }
-
+        public int TourId { get; set; }
     }
 }

@@ -22,6 +22,12 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.GetPaged(page, pageSize));
         }
 
+        [HttpGet("getAllPublic")]
+        public ActionResult<TourDto> GetAllPublic()
+        {
+            return CreateResponse(_tourService.GetAllPublic());
+        }
+
         [AllowAnonymous]
         [HttpPost]
         public ActionResult<TourDto> Create([FromBody] TourDto tour)
@@ -53,6 +59,19 @@ namespace Explorer.API.Controllers.Author.Tour
         {
             return CreateResponse(_tourService.ArhiveTour(id));
         }
+
+        [HttpPost("rateTour/{tourId:int}")]
+        public ActionResult<TourReviewDto> RateTour([FromRoute] int tourId, [FromBody] TourReviewDto tourReview)
+        {
+            return CreateResponse(_tourService.RateTour(tourId, tourReview));
+        }
+
+        [HttpGet("averageRating/{tourId:int}")]
+        public ActionResult<double> GetAverageRating(int tourId)
+        {
+            return CreateResponse(_tourService.GetAverageRating(tourId));
+        }
+
 
         [AllowAnonymous]
         [HttpGet("searchByPointDistance")]

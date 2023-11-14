@@ -2,6 +2,7 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.Core.Converters;
 using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
 
@@ -30,6 +31,23 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return MapToDto(tourDb);
         }
 
+        public Result<List<TourDto>> GetAllPublic()
+        {
+            var allTours = CrudRepository.GetPaged(0, 0).Results;
+            var toursWithPublicPoints = new List<TourDto>();
+
+            foreach(var tour in allTours)
+            {
+                var publicPoints = tour.Points.Where(point => point.Public).ToList();
+
+                var tourDto = MapToDto(tour);
+                tourDto.Points = publicPoints.Select(PointConverter.ToDto).ToList();    
+                toursWithPublicPoints.Add(tourDto);
+            }
+
+            return toursWithPublicPoints;
+        }
+
         public Result<List<TourDto>> SearchByPointDistance(double longitude, double latitude, int distance)
         {
             var searchResults = new List<TourDto>();
@@ -46,5 +64,20 @@ namespace Explorer.Tours.Core.UseCases.Administration
             CrudRepository.Update(tourDb);
             return MapToDto(tourDb);
         }
+        public Result<TourDto> RateTour(int tourId, TourReviewDto review)
+        {
+            var tourReview = TourReviewConverter.ToDomain(review);
+            Tour tour = CrudRepository.Get(tourId);
+            tour.Reviews.Add(tourReview);
+            CrudRepository.Update(tour);
+            return MapToDto(tour);
+        }
+
+        public Result<double> GetAverageRating(int tourId)
+        {
+            Tour tour = CrudRepository.Get(tourId);
+            return tour.GetAverageRating();
+        }
+
     }
 }

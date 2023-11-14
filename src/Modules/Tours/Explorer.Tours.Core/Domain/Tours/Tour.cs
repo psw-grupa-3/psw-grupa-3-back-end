@@ -30,6 +30,8 @@ namespace Explorer.Tours.Core.Domain.Tours
         [NotMapped][JsonProperty]
         public List<RequiredTime>? RequiredTimes { get; private set; } = new List<RequiredTime>();
         [NotMapped][JsonProperty]
+        public List<TourReview>? Reviews { get; set; } = new List<TourReview>();
+        [NotMapped][JsonProperty]
         public Guide Guide { get; private set; }
         [NotMapped][JsonProperty]
         public float? Length { get; private set; }
@@ -42,7 +44,7 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         [JsonConstructor]
         public Tour(string name, string description, int difficult, TourStatus status, Guide guide, double price, float length, DateTime? publishTime,
-            DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes)
+            DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews)
         {
             Name = name;
             Description = description;
@@ -52,6 +54,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Points = points;
             Tags = tags;
             RequiredTimes = requiredTimes;
+            Reviews = reviews;
             Guide = guide;
             Length = length;
             PublishTime = publishTime;
@@ -102,7 +105,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             var centerPoint = GeographyPoint.Create(latitude, longitude);
             foreach (var point in Points)
             {
-                if (centerPoint.Distance(GeographyPoint.Create(point.Latitude, point.Longitude)) / 1000 <= distance)
+                if (point.Public && centerPoint.Distance(GeographyPoint.Create(point.Latitude, point.Longitude)) / 1000 <= distance)
                 {
                     return true;     
                 }
@@ -129,6 +132,24 @@ namespace Explorer.Tours.Core.Domain.Tours
             }
         }
 
+        public double GetAverageRating()
+        {
+            if (Reviews == null || Reviews.Count == 0)
+            {
+                return 0.0;
+            }
+
+            double sumOfRatings = 0.0;
+            foreach (var review in Reviews)
+            {
+                sumOfRatings += review.Rating;
+            }
+
+            double averageRating = sumOfRatings / Reviews.Count;
+            return averageRating;
+        }
+
+
         public override void ToJson()
         {
             JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ??
@@ -139,7 +160,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             var tour = JsonConvert.DeserializeObject<Tour>(JsonObject ??
                                                            throw new NullReferenceException(
                                                                "Exception! No object to deserialize!")) ??
-                       throw new NullReferenceException("Exception! Blog is null!");
+                       throw new NullReferenceException("Exception! Tour is null!");
             Name = tour.Name;
             Description = tour.Description;
             Difficult = tour.Difficult;
@@ -149,6 +170,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Tags = tour.Tags;
             RequiredTimes = tour.RequiredTimes;
             Length = tour.Length;
+            Reviews = tour.Reviews;
             Guide = tour.Guide;
             PublishTime = tour.PublishTime;
             ArhiveTime = tour.ArhiveTime;
