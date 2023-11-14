@@ -58,7 +58,7 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<Problem>), typeof(CrudDatabaseRepository<Problem, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TouristEquipment>), typeof(CrudDatabaseRepository<TouristEquipment, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Preference>), typeof(CrudDatabaseRepository<Preference, ToursContext>));
-        services.AddScoped(typeof(ICrudRepository<Tour>), typeof(JsonCrudDatabaseRepository<Tour, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<Tour>), typeof(JsonCrudRepo<Tour, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TourReview>), typeof(CrudDatabaseRepository<TourReview, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<EquipmentManagment>), typeof(CrudDatabaseRepository<EquipmentManagment, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TourExecution>), typeof(JsonCrudRepo<TourExecution, ToursContext>));

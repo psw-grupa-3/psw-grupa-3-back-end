@@ -1,16 +1,19 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Guide : Entity
     {
-        [JsonPropertyName("Name")]
+        [NotMapped][JsonProperty]
         public string Name { get; init; }
-        [JsonPropertyName("Surname")]
+        [NotMapped][JsonProperty]
         public string Surname { get; init; }
-        [JsonPropertyName("Email")]
+        [NotMapped][JsonProperty]
         public string Email { get; init; }
+
+        public Guide() { }
 
         [JsonConstructor]
         public Guide(long id, string name, string surname, string email)

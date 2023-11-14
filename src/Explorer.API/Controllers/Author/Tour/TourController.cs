@@ -60,5 +60,11 @@ namespace Explorer.API.Controllers.Author.Tour
         {
             return CreateResponse(_tourService.SearchByPointDistance(longitude, latitude, distance));
         }
+
+        [HttpPatch("publishPoint/{id}")]
+        public ActionResult PublishPoint(long id, [FromQuery] string pointName)
+        {
+            return CreateResponse(_tourService.PublishPoint(id, pointName));
+        }
     }
 }

@@ -13,7 +13,7 @@ public class ToursContext : DbContext
     public DbSet<Problem> Problems { get; set; }
     public DbSet<TouristEquipment> TouristEquipment { get; set; }
     public DbSet<Preference> Preferences { get; set; }
-    public DbSet<DbEntity<Tour>> Tours { get; set; }
+    public DbSet<Tour> Tours { get; set; }
     public DbSet<DbEntity<Guide>> Guides { get; set; }
     public DbSet<TourReview> TourReviews { get; set; }
     public DbSet<TouristPosition> TouristPositions { get; set; }
@@ -36,8 +36,8 @@ public class ToursContext : DbContext
     {
         modelBuilder.Entity<ShoppingCart>().Property(item => item.Items).HasColumnType("jsonb");
 
-        modelBuilder.Entity<DbEntity<Tour>>().ToTable("Tours");
-        modelBuilder.Entity<DbEntity<Tour>>()
+        modelBuilder.Entity<Tour>().ToTable("Tours");
+        modelBuilder.Entity<Tour>()
             .Property(item => item.JsonObject).HasColumnType("jsonb");
 
         modelBuilder.Entity<DbEntity<Guide>>().ToTable("Guides");
