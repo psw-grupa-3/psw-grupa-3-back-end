@@ -17,5 +17,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> RateTour(int tourId, TourReviewDto review);
         Result<double> GetAverageRating(int tourId);
 
+        Result<List<TourDto>> GetAllPublic();
     }
 }
