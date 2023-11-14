@@ -18,6 +18,8 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         public Position? Position { get; set; }
         [NotMapped][JsonProperty]
         public List<PointTask>? Tasks { get; set; } = new List<PointTask>();
+        [NotMapped][JsonProperty]
+        public int TourId { get; set; }
         
         public TourExecution(){}
 
@@ -28,12 +30,13 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             Position = position;
             Tasks = tasks;
         }
-        public TourExecution(List<Point> points)
+        public TourExecution(List<Point> points, int tourId)
         {
             Validate(points);
             PrepareInitialPosition(points);
             PrepareTasks(points);
             Status = TourExecutionStatus.Active;
+            TourId=tourId;
         }
         public void UpdatePosition(Position currentPosition)
         {
@@ -83,6 +86,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             Status = tourExecution.Status;
             Position = tourExecution.Position;
             Tasks = tourExecution.Tasks;
+            TourId= tourExecution.TourId;
         }
     }
 }
