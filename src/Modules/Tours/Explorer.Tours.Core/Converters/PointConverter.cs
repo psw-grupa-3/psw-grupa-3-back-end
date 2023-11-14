@@ -14,14 +14,15 @@ namespace Explorer.Tours.Core.Converters
                 Latitude = point.Latitude,
                 Longitude = point.Longitude,
                 Name = point.Name,
-                Picture = point.Picture
+                Picture = point.Picture,
+                Public = point.Public,
             };
         }
 
         public static Point ToDomain(this PointDto pointDto)
         {
             return pointDto == null ? null :
-                new Point(pointDto.Latitude, pointDto.Longitude, pointDto.Name, pointDto.Description, pointDto.Picture);
+                new Point(pointDto.Latitude, pointDto.Longitude, pointDto.Name, pointDto.Description, pointDto.Picture, pointDto.Public);
         }
     }
 }

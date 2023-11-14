@@ -1,41 +1,49 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.Users;
 using Microsoft.Spatial;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
+using System.Xml.Linq;
 using static Explorer.Tours.API.Enums.TourEnums;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Explorer.Tours.Core.Domain.Tours
 {
-    public class Tour : Entity
+    [JsonObject(MemberSerialization.OptIn)]
+    public class Tour : JsonEntity
     {
-        [JsonPropertyName("name")]
-        public string Name { get; init; }
-        [JsonPropertyName("description")]
-        public string Description { get; init; }
-        [JsonPropertyName("diffucult")]
-        public int Difficult { get; init; }
-        [JsonPropertyName("status")]
+        [NotMapped][JsonProperty]
+        public string Name { get; private set; }
+        [NotMapped][JsonProperty]
+        public string Description { get; private set; }
+        [NotMapped][JsonProperty]
+        public int Difficult { get; private set; }
+        [NotMapped][JsonProperty]
         public TourStatus Status { get; private set; }
-        [JsonPropertyName("price")]
-        public double Price { get; init; }
-        [JsonPropertyName("points")]
+        [NotMapped][JsonProperty]
+        public double Price { get; private set; }
+        [NotMapped][JsonProperty]
         public List<Point>? Points { get; set; } = new List<Point>();
-        [JsonPropertyName("tags")]
-        public List<Tag>? Tags { get; init; } = new List<Tag>();
-        [JsonPropertyName("requiredTimes")]
-        public List<RequiredTime>? RequiredTimes { get; init; } = new List<RequiredTime>();
-        [JsonPropertyName("guide")]
-        public Guide Guide { get; init; }
-        [JsonPropertyName("length")]
-        public float? Length { get; init; }
-        [JsonPropertyName("publishTime")]
+        [NotMapped][JsonProperty]
+        public List<Tag>? Tags { get; private set; } = new List<Tag>();
+        [NotMapped][JsonProperty]
+        public List<RequiredTime>? RequiredTimes { get; private set; } = new List<RequiredTime>();
+        [NotMapped][JsonProperty]
+        public Guide Guide { get; private set; }
+        [NotMapped][JsonProperty]
+        public float? Length { get; private set; }
+        [NotMapped][JsonProperty]
         public DateTime? PublishTime { get; private set; }
-        [JsonPropertyName("arhiveTime")]
+        [NotMapped][JsonProperty]
         public DateTime? ArhiveTime { get; private set; }
 
+        public Tour() {}
+
         [JsonConstructor]
-        public Tour(long id, string name, string description, int difficult, TourStatus status, double price, Guide guide, float length, DateTime? publishTime, DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes)
+        public Tour(string name, string description, int difficult, TourStatus status, Guide guide, double price, float length, DateTime? publishTime,
+            DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes)
         {
-            Id = id;
             Name = name;
             Description = description;
             Difficult = difficult;
@@ -44,7 +52,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Points = points;
             Tags = tags;
             RequiredTimes = requiredTimes;
-            Guide = new Guide(guide.Id, guide.Name, guide.Surname, guide.Email);
+            Guide = guide;
             Length = length;
             PublishTime = publishTime;
             ArhiveTime = arhiveTime;
@@ -100,6 +108,50 @@ namespace Explorer.Tours.Core.Domain.Tours
                 }
             }
             return false;
+        }
+
+        public void PublishPoint(string pointName)
+        {
+            if (Points == null)
+            {
+                throw new InvalidOperationException("Points list is not initialized.");
+            }
+
+            Point pointToPublish = Points.FirstOrDefault(p => p.Name == pointName);
+
+            if (pointToPublish != null)
+            {
+                pointToPublish.Public = true;
+            }
+            else
+            {
+                throw new ArgumentException("Point with the specified name was not found.");
+            }
+        }
+
+        public override void ToJson()
+        {
+            JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ??
+                         throw new JsonSerializationException("Exception! Could not serialize object!");
+        }
+        public override void FromJson()
+        {
+            var tour = JsonConvert.DeserializeObject<Tour>(JsonObject ??
+                                                           throw new NullReferenceException(
+                                                               "Exception! No object to deserialize!")) ??
+                       throw new NullReferenceException("Exception! Blog is null!");
+            Name = tour.Name;
+            Description = tour.Description;
+            Difficult = tour.Difficult;
+            Status = tour.Status;
+            Price = tour.Price;
+            Points = tour.Points;
+            Tags = tour.Tags;
+            RequiredTimes = tour.RequiredTimes;
+            Length = tour.Length;
+            Guide = tour.Guide;
+            PublishTime = tour.PublishTime;
+            ArhiveTime = tour.ArhiveTime;
         }
     }
 }

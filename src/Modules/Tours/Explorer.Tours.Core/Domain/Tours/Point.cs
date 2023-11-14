@@ -5,25 +5,22 @@ namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Point : ValueObject
     {
-        [JsonPropertyName("Latitude")]
         public double Latitude { get; set; }
-        [JsonPropertyName("Longitude")]
         public double Longitude { get; set; }
-        [JsonPropertyName("Name")]
         public string Name { get; set; }
-        [JsonPropertyName("Description")]
         public string Description { get; set; }
-        [JsonPropertyName("Picture")]
         public string Picture { get; set; }
+        public bool Public { get; set; }
 
-        [JsonConstructor]
-        public Point(double latitude, double longitude, string name, string description, string picture)
+        [Newtonsoft.Json.JsonConstructor]
+        public Point(double latitude, double longitude, string name, string description, string picture, bool isPublic = false)
         {
             Latitude = latitude;
             Longitude = longitude;
             Name = name;
             Description = description;
             Picture = picture;
+            Public = isPublic;
             Validate();
         }
 
@@ -48,6 +45,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             yield return Name;
             yield return Description;
             yield return Picture;
+            yield return Public;
         }
     }
 }

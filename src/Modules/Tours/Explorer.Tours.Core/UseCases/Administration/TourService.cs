@@ -39,5 +39,12 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
             return searchResults;
         }
+        public Result<TourDto> PublishPoint(long id, string pointName)
+        {
+            var tourDb = CrudRepository.Get(id);
+            tourDb.PublishPoint(pointName);
+            CrudRepository.Update(tourDb);
+            return MapToDto(tourDb);
+        }
     }
 }
