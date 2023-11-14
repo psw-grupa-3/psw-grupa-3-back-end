@@ -54,6 +54,19 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.ArhiveTour(id));
         }
 
+        [HttpPost("rateTour/{tourId:int}")]
+        public ActionResult<TourReviewDto> RateTour([FromRoute] int tourId, [FromBody] TourReviewDto tourReview)
+        {
+            return CreateResponse(_tourService.RateTour(tourId, tourReview));
+        }
+
+        [HttpGet("averageRating/{tourId:int}")]
+        public ActionResult<double> GetAverageRating(int tourId)
+        {
+            return CreateResponse(_tourService.GetAverageRating(tourId));
+        }
+
+
         [AllowAnonymous]
         [HttpGet("searchByPointDistance")]
         public ActionResult<TourDto> SearchByPointDistance([FromQuery] double longitude, [FromQuery] double latitude, [FromQuery] int distance)
