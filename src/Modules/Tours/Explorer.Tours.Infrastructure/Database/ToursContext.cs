@@ -15,7 +15,6 @@ public class ToursContext : DbContext
     public DbSet<Preference> Preferences { get; set; }
     public DbSet<Tour> Tours { get; set; }
     public DbSet<DbEntity<Guide>> Guides { get; set; }
-    public DbSet<TourReview> TourReviews { get; set; }
     public DbSet<TouristPosition> TouristPositions { get; set; }
     public DbSet<EquipmentManagment> EquipmentManagements { get; set; }
     public DbSet<PublicRegistrationRequest> PublicRegistrationRequests { get; set; }
