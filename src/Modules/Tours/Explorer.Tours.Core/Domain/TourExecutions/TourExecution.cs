@@ -71,6 +71,44 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             Position = new Position(firsPoint.Latitude, firsPoint.Longitude, DateTime.MinValue);
         }
 
+
+        public double PercentageOfDone(TourExecution tourExecution)
+        {
+            if (tourExecution.Tasks == null || tourExecution.Tasks.Count == 0)
+            {
+                return 0.0; 
+            }
+
+            int totalTasks = tourExecution.Tasks.Count;
+            int completedTasks = tourExecution.Tasks.Count(task => task.Done);
+
+            double percentage = (double)completedTasks / totalTasks * 100.0;
+
+            return percentage;
+        }
+
+
+        public bool IsLastActivityWithinWeek(TourExecution tourExecution)
+        {
+            
+            if (tourExecution.Position == null)
+            {
+                return true;
+            }
+
+            
+            if (tourExecution.Position.LastActivity == null)
+            {
+                return true; 
+            }
+
+            TimeSpan timeDifference = DateTime.Now - tourExecution.Position.LastActivity;
+
+            
+            return timeDifference.TotalDays > 7.0;
+        }
+
+
         public override void ToJson()
         {
             JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ??
