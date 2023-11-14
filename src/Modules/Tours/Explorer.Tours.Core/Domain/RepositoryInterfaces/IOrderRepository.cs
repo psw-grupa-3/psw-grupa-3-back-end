@@ -7,6 +7,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
     public interface IOrderRepository : ICrudRepository<ShoppingCart>
     {
-        public Result<ShoppingCartDto> GetByUserId(int id);
+        Result<ShoppingCart> AddToCart(OrderItem orderItem, int userId);
+        Result<ShoppingCartDto>? GetByUserId(int id);
     }
 }
