@@ -12,10 +12,8 @@ public class ToursProfile : Profile
 {
     public ToursProfile()
     {
-        CreateMap<OrderItemDto, OrderItem>();
         CreateMap<ShoppingCartDto, ShoppingCart>()
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(itemDto => new OrderItem(itemDto.IdTour, itemDto.Name, itemDto.Price))));
-        CreateMap<OrderItem, OrderItemDto>();
         CreateMap<ShoppingCart, ShoppingCartDto>()
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(orderItem => new OrderItemDto { IdTour = orderItem.IdTour, Name = orderItem.Name, Price = orderItem.Price })));
 
@@ -34,5 +32,6 @@ public class ToursProfile : Profile
         CreateMap<TouristPositionDto, TouristPosition>().ReverseMap();
         CreateMap<PublicRegistrationRequestDto, PublicRegistrationRequest>().ReverseMap();
         CreateMap<TourPurchaseTokenDto, TourPurchaseToken>().ReverseMap();
+        CreateMap<OrderItemDto, OrderItem>().ReverseMap();
     }
 }

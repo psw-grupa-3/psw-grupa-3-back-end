@@ -38,16 +38,16 @@ namespace Explorer.API.Controllers.Shopping
             return CreateResponse(result);
         }
 
+        [HttpPost("addToCart")]
+        public ActionResult<ShoppingCartDto> AddToCart([FromBody] OrderItemDto orderItem, [FromQuery] int userId)
+        {
+            var result = _orderService.AddToCart(orderItem, userId);
+            return CreateResponse(result);
+        }
+
         [HttpPut]
         public ActionResult<ShoppingCartDto> Update([FromBody] ShoppingCartDto cart)
         {
-            var result = _orderService.Update(cart);
-            return CreateResponse(result);
-        }
-        [HttpPut("buy")]
-        public ActionResult<ShoppingCartDto> BuyUpdate([FromBody] ShoppingCartDto cart)
-        {
-            //u servisu treba implementirati funkciju koja isprazni korpu i napravi tokene
             var result = _orderService.Update(cart);
             return CreateResponse(result);
         }
