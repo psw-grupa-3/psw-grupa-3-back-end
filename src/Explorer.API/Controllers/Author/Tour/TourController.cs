@@ -22,6 +22,12 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.GetPaged(page, pageSize));
         }
 
+        [HttpGet("getAllPublic")]
+        public ActionResult<TourDto> GetAllPublic()
+        {
+            return CreateResponse(_tourService.GetAllPublic());
+        }
+
         [AllowAnonymous]
         [HttpPost]
         public ActionResult<TourDto> Create([FromBody] TourDto tour)

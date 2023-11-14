@@ -31,6 +31,23 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return MapToDto(tourDb);
         }
 
+        public Result<List<TourDto>> GetAllPublic()
+        {
+            var allTours = CrudRepository.GetPaged(0, 0).Results;
+            var toursWithPublicPoints = new List<TourDto>();
+
+            foreach(var tour in allTours)
+            {
+                var publicPoints = tour.Points.Where(point => point.Public).ToList();
+
+                var tourDto = MapToDto(tour);
+                tourDto.Points = publicPoints.Select(PointConverter.ToDto).ToList();    
+                toursWithPublicPoints.Add(tourDto);
+            }
+
+            return toursWithPublicPoints;
+        }
+
         public Result<List<TourDto>> SearchByPointDistance(double longitude, double latitude, int distance)
         {
             var searchResults = new List<TourDto>();

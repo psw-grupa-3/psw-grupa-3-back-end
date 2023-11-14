@@ -105,7 +105,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             var centerPoint = GeographyPoint.Create(latitude, longitude);
             foreach (var point in Points)
             {
-                if (centerPoint.Distance(GeographyPoint.Create(point.Latitude, point.Longitude)) / 1000 <= distance)
+                if (point.Public && centerPoint.Distance(GeographyPoint.Create(point.Latitude, point.Longitude)) / 1000 <= distance)
                 {
                     return true;     
                 }
@@ -160,7 +160,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             var tour = JsonConvert.DeserializeObject<Tour>(JsonObject ??
                                                            throw new NullReferenceException(
                                                                "Exception! No object to deserialize!")) ??
-                       throw new NullReferenceException("Exception! Blog is null!");
+                       throw new NullReferenceException("Exception! Tour is null!");
             Name = tour.Name;
             Description = tour.Description;
             Difficult = tour.Difficult;
