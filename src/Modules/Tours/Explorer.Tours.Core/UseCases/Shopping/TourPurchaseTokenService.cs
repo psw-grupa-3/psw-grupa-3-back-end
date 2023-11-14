@@ -25,5 +25,10 @@ namespace Explorer.Tours.Core.UseCases.Shopping
         {
             return MapToDto(_tourPurchaseRepository.PurchaseItemsFromCart(shoppingCart));
         }
+
+        public Result<List<TourPurchaseTokenDto>> GetAllForUser(int userId)
+        {
+            return MapToDto(_tourPurchaseRepository.GetAllForUser(userId));
+        }
     }
 }
