@@ -10,6 +10,7 @@ namespace Explorer.Tours.Core.Domain.RepositoryInterfaces
 {
     public interface ITourPurchaseTokenRepository
     {
+        Result<List<TourPurchaseToken>> GetAllForUser(int userId);
         Result<List<TourPurchaseToken>> PurchaseItemsFromCart(ShoppingCartDto shoppingCart);
     }
 }

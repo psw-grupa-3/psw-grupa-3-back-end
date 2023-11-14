@@ -28,7 +28,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             var retVal = new List<TourPurchaseToken>();
             foreach(var item in shoppingCart.Items)
             {
-                var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdTour, DateTime.Now.ToUniversalTime());
+                var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdTour, DateTime.Now.ToUniversalTime(), item.Name);
                 _dbSet.Add(token);
                 retVal.Add(token);
             }
@@ -36,5 +36,12 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return retVal;
         }
+
+        public Result<List<TourPurchaseToken>> GetAllForUser(int userId)
+        {
+            var usersTokens = _dbSet.Where(x => x.UserId == userId).ToList();
+            return usersTokens;
+        }
+
     }
 }

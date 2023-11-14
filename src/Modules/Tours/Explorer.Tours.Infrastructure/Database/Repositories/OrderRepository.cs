@@ -49,7 +49,8 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 {
                     IdTour = item.IdTour,
                     Name = item.Name,
-                    Price = item.Price
+                    Price = item.Price,
+                    Image = item.Image,
                 };
                 list.Add(itemDto);
             }

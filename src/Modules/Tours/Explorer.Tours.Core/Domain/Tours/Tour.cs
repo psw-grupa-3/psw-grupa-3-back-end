@@ -31,8 +31,8 @@ namespace Explorer.Tours.Core.Domain.Tours
         public List<RequiredTime>? RequiredTimes { get; private set; } = new List<RequiredTime>();
         [NotMapped][JsonProperty]
         public List<TourReview>? Reviews { get; set; } = new List<TourReview>();
-        [NotMapped][JsonProperty]
-        public Guide Guide { get; private set; }
+        /*[NotMapped][JsonProperty]
+        public Guide Guide { get; private set; }*/
         [NotMapped][JsonProperty]
         public float? Length { get; private set; }
         [NotMapped][JsonProperty]
@@ -55,7 +55,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Tags = tags;
             RequiredTimes = requiredTimes;
             Reviews = reviews;
-            Guide = guide;
+            //Guide = guide;
             Length = length;
             PublishTime = publishTime;
             ArhiveTime = arhiveTime;
@@ -98,14 +98,25 @@ namespace Explorer.Tours.Core.Domain.Tours
             throw new ArgumentException("Tour needs to be published first!");
         }
 
+        public double GetDistance(double longitude, double latitude, double otherLongitude, double otherLatitude)
+        {
+            var d1 = latitude * (Math.PI / 180.0);
+            var num1 = longitude * (Math.PI / 180.0);
+            var d2 = otherLatitude * (Math.PI / 180.0);
+            var num2 = otherLongitude * (Math.PI / 180.0) - num1;
+            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
+
+            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
+        }
+
         public bool HasPointsWithinDistance(double longitude, double latitude, int distance)
         {
             if (Status != TourStatus.Published || Points == null) return false;
 
-            var centerPoint = GeographyPoint.Create(latitude, longitude);
             foreach (var point in Points)
             {
-                if (point.Public && centerPoint.Distance(GeographyPoint.Create(point.Latitude, point.Longitude)) / 1000 <= distance)
+                var actualDistance = GetDistance(longitude, latitude, point.Longitude, point.Latitude);
+                if (point.Public && actualDistance / 1000 <= distance)
                 {
                     return true;     
                 }
@@ -171,7 +182,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             RequiredTimes = tour.RequiredTimes;
             Length = tour.Length;
             Reviews = tour.Reviews;
-            Guide = tour.Guide;
+            //Guide = tour.Guide;
             PublishTime = tour.PublishTime;
             ArhiveTime = tour.ArhiveTime;
         }

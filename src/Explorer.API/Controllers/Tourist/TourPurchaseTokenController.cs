@@ -28,9 +28,16 @@ namespace Explorer.API.Controllers.Tourist
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult<PagedResult<TourPurchaseToken>> GetPaged([FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<PagedResult<TourPurchaseTokenDto>> GetPaged([FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _tokenService.GetPaged(page, pageSize);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("{userId:int}")]
+        public ActionResult<List<TourPurchaseTokenDto>> GetAllForUser(int userId)
+        {
+            var result = _tokenService.GetAllForUser(userId);
             return CreateResponse(result);
         }
     }
