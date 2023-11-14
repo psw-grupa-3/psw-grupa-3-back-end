@@ -12,7 +12,7 @@ namespace Explorer.Tours.API.Dtos.Tours
         public string Category { get; set; }
         public bool Priority { get; set; }
         public string Description { get; set; }
-        public DateTime Time { get; set; }
+        public DateTime? Time { get; set; }
         public long TourId { get; set; }
         public int TouristId { get; set; }
         public string AuthorsSolution { get; set; }
@@ -20,4 +20,7 @@ namespace Explorer.Tours.API.Dtos.Tours
         public string UnsolvedProblemComment { get; set; }
         public DateTime Deadline { get; set; }
     }
-}
+
+        
+    }
+

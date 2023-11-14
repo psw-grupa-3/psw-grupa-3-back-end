@@ -20,7 +20,10 @@ namespace Explorer.Tours.Core.Domain.Tours
         [JsonPropertyName("description")]
         public string Description { get; init; }
         [JsonPropertyName("time")]
-        public DateTime Time { get; init; } = DateTime.Now;
+
+
+        public DateTime? Time { get; init; } = DateTime.Now;
+
         [JsonPropertyName("tourId")]
         public long TourId { get; init; }
         [JsonPropertyName("touristId")]
@@ -28,17 +31,21 @@ namespace Explorer.Tours.Core.Domain.Tours
         [JsonPropertyName("authorsSolution")]
         public string AuthorsSolution { get; private set; }
         [JsonPropertyName("isSolved")]
-        public bool IsSolved { get; private set; }
+        public bool IsSolved { get;set; }
         [JsonPropertyName("unsolvedProblemComment")]
         public string UnsolvedProblemComment { get; private set; }
         [JsonPropertyName("deadline")]
-        public DateTime Deadline { get; private set; }
+
+        public DateTime Deadline { get; set; }
+
         public Problem()
         {
         }
 
         [JsonConstructor]
-        public Problem(long id, string category, bool priority, string description, DateTime time, long tourId, int touristId, string authorsSolution, bool isSolved, string unsolvedProblemComment, DateTime deadline)
+
+        public Problem(long id, string category, bool priority, string description, DateTime? time, long tourId, int touristId, string authorsSolution, bool isSolved, string unsolvedProblemComment, DateTime deadline)
+
         {
             Id = id;
             if (string.IsNullOrWhiteSpace(category)) throw new ArgumentException("Invalid category.");
@@ -78,5 +85,16 @@ namespace Explorer.Tours.Core.Domain.Tours
         {
             IsSolved = true;
         }
+
+        public void SetDeadline(DateTime deadline)
+        {
+            Deadline = deadline;
+        }
+        public bool IsDeadlineExpired()
+        {
+            return !IsSolved && Deadline < DateTime.Now;
+        }
+
+
     }
 }

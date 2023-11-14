@@ -6,7 +6,7 @@ namespace Explorer.Tours.API.Public.Administration
 {
     public interface ITourService
     {
-        Result<PagedResult<TourDto>> GetPaged(int page,  int pageSize);
+        Result<PagedResult<TourDto>> GetPaged(int page, int pageSize);
         Result<TourDto> Create(TourDto dataIn);
         Result<TourDto> Update(TourDto dataIn);
         Result Delete(int id);
@@ -17,10 +17,17 @@ namespace Explorer.Tours.API.Public.Administration
         //Result<TourDto> RespondToProblem(Problem problem);
         //Result<TourDto> UpdateProblem(ProblemDto problem, );
         Result<TourDto> PublishPoint(long id, string pointName);
+
         Result<TourDto> RateTour(int tourId, TourReviewDto review);
         Result<double> GetAverageRating(int tourId);
         Result<TourDto> Get(int id);
         Result<TourDto> GetById(long id);
         Result<List<TourDto>> GetAllPublic();
+
+      
+        //Result<TourDto> RespondToProblem(Problem problem);
+        //Result<TourDto> UpdateProblem(ProblemDto problem, );
+
+
     }
 }

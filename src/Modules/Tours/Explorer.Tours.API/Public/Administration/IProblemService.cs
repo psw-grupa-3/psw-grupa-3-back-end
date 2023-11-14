@@ -20,5 +20,7 @@ namespace Explorer.Tours.API.Public.Administration
         object ProblemIsSolved(long id);
         object GetProblemById(long id);
         object GetToursProblems(long id);
+        object SetProblemDeadline(long id, DateTime newDeadline);
+        Result<ProblemDto> DeleteProblem(long Id);
     }
 }

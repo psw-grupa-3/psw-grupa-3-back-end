@@ -36,7 +36,8 @@ namespace Explorer.Tours.Core.Converters
         public static Problem ToDomain(this ProblemDto problemDto)
         {
             return problemDto == null ? null :
-                new Problem(problemDto.Id, problemDto.Category, problemDto.Priority, problemDto.Description, problemDto.Time, problemDto.TourId, problemDto.TouristId, problemDto.AuthorsSolution, problemDto.IsSolved, problemDto.UnsolvedProblemComment, problemDto.Deadline);
+                new Problem(problemDto.Id, problemDto.Category, problemDto.Priority, problemDto.Description, problemDto.Time, 
+                problemDto.TourId, problemDto.TouristId, problemDto.AuthorsSolution, problemDto.IsSolved, problemDto.UnsolvedProblemComment, problemDto.Deadline);
         }
     }
 }

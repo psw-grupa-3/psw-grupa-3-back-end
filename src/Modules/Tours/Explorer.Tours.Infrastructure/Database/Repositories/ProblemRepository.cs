@@ -1,3 +1,4 @@
+
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.Core.Domain;
@@ -17,6 +18,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+﻿using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Tours.API.Dtos.Tours;
+using Explorer.Tours.Core.Converters;
+using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.Tours;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Globalization;
+
+
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
     public class ProblemRepository : CrudDatabaseRepository<Problem, ToursContext>, IProblemRepository
@@ -30,17 +41,21 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbSet = DbContext.Set<DbEntity<Problem>>();
         }
 
+
         public ProblemDto GetProblemById(long id)
         {
+            var dbProblem = _context.Problems.FirstOrDefault(p => p.Id == id);
 
-            var dbProblems = _context.Problems.ToList();
-            var p = dbProblems.Find(p => p.Id == id);
-            var problem = ExtractProblem(p.JsonObject);
-            var problemDto = ProblemConverter.ToDto(problem);
-            problemDto.Id = p.Id;
-            
-            return problemDto;
+            if (dbProblem != null)
+            {
+                var problemDto = JsonConvert.DeserializeObject<ProblemDto>(dbProblem.JsonObject);
+                problemDto.Id = dbProblem.Id;
+                return problemDto;
+            }
+
+            return null; // Vraćanje null ako ne pronađemo problem
         }
+
         public static Problem ExtractProblem(string jsonString)
         {
             jsonString = jsonString.Trim();
@@ -90,6 +105,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return problem;
         }
 
+
         private static DateTime ParseDateTime(string dateTimeString)
         {
             if (DateTime.TryParse(dateTimeString, out DateTime result))
@@ -104,6 +120,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public int GetProblemCount()
         {
+
             var problems = _context.Problems.ToList();
             var last = problems.LastOrDefault();
             if( last == null)
@@ -114,6 +131,9 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             {
                 return (int)last.Id;
             }
+
+            return _dbSet.Count();
+
         }
         public List<ProblemDto> GetUnresolvedProblemsWithDeadline(List<ProblemDto> problems)
         {
@@ -131,6 +151,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 var problem = JsonConvert.DeserializeObject<Problem>(dbProblem.JsonObject);
                 var dto = ProblemConverter.ToDto(problem);
                 dto.Id = dbProblem.Id;
+
                 problemDtos.Add(dto);
             }
 
@@ -148,6 +169,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 var problem = ExtractProblem(dbProblem.JsonObject);
                 var dto = ProblemConverter.ToDto(problem);
                 dto.Id = dbProblem.Id;
+
                 problemDtos.Add(dto);
             }
 
@@ -158,6 +180,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             _context.SaveChanges();
         }
+
 
         public object GetToursProblems(long tourId)
         {
@@ -174,5 +197,30 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return problemDtos;
         }
+    
+
+
+        public TourDto TourFromProblem(ProblemDto problem)
+        {
+            var associatedTour = _context.Tours.FirstOrDefault(t => t.Id == problem.TourId);
+
+            if (associatedTour != null)
+            {
+                var tourDto = JsonConvert.DeserializeObject<TourDto>(associatedTour.JsonObject);
+                // Ako je potrebno dodatno mapiranje ili manipulacija podacima, obavite to ovde
+
+                _context.Tours.Remove(associatedTour);
+                _context.SaveChanges();
+
+                return tourDto;
+            }
+
+            return null; // Vrati null ukoliko tura nije pronađena
+        }
+
+
+
+
     }
 }
+

@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.API.Public;
 
+
 namespace Explorer.API.Controllers.Tourist
 {
     [Route("api/tourist/problem")]
@@ -21,14 +22,18 @@ namespace Explorer.API.Controllers.Tourist
         private readonly IProblemService _problemService;
         private readonly ITourService _tourService;
         private readonly IProblemRepository _problemRepository;
+
         private readonly IUserNotificationService _userNotificationService;
 
         public ProblemController(IProblemService problemService, ITourService tourService, IProblemRepository problemRepository, IUserNotificationService userNotificationService)
+
         {
             _problemService = problemService;
             _tourService = tourService;
             _problemRepository = problemRepository;
+
             _userNotificationService = userNotificationService;
+
         }
         [HttpPost]
         public ActionResult<ProblemDto> Create([FromBody] ProblemDto problem)
@@ -41,7 +46,12 @@ namespace Explorer.API.Controllers.Tourist
         {
 
             int count = _problemRepository.GetProblemCount();
+
             problem.Id = (long)count+1;
+
+            problem.Id = (long)count + 1;
+            problem.Deadline = DateTime.Now.AddDays(5);
+
             var result = _problemService.Create(problem);
             var result2 = _tourService.AddProblem(problem.TourId, problem);
             return CreateResponse(result);
@@ -53,7 +63,10 @@ namespace Explorer.API.Controllers.Tourist
             return Ok(result);
         }
         [HttpPatch("solveProblem/{id}")]
+
         public ActionResult<PagedResult<ProblemDto>> SolveProblem(long id)
+        
+
         {
             var result = _problemService.ProblemIsSolved(id);
             return Ok(result);
@@ -64,6 +77,7 @@ namespace Explorer.API.Controllers.Tourist
             var result = _problemService.GetProblemById(id);
             return Ok(result);
         }
+
         [HttpGet("getAll")]
         public ActionResult<PagedResult<ProblemDto>> GetAll()
         {
@@ -80,3 +94,4 @@ namespace Explorer.API.Controllers.Tourist
     }
 
 }
+

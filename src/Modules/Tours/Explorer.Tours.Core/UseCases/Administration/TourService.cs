@@ -13,12 +13,12 @@ using System.Xml.Linq;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
-    public class TourService : CrudService<TourDto,Tour>, ITourService
+    public class TourService : CrudService<TourDto, Tour>, ITourService
     {
 
         private readonly IProblemRepository _problemRepository;
         private readonly ICrudRepository<TourExecution> _tourExecutionRepository;
-        public TourService(ICrudRepository<Tour> repository, IProblemRepository problemRepository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
+        public TourService(ICrudRepository<Tour> repository, IProblemRepository problemRepository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper)
         {
             _tourExecutionRepository = tourExecutionRepository;
             _problemRepository = problemRepository;
@@ -40,7 +40,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return MapToDto(tourDb);
         }
 
-        public Result<TourDto> AddProblem(long tourId,ProblemDto problem)
+        public Result<TourDto> AddProblem(long tourId, ProblemDto problem)
         {
             var tour = CrudRepository.Get(tourId);
             if (tour is null)
@@ -76,12 +76,12 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var allTours = CrudRepository.GetPaged(0, 0).Results;
             var toursWithPublicPoints = new List<TourDto>();
 
-            foreach(var tour in allTours)
+            foreach (var tour in allTours)
             {
                 var publicPoints = tour.Points.Where(point => point.Public).ToList();
 
                 var tourDto = MapToDto(tour);
-                tourDto.Points = publicPoints.Select(PointConverter.ToDto).ToList();    
+                tourDto.Points = publicPoints.Select(PointConverter.ToDto).ToList();
                 toursWithPublicPoints.Add(tourDto);
             }
 
@@ -104,8 +104,8 @@ namespace Explorer.Tours.Core.UseCases.Administration
             CrudRepository.Update(tourDb);
             return MapToDto(tourDb);
         }
-    
-          
+
+
         public Result<TourDto> RateTour(int tourId, TourReviewDto review)
         {
             var tourReview = TourReviewConverter.ToDomain(review);
@@ -119,14 +119,16 @@ namespace Explorer.Tours.Core.UseCases.Administration
             if (tourExecution == null) return Result.Fail("You must start the tour.");
 
             double percentageOfDone = tourExecution.PercentageOfDone(tourExecution);
-            bool isLastActivityBad=tourExecution.IsLastActivityWithinWeek(tourExecution);
-            if (percentageOfDone > 35.0 && !isLastActivityBad )
+            bool isLastActivityBad = tourExecution.IsLastActivityWithinWeek(tourExecution);
+            if (percentageOfDone > 35.0 && !isLastActivityBad)
             {
-                if (!hasReviewWithUserId) {
+                if (!hasReviewWithUserId)
+                {
                     tour.Reviews.Add(tourReview);
                     CrudRepository.Update(tour);
 
-                    return MapToDto(tour); }
+                    return MapToDto(tour);
+                }
                 else return Result.Fail("You already gave a review.");
             }
 

@@ -26,6 +26,8 @@ public class ToursContext : DbContext
     public DbSet<TourExecution> TourExecutions { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("tours");
@@ -51,6 +53,9 @@ public class ToursContext : DbContext
 
         modelBuilder.Entity<DbEntity<Problem>>().ToTable("Problems");
         modelBuilder.Entity<DbEntity<Problem>>()
+
             .Property(item => item.JsonObject).HasColumnType("jsonb"); 
+
+
     }
 }

@@ -1,5 +1,6 @@
 using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Users;
+using Explorer.Tours.API.Dtos.Tours;
 using Microsoft.Spatial;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -41,9 +42,12 @@ namespace Explorer.Tours.Core.Domain.Tours
         public DateTime? PublishTime { get; private set; }
         [NotMapped][JsonProperty]
         public DateTime? ArhiveTime { get; private set; }
+
         [NotMapped]
         [JsonProperty]
         public List<Problem>? Problems { get; private set; } = new List<Problem>();
+
+
 
         public Tour() {}
 
@@ -96,7 +100,7 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public void ArhiveTour()
         {
-            if(Status == TourStatus.Published)
+            if (Status == TourStatus.Published)
             {
                 Status = TourStatus.Archived;
                 ArhiveTime = DateTime.Now;
@@ -125,7 +129,7 @@ namespace Explorer.Tours.Core.Domain.Tours
                 var actualDistance = GetDistance(longitude, latitude, point.Longitude, point.Latitude);
                 if (point.Public && actualDistance / 1000 <= distance)
                 {
-                    return true;     
+                    return true;
                 }
             }
             return false;
@@ -195,5 +199,30 @@ namespace Explorer.Tours.Core.Domain.Tours
             ArhiveTime = tour.ArhiveTime;
             Problems = tour.Problems;
         }
+
+        public void RespondToProblem(Problem problem)
+        {
+            Problem currentProblem = Problems.Find(p => p.TourId == problem.TourId);
+            UpdateProblem(problem, currentProblem);
+        }
+        public void UpdateProblem(Problem problem, Problem currentProblem)
+        {
+            /* if (currentProblem == null)
+             {
+                 //Problems.Add(problem); treba da bdue greska
+             }
+             else
+             {
+                 currentProblem.UpdateProblem(problem);
+             }*/
+        }
+
+        public void AddNewProblem(ProblemDto problem)
+        {
+            //Problem newProblem = new(problem.Category, problem.Priority, problem.Description, problem.Time, problem.TourId, problem.TouristId, problem.IsSolved, problem.UnsolvedProblemComment, problem.Deadline);
+            //Problems.Add());
+
+        }
+
     }
 }

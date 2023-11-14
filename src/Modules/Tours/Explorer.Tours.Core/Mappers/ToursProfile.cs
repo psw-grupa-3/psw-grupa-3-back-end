@@ -16,7 +16,7 @@ public class ToursProfile : Profile
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(itemDto => new OrderItem(itemDto.IdTour, itemDto.Name, itemDto.Price, itemDto.Image))));
         CreateMap<ShoppingCart, ShoppingCartDto>()
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(orderItem => new OrderItemDto { IdTour = orderItem.IdTour, Name = orderItem.Name, Price = orderItem.Price, Image = orderItem.Image })));
-        CreateMap<TourPurchaseToken, TourPurchaseTokenDto>().ForMember(dest => dest.PurchaseTime, opt =>  opt.MapFrom(src => src.PurchaseTime.ToShortDateString()));
+        CreateMap<TourPurchaseToken, TourPurchaseTokenDto>().ForMember(dest => dest.PurchaseTime, opt => opt.MapFrom(src => src.PurchaseTime.ToShortDateString()));
 
         CreateMap<EquipmentDto, Equipment>().ReverseMap();
         CreateMap<ProblemDto, Problem>().ReverseMap();
