@@ -47,9 +47,11 @@ namespace Explorer.API.Controllers.Tourist
 
             int count = _problemRepository.GetProblemCount();
 
+
             problem.Id = (long)count+1;
 
             problem.Id = (long)count + 1;
+
             problem.Deadline = DateTime.Now.AddDays(5);
 
             var result = _problemService.Create(problem);

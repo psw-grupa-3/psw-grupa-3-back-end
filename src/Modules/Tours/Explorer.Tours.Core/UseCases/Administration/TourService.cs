@@ -2,9 +2,11 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.Core.Domain.Users;
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.Users;
 using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Core.Converters;
+using Explorer.Tours.Core.Domain.Order;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Domain.Tours;
@@ -51,6 +53,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
 
                 var currentProblem = ProblemConverter.ToDomain(problem);
+
                 tour.Problems.Add(currentProblem);
                 CrudRepository.Update(tour);
 

@@ -153,10 +153,8 @@ namespace Explorer.Tours.Core.UseCases.Administration
             problem.SetDeadline(newDeadline);
             CrudRepository.Update(problem);
             _problemRepository.SaveChanges(problem);
+           return  MapToDto(problem);
 
-            problemDto = ProblemConverter.ToDto(problem);
-            problemDto.Id = problem.Id;
-            return problemDto;
         }
 
 

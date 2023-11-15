@@ -26,6 +26,7 @@ using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Globalization;
+using System.Text.Json.Nodes;
 
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
@@ -44,17 +45,23 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public ProblemDto GetProblemById(long id)
         {
-            var dbProblem = _context.Problems.FirstOrDefault(p => p.Id == id);
+            var dbProblem = _dbSet.Find(id);
 
             if (dbProblem != null)
             {
-                var problemDto = JsonConvert.DeserializeObject<ProblemDto>(dbProblem.JsonObject);
-                problemDto.Id = dbProblem.Id;
-                return problemDto;
+                string json = dbProblem.JsonObject; // pretpostavka da je svojstvo JsonObject u dbProblem
+                Problem problem = JsonConvert.DeserializeObject<Problem>(json);
+                ProblemDto dto= problem.ToDto();
+                return dto;
             }
 
-            return null; // Vraćanje null ako ne pronađemo problem
+            return null;
         }
+     
+
+
+
+
 
         public static Problem ExtractProblem(string jsonString)
         {
@@ -151,6 +158,8 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 var problem = JsonConvert.DeserializeObject<Problem>(dbProblem.JsonObject);
                 var dto = ProblemConverter.ToDto(problem);
                 dto.Id = dbProblem.Id;
+               
+
 
                 problemDtos.Add(dto);
             }
@@ -217,7 +226,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return null; // Vrati null ukoliko tura nije pronađena
         }
-
 
 
 

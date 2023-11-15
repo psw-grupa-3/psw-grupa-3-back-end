@@ -1,6 +1,5 @@
 using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Users;
-using Explorer.Tours.API.Dtos.Tours;
 using Microsoft.Spatial;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,33 +13,49 @@ namespace Explorer.Tours.Core.Domain.Tours
     [JsonObject(MemberSerialization.OptIn)]
     public class Tour : JsonEntity
     {
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public string Name { get; private set; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public string Description { get; private set; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public int Difficult { get; private set; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public TourStatus Status { get; private set; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public double Price { get; private set; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public List<Point>? Points { get; set; } = new List<Point>();
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public List<Tag>? Tags { get; private set; } = new List<Tag>();
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public List<RequiredTime>? RequiredTimes { get; private set; } = new List<RequiredTime>();
+
         [NotMapped][JsonProperty]
         public List<TourReview>? Reviews { get; set; } = new List<TourReview>();
         /*[NotMapped][JsonProperty]
         public Guide Guide { get; private set; }*/
         [NotMapped][JsonProperty]
         public int AuthorId { get; private set; }
-        [NotMapped][JsonProperty]
+
+        [NotMapped]
+        [JsonProperty]
+        public Guide Guide { get; private set; }
+        [NotMapped]
+        [JsonProperty]
         public float? Length { get; private set; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public DateTime? PublishTime { get; private set; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public DateTime? ArhiveTime { get; private set; }
 
         [NotMapped]
@@ -54,6 +69,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         [JsonConstructor]
         public Tour(string name, string description, int difficult, TourStatus status, Guide guide, double price, float length, DateTime? publishTime,
             DateTime? arhiveTime, int authorId, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews, List<Problem>? problems)
+
         {
             Name = name;
             Description = description;
@@ -71,7 +87,10 @@ namespace Explorer.Tours.Core.Domain.Tours
             ArhiveTime = arhiveTime;
             Problems = problems;
             Validate();
+            Problems = problems;
         }
+
+
 
         private void Validate()
         {
@@ -199,30 +218,8 @@ namespace Explorer.Tours.Core.Domain.Tours
             ArhiveTime = tour.ArhiveTime;
             Problems = tour.Problems;
         }
+        
 
-        public void RespondToProblem(Problem problem)
-        {
-            Problem currentProblem = Problems.Find(p => p.TourId == problem.TourId);
-            UpdateProblem(problem, currentProblem);
-        }
-        public void UpdateProblem(Problem problem, Problem currentProblem)
-        {
-            /* if (currentProblem == null)
-             {
-                 //Problems.Add(problem); treba da bdue greska
-             }
-             else
-             {
-                 currentProblem.UpdateProblem(problem);
-             }*/
-        }
-
-        public void AddNewProblem(ProblemDto problem)
-        {
-            //Problem newProblem = new(problem.Category, problem.Priority, problem.Description, problem.Time, problem.TourId, problem.TouristId, problem.IsSolved, problem.UnsolvedProblemComment, problem.Deadline);
-            //Problems.Add());
-
-        }
 
     }
 }

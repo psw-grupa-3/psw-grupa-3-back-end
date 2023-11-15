@@ -57,17 +57,13 @@ namespace Explorer.API.Controllers.Administrator.Administration
 
             return Ok(result);
         }
-        [HttpDelete("{id}/delete")]
-        public IActionResult DeleteProblemOrTour(long id)
+       
+
+            [HttpDelete("{id}/delete")]
+        public ActionResult DeleteProblemOrTour(long id)
         {
             var result = _problemService.DeleteProblem(id);
-
-            if (result.IsSuccess)
-            {
-                return Ok("Problem or Tour successfully deleted.");
-            }
-
-            return BadRequest("Failed to delete Problem or Tour.");
+            return CreateResponse(result);
         }
 
     }

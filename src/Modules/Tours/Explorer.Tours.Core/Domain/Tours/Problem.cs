@@ -31,6 +31,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         [JsonPropertyName("authorsSolution")]
         public string AuthorsSolution { get; private set; }
         [JsonPropertyName("isSolved")]
+
         public bool IsSolved { get;set; }
         [JsonPropertyName("unsolvedProblemComment")]
         public string UnsolvedProblemComment { get; private set; }
