@@ -81,6 +81,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var sortedTourExecutions = _tourExecutionRepository.GetPaged(0, 0).Results.Where(te => te.TourId == tourId).OrderByDescending(te => te.Id).ToList();
 
             TourExecution tourExecution = sortedTourExecutions.FirstOrDefault();
+            if (tourExecution == null) return Result.Fail("You must start the tour.");
 
             double percentageOfDone = tourExecution.PercentageOfDone(tourExecution);
             bool isLastActivityBad=tourExecution.IsLastActivityWithinWeek(tourExecution);
