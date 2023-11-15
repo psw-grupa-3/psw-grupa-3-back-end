@@ -104,7 +104,9 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public int GetProblemCount()
         {
-            return _dbSet.Count();
+            var problems = _context.Problems.ToList();
+            var last = problems.LastOrDefault();
+            return (int)last.Id;
         }
         public List<ProblemDto> GetUnresolvedProblemsWithDeadline(List<ProblemDto> problems)
         {
@@ -129,10 +131,41 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 .Where(problem => !problem.IsSolved && problem.Deadline < problem.Time)
                 .ToList(); return problemDtos;
         }
+        public List<ProblemDto> GetAll()
+        {
+            var dbProblems = _context.Problems.ToList();
+            List<ProblemDto> problemDtos = new List<ProblemDto>();
+
+            foreach (var dbProblem in dbProblems)
+            {
+                var problem = ExtractProblem(dbProblem.JsonObject);
+                var dto = ProblemConverter.ToDto(problem);
+                dto.Id = dbProblem.Id;
+                problemDtos.Add(dto);
+            }
+
+            return problemDtos;
+        }
 
         public void SaveChanges(Problem problem)
         {
             _context.SaveChanges();
+        }
+
+        public object GetToursProblems(long tourId)
+        {
+            var dbProblems = GetAll();
+            List<ProblemDto> problemDtos = new List<ProblemDto>();
+
+            foreach (var dbProblem in dbProblems)
+            {
+                if(tourId == dbProblem.TourId)
+                {
+                    problemDtos.Add(dbProblem);
+                }
+            }
+
+            return problemDtos;
         }
     }
 }

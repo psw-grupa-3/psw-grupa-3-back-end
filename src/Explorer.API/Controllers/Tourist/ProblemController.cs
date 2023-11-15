@@ -9,22 +9,26 @@ using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.Tours;
 using Newtonsoft.Json;
 using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Stakeholders.API.Public;
 
 namespace Explorer.API.Controllers.Tourist
 {
     [Route("api/tourist/problem")]
-    //[Authorize(Policy = "touristPolicy")]
+    [Authorize(Policy = "touristPolicy")]
 
     public class ProblemController : BaseApiController
     {
         private readonly IProblemService _problemService;
         private readonly ITourService _tourService;
         private readonly IProblemRepository _problemRepository;
-        public ProblemController(IProblemService problemService, ITourService tourService, IProblemRepository problemRepository)
+        private readonly IUserNotificationService _userNotificationService;
+
+        public ProblemController(IProblemService problemService, ITourService tourService, IProblemRepository problemRepository, IUserNotificationService userNotificationService)
         {
             _problemService = problemService;
             _tourService = tourService;
             _problemRepository = problemRepository;
+            _userNotificationService = userNotificationService;
         }
         [HttpPost]
         public ActionResult<ProblemDto> Create([FromBody] ProblemDto problem)
@@ -49,7 +53,7 @@ namespace Explorer.API.Controllers.Tourist
             return Ok(result);
         }
         [HttpPatch("solveProblem/{id}")]
-        public ActionResult<PagedResult<ProblemDto>> ProblemNotSolved(long id)
+        public ActionResult<PagedResult<ProblemDto>> SolveProblem(long id)
         {
             var result = _problemService.ProblemIsSolved(id);
             return Ok(result);
@@ -59,6 +63,19 @@ namespace Explorer.API.Controllers.Tourist
         {
             var result = _problemService.GetProblemById(id);
             return Ok(result);
+        }
+        [HttpGet("getAll")]
+        public ActionResult<PagedResult<ProblemDto>> GetAll()
+        {
+            var result = _problemService.GetAll();
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+            else
+            {
+                return BadRequest("Failed to retrieve problems.");
+            }
         }
     }
     

@@ -1,4 +1,8 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
+using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain.Users;
+using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.API.Public.Administration;
 using Microsoft.AspNetCore.Authorization;
@@ -7,13 +11,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace Explorer.API.Controllers.Author.Tour
 {
     [Route("api/author/problems")]
-    //[Authorize(Policy = "authorPolicy")]
+    [Authorize(Policy = "authorPolicy")]
     public class ProblemController : BaseApiController
     {
         private readonly IProblemService _problemService;
-        public ProblemController(IProblemService problemService)
+        private readonly IUserNotificationService _userNotificationService;
+        public ProblemController(IProblemService problemService, IUserNotificationService userNotificationService)
         {
             _problemService = problemService;
+            _userNotificationService = userNotificationService;
         }
 
         [HttpGet("getAll")]
@@ -34,7 +40,17 @@ namespace Explorer.API.Controllers.Author.Tour
         public ActionResult<PagedResult<ProblemDto>> RespondToProblem(long id, string response)
         {
             var result = _problemService.RespondToProblem(id, response);
+            var problem = result.Value;
+            return Ok(result);
+        }
+        
+        [HttpGet("getToursProblems/{id}")]
+        public ActionResult<PagedResult<ProblemDto>> GetToursProblems(long id)
+        {
+            var result = _problemService.GetToursProblems(id);
+
             return Ok(result);
         }
     }
 }
+

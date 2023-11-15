@@ -19,5 +19,6 @@ namespace Explorer.Tours.API.Public.Administration
         object ProblemNotSolved(long id, string comment);
         object ProblemIsSolved(long id);
         object GetProblemById(long id);
+        object GetToursProblems(long id);
     }
 }
