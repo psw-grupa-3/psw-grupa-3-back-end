@@ -15,8 +15,10 @@ namespace Explorer.Tours.API.Dtos.Tours
         public List<RequiredTimeDto>? RequiredTimes { get; set; }
         public List<TourReviewDto>? Reviews { get; set; }
         public GuideDto Guide { get; set; }
+        public int AuthorId { get; set; }
         public float? Length { get; set; }
         public DateTime? PublishTime { get; set; }
         public DateTime? ArhiveTime { get; set; }
+        public List<ProblemDto>? Problems { get; set; }
     }
 }

@@ -13,10 +13,14 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> PublishTour(long id);
         Result<TourDto> ArhiveTour(long id);
         Result<List<TourDto>> SearchByPointDistance(double longitude, double latitude, int distance);
+        Result<TourDto> AddProblem(long tourId,ProblemDto problem);
+        //Result<TourDto> RespondToProblem(Problem problem);
+        //Result<TourDto> UpdateProblem(ProblemDto problem, );
         Result<TourDto> PublishPoint(long id, string pointName);
         Result<TourDto> RateTour(int tourId, TourReviewDto review);
         Result<double> GetAverageRating(int tourId);
         Result<TourDto> Get(int id);
+        Result<TourDto> GetById(long id);
         Result<List<TourDto>> GetAllPublic();
     }
 }
