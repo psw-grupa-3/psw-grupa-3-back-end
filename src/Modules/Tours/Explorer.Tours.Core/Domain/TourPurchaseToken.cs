@@ -17,14 +17,16 @@ namespace Explorer.Tours.Core.Domain
         public int TourId { get; init; }
         public DateTime PurchaseTime { get; init; }
         public string TourName { get; init; }
+        public string TourImage { get; init; }
 
-        public TourPurchaseToken(long id, int userId, int tourId, DateTime purchaseTime, string tourName)
+        public TourPurchaseToken(long id, int userId, int tourId, DateTime purchaseTime, string tourName, string tourImage)
         {
             Id = id;
             UserId = userId;
             TourId = tourId;
             PurchaseTime = purchaseTime;
             TourName = tourName;
+            TourImage = tourImage;
             Validate();
         }
 
@@ -33,6 +35,7 @@ namespace Explorer.Tours.Core.Domain
             if (UserId <= 0) throw new ArgumentOutOfRangeException();
             if (TourId <= 0) throw new ArgumentOutOfRangeException();
             if (TourName == string.Empty || TourName == null) throw new ArgumentNullException();
+            if (TourImage == string.Empty || TourImage == null) throw new ArgumentNullException();
         }
     }
 }

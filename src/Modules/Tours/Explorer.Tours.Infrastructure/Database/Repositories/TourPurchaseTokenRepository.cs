@@ -28,7 +28,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             var retVal = new List<TourPurchaseToken>();
             foreach(var item in shoppingCart.Items)
             {
-                var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdTour, DateTime.Now.ToUniversalTime(), item.Name);
+                var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdTour, DateTime.Now.ToUniversalTime(), item.Name, item.Image);
                 _dbSet.Add(token);
                 retVal.Add(token);
             }
