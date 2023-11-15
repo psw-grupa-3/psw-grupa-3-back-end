@@ -1,41 +1,51 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.Users;
 using Microsoft.Spatial;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
+using System.Xml.Linq;
 using static Explorer.Tours.API.Enums.TourEnums;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Explorer.Tours.Core.Domain.Tours
 {
-    public class Tour : Entity
+    [JsonObject(MemberSerialization.OptIn)]
+    public class Tour : JsonEntity
     {
-        [JsonPropertyName("name")]
-        public string Name { get; init; }
-        [JsonPropertyName("description")]
-        public string Description { get; init; }
-        [JsonPropertyName("diffucult")]
-        public int Difficult { get; init; }
-        [JsonPropertyName("status")]
+        [NotMapped][JsonProperty]
+        public string Name { get; private set; }
+        [NotMapped][JsonProperty]
+        public string Description { get; private set; }
+        [NotMapped][JsonProperty]
+        public int Difficult { get; private set; }
+        [NotMapped][JsonProperty]
         public TourStatus Status { get; private set; }
-        [JsonPropertyName("price")]
-        public double Price { get; init; }
-        [JsonPropertyName("points")]
+        [NotMapped][JsonProperty]
+        public double Price { get; private set; }
+        [NotMapped][JsonProperty]
         public List<Point>? Points { get; set; } = new List<Point>();
-        [JsonPropertyName("tags")]
-        public List<Tag>? Tags { get; init; } = new List<Tag>();
-        [JsonPropertyName("requiredTimes")]
-        public List<RequiredTime>? RequiredTimes { get; init; } = new List<RequiredTime>();
-        [JsonPropertyName("guide")]
-        public Guide Guide { get; init; }
-        [JsonPropertyName("length")]
-        public float? Length { get; init; }
-        [JsonPropertyName("publishTime")]
+        [NotMapped][JsonProperty]
+        public List<Tag>? Tags { get; private set; } = new List<Tag>();
+        [NotMapped][JsonProperty]
+        public List<RequiredTime>? RequiredTimes { get; private set; } = new List<RequiredTime>();
+        [NotMapped][JsonProperty]
+        public List<TourReview>? Reviews { get; set; } = new List<TourReview>();
+        /*[NotMapped][JsonProperty]
+        public Guide Guide { get; private set; }*/
+        [NotMapped][JsonProperty]
+        public float? Length { get; private set; }
+        [NotMapped][JsonProperty]
         public DateTime? PublishTime { get; private set; }
-        [JsonPropertyName("arhiveTime")]
+        [NotMapped][JsonProperty]
         public DateTime? ArhiveTime { get; private set; }
 
+        public Tour() {}
+
         [JsonConstructor]
-        public Tour(long id, string name, string description, int difficult, TourStatus status, double price, Guide guide, float length, DateTime? publishTime, DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes)
+        public Tour(string name, string description, int difficult, TourStatus status, Guide guide, double price, float length, DateTime? publishTime,
+            DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews)
         {
-            Id = id;
             Name = name;
             Description = description;
             Difficult = difficult;
@@ -44,7 +54,8 @@ namespace Explorer.Tours.Core.Domain.Tours
             Points = points;
             Tags = tags;
             RequiredTimes = requiredTimes;
-            Guide = new Guide(guide.Id, guide.Name, guide.Surname, guide.Email);
+            Reviews = reviews;
+            //Guide = guide;
             Length = length;
             PublishTime = publishTime;
             ArhiveTime = arhiveTime;
@@ -87,19 +98,93 @@ namespace Explorer.Tours.Core.Domain.Tours
             throw new ArgumentException("Tour needs to be published first!");
         }
 
+        public double GetDistance(double longitude, double latitude, double otherLongitude, double otherLatitude)
+        {
+            var d1 = latitude * (Math.PI / 180.0);
+            var num1 = longitude * (Math.PI / 180.0);
+            var d2 = otherLatitude * (Math.PI / 180.0);
+            var num2 = otherLongitude * (Math.PI / 180.0) - num1;
+            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
+
+            return 6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)));
+        }
+
         public bool HasPointsWithinDistance(double longitude, double latitude, int distance)
         {
             if (Status != TourStatus.Published || Points == null) return false;
 
-            var centerPoint = GeographyPoint.Create(latitude, longitude);
             foreach (var point in Points)
             {
-                if (centerPoint.Distance(GeographyPoint.Create(point.Latitude, point.Longitude)) / 1000 <= distance)
+                var actualDistance = GetDistance(longitude, latitude, point.Longitude, point.Latitude);
+                if (point.Public && actualDistance / 1000 <= distance)
                 {
                     return true;     
                 }
             }
             return false;
+        }
+
+        public void PublishPoint(string pointName)
+        {
+            if (Points == null)
+            {
+                throw new InvalidOperationException("Points list is not initialized.");
+            }
+
+            Point pointToPublish = Points.FirstOrDefault(p => p.Name == pointName);
+
+            if (pointToPublish != null)
+            {
+                pointToPublish.Public = true;
+            }
+            else
+            {
+                throw new ArgumentException("Point with the specified name was not found.");
+            }
+        }
+
+        public double GetAverageRating()
+        {
+            if (Reviews == null || Reviews.Count == 0)
+            {
+                return 0.0;
+            }
+
+            double sumOfRatings = 0.0;
+            foreach (var review in Reviews)
+            {
+                sumOfRatings += review.Rating;
+            }
+
+            double averageRating = sumOfRatings / Reviews.Count;
+            return averageRating;
+        }
+
+
+        public override void ToJson()
+        {
+            JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ??
+                         throw new JsonSerializationException("Exception! Could not serialize object!");
+        }
+        public override void FromJson()
+        {
+            var tour = JsonConvert.DeserializeObject<Tour>(JsonObject ??
+                                                           throw new NullReferenceException(
+                                                               "Exception! No object to deserialize!")) ??
+                       throw new NullReferenceException("Exception! Tour is null!");
+            Name = tour.Name;
+            Description = tour.Description;
+            Difficult = tour.Difficult;
+            Status = tour.Status;
+            Price = tour.Price;
+            Points = tour.Points;
+            Tags = tour.Tags;
+            RequiredTimes = tour.RequiredTimes;
+            Length = tour.Length;
+            Reviews = tour.Reviews;
+            //Guide = tour.Guide;
+            PublishTime = tour.PublishTime;
+            ArhiveTime = tour.ArhiveTime;
         }
     }
 }

@@ -12,12 +12,11 @@ public class ToursProfile : Profile
 {
     public ToursProfile()
     {
-        CreateMap<OrderItemDto, OrderItem>();
         CreateMap<ShoppingCartDto, ShoppingCart>()
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(itemDto => new OrderItem(itemDto.IdTour, itemDto.Name, itemDto.Price))));
-        CreateMap<OrderItem, OrderItemDto>();
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(itemDto => new OrderItem(itemDto.IdTour, itemDto.Name, itemDto.Price, itemDto.Image))));
         CreateMap<ShoppingCart, ShoppingCartDto>()
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(orderItem => new OrderItemDto { IdTour = orderItem.IdTour, Name = orderItem.Name, Price = orderItem.Price })));
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(orderItem => new OrderItemDto { IdTour = orderItem.IdTour, Name = orderItem.Name, Price = orderItem.Price, Image = orderItem.Image })));
+        CreateMap<TourPurchaseToken, TourPurchaseTokenDto>().ForMember(dest => dest.PurchaseTime, opt =>  opt.MapFrom(src => src.PurchaseTime.ToShortDateString()));
 
         CreateMap<EquipmentDto, Equipment>().ReverseMap();
         CreateMap<ProblemDto, Problem>().ReverseMap();
@@ -33,5 +32,7 @@ public class ToursProfile : Profile
         CreateMap<ObjectDto, Object>().ReverseMap();
         CreateMap<TouristPositionDto, TouristPosition>().ReverseMap();
         CreateMap<PublicRegistrationRequestDto, PublicRegistrationRequest>().ReverseMap();
+        CreateMap<TourPurchaseTokenDto, TourPurchaseToken>();
+        CreateMap<OrderItemDto, OrderItem>().ReverseMap();
     }
 }

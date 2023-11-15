@@ -16,13 +16,15 @@ namespace Explorer.Tours.Core.Domain.Order
         public int IdTour { get; init; }
         public string Name { get; init; }
         public double Price { get; init; }
+        public string Image { get; init; }
 
         [JsonConstructor]
-        public OrderItem(int idTour, string name, double price)
+        public OrderItem(int idTour, string name, double price, string image)
         {
             IdTour = idTour;
             Name = name;
             Price = price;
+            Image = image;
             Validate();
         }
         protected override IEnumerable<object> GetEqualityComponents()
@@ -30,12 +32,14 @@ namespace Explorer.Tours.Core.Domain.Order
             yield return IdTour;
             yield return Name;
             yield return Price;
+            yield return Image;
         }
         private void Validate()
         {
             if (string.IsNullOrEmpty(Name)) throw new ArgumentException("Invalid name");
             if (Price < 0) throw new ArgumentException("Invalid price");
             if (IdTour == 0) throw new ArgumentException("Invalid TourId");
+            if (Image == string.Empty || Image == null) throw new ArgumentException("Invalid image");
         }
 
     }

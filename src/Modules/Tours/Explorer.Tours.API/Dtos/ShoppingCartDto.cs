@@ -2,7 +2,7 @@
 {
     public class ShoppingCartDto
     {
-         public int Id { get; set; }
+         public long Id { get; set; }
          public int IdUser { get; init; }
          public List<OrderItemDto> Items { get; init; }
     }

@@ -22,6 +22,12 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.GetPaged(page, pageSize));
         }
 
+        [HttpGet("getAllPublic")]
+        public ActionResult<TourDto> GetAllPublic()
+        {
+            return CreateResponse(_tourService.GetAllPublic());
+        }
+
         [AllowAnonymous]
         [HttpPost]
         public ActionResult<TourDto> Create([FromBody] TourDto tour)
@@ -36,29 +42,57 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.Update(dataIn));
         }
 
+        [HttpGet("getById/{id}")]
+        public ActionResult<TourDto> GetTour(long id)
+        {
+            return CreateResponse(_tourService.Get((int)id));
+        }
+
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id) 
         {
             return CreateResponse(_tourService.Delete(id));
         }
 
-        [HttpPatch("publishTour/{id}")]
+        [HttpGet("publishTour/{id}")]
         public ActionResult PublishTour(long id)
         {
             return CreateResponse(_tourService.PublishTour(id));
         }
 
-        [HttpPatch("arhiveTour/{id}")]
+        [HttpGet("arhiveTour/{id}")]
         public ActionResult ArhiveTour(long id)
         {
             return CreateResponse(_tourService.ArhiveTour(id));
         }
+
+        [HttpPost("rateTour/{tourId:int}")]
+        [Authorize(Policy = "TouristPolicy")]
+
+        public ActionResult<TourReviewDto> RateTour([FromRoute] int tourId, [FromBody] TourReviewDto tourReview)
+        {
+            return CreateResponse(_tourService.RateTour(tourId, tourReview));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("averageRating/{tourId:int}")]
+        public ActionResult<double> GetAverageRating(int tourId)
+        {
+            return CreateResponse(_tourService.GetAverageRating(tourId));
+        }
+
 
         [AllowAnonymous]
         [HttpGet("searchByPointDistance")]
         public ActionResult<TourDto> SearchByPointDistance([FromQuery] double longitude, [FromQuery] double latitude, [FromQuery] int distance)
         {
             return CreateResponse(_tourService.SearchByPointDistance(longitude, latitude, distance));
+        }
+
+        [HttpPatch("publishPoint/{id}")]
+        public ActionResult PublishPoint(long id, [FromQuery] string pointName)
+        {
+            return CreateResponse(_tourService.PublishPoint(id, pointName));
         }
     }
 }

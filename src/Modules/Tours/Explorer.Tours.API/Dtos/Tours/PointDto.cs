@@ -7,5 +7,6 @@
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string Picture { get; set; }
+        public bool Public { get; set; }
     }
 }

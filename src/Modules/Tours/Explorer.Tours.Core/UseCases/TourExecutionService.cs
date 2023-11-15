@@ -34,9 +34,11 @@ namespace Explorer.Tours.Core.UseCases
         public Result<TourExecutionDto> StartExecution(int tourId)
         {
             var tour = _tourRepository.Get(tourId);
-            var tourExecution = new TourExecution(tour.Points);
+            var tourExecution = new TourExecution(tour.Points,tourId);
             CrudRepository.Create(tourExecution);
             return MapToDto(tourExecution);
         }
+
+
     }
 }

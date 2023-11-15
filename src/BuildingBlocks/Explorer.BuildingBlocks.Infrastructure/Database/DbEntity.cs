@@ -19,7 +19,12 @@ namespace Explorer.BuildingBlocks.Infrastructure.Database
         }
         private string ToJson(TEntity entity)
         {
-            return JsonConvert.SerializeObject(entity);
+            var settings = new JsonSerializerSettings
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.None,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+            return JsonConvert.SerializeObject(entity, settings);
         }
         public TEntity FromJson()
         {

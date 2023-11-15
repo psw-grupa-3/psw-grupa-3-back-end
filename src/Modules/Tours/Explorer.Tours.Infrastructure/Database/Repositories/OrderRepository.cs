@@ -16,13 +16,31 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _context = dbContext;
             _dbSet = DbContext.Set<ShoppingCart>();
         }
-        public Result<ShoppingCartDto> GetByUserId(int id)
+
+        public Result<ShoppingCart> AddToCart(OrderItem orderItem, int userId)
         {
-            ShoppingCart cart = _dbSet.Where(i => i.IdUser == id).FirstOrDefault();
+            var cart = _dbSet.Where(x => x.IdUser ==  userId).FirstOrDefault();
+            if(cart == null)
+            {
+                var orderItems = new List<OrderItem> { orderItem };
+                var newCart = new ShoppingCart(userId, orderItems);
+                _dbSet.Add(newCart);
+                DbContext.SaveChanges();
+                return newCart;
+            }
+            cart.Items.Add(orderItem);
+            DbContext.Update(cart);
+            DbContext.SaveChanges();
+            return cart;
+        }
+
+        public Result<ShoppingCartDto>? GetByUserId(int id)
+        {
+            var cart = _dbSet.Where(i => i.IdUser == id).FirstOrDefault();
 
             if(cart == null)
             {
-                return null;
+                throw new KeyNotFoundException("Not found: " + id);
             }
             List<OrderItemDto> list = new List<OrderItemDto>();
             foreach(var item in cart.Items)
@@ -31,12 +49,14 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 {
                     IdTour = item.IdTour,
                     Name = item.Name,
-                    Price = item.Price
+                    Price = item.Price,
+                    Image = item.Image,
                 };
                 list.Add(itemDto);
             }
             ShoppingCartDto result = new ShoppingCartDto
             {
+                Id = cart.Id,
                 IdUser = cart.IdUser,
                 Items = list,
             };
