@@ -21,6 +21,11 @@ namespace Explorer.Tours.Core.UseCases.Shopping
             _tourPurchaseRepository = tourPurchaseRepository;
         }
 
+        public Result<bool> GetToken(int idUser, int idTour)
+        {
+            return _tourPurchaseRepository.GetToken(idUser, idTour);
+        }
+
         public Result<List<TourPurchaseTokenDto>> PurchaseItemsFromCart(ShoppingCartDto shoppingCart)
         {
             return MapToDto(_tourPurchaseRepository.PurchaseItemsFromCart(shoppingCart));
