@@ -1,5 +1,4 @@
 using Explorer.Blog.API.Public;
-using Explorer.Blog.Core.Domain;
 using Explorer.Blog.Core.Mappers;
 using Explorer.Blog.Core.UseCases;
 using Explorer.Blog.Infrastructure.Database;
@@ -24,14 +23,11 @@ public static class BlogStartup
     private static void SetupCore(IServiceCollection services)
     {
         services.AddScoped<IBlogService, BlogService>();
-        services.AddScoped<IBlogCommentService, BlogCommentService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
     {
-        services.AddScoped(typeof(ICrudRepository<Core.Domain.Blog>), typeof(CrudDatabaseRepository<Core.Domain.Blog, BlogContext>));
-        services.AddScoped(typeof(ICrudRepository<BlogComment>), typeof(CrudDatabaseRepository<BlogComment, BlogContext>));
-
+        services.AddScoped(typeof(ICrudRepository<Core.Domain.Blog>), typeof(JsonCrudRepo<Core.Domain.Blog, BlogContext>));
 
         services.AddDbContext<BlogContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("blog"),

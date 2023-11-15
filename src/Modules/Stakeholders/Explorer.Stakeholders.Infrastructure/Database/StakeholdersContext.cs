@@ -1,6 +1,7 @@
-﻿using Explorer.Stakeholders.Core.Domain;
+﻿using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Stakeholders.Core.Domain;
+using Explorer.Stakeholders.Core.Domain.Users;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Explorer.Stakeholders.Infrastructure.Database;
 
@@ -22,6 +23,9 @@ public class StakeholdersContext : DbContext
         modelBuilder.HasDefaultSchema("stakeholders");
 
         modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
+
+        modelBuilder.Entity<User>().Property(u => u.Followers).HasColumnType("jsonb");
+        modelBuilder.Entity<User>().Property(u => u.Notifications).HasColumnType("jsonb");
 
         ConfigureStakeholder(modelBuilder);
     }

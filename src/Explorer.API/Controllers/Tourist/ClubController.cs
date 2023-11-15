@@ -4,7 +4,6 @@ using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Dtos.Tour.DataIn;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +11,7 @@ using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist
 {
-    //[Authorize(Policy = "administratorPolicy")]
+    //[Authorize(Policy = "touristPolicy")]
     [Route("api/club")]
     public class ClubController : BaseApiController
     {

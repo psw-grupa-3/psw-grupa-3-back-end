@@ -52,6 +52,12 @@ public class CrudDatabaseRepository<TEntity, TDbContext> : ICrudRepository<TEnti
         return entity;
     }
 
+    public List<TEntity> GetFiltered(Predicate<TEntity> predicate)
+    {
+        return _dbSet.ToList()
+            .FindAll(predicate);
+    }
+
     public void Delete(long id)
     {
         var entity = Get(id);

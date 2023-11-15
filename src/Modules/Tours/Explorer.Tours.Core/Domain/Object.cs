@@ -1,28 +1,32 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.Domain
 {
-    public enum ObjectType { WC, RESTAURANT, PARKING, OTHER };
-    public class Object:Entity
+    public enum Category { WC, RESTAURANT, PARKING, OTHER };
+    public class Object : Entity
     {
-        public string ObjectName {  get; init; }
-        public string ObjectDescription {  get; init; }
-        public string[] ObjectImages { get; init; }
-        public ObjectType Type { get; init; }
+        public double Latitude { get; init; }
+        public double Longitude { get; init; }
+        public string Name {  get; init; }
+        public string Description {  get; init; }
+        public string Picture { get; init; }
+        public Category Category { get; init; }
+        public bool Public { get; set; }
 
-        public Object(string objectName, string objectDescription, string[] objectImages, ObjectType type)
+        public Object(double latitude, double longitude, string name, string description, string picture, Category category)
         {
-            if (string.IsNullOrEmpty(objectName)) throw new ArgumentNullException("Invalid or empty name.");
-            if (string.IsNullOrEmpty(objectDescription)) throw new ArgumentNullException("Invalid or empty description.");
-            ObjectName = objectName;
-            ObjectDescription = objectDescription;
-            ObjectImages = objectImages;
-            Type = type;
+            if (Math.Abs(latitude) > 90) throw new ArgumentException("Invalid Latitude.");
+            Latitude = latitude;
+            if (Math.Abs(longitude) > 180) throw new ArgumentException("Invalid Longitude.");
+            Longitude = longitude;
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Invalid Name.");
+            Name = name;
+            if (string.IsNullOrWhiteSpace(description)) throw new ArgumentException("Invalid Description.");
+            Description = description;
+            if (string.IsNullOrWhiteSpace(picture)) throw new ArgumentException("Invalid Name.");
+            Picture = picture;
+            Category = category;
+            Public = false;
         }
     }
 }

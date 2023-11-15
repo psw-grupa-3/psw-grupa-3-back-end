@@ -25,6 +25,13 @@ namespace Explorer.API.Controllers.Tourist.Personalization
             return CreateResponse(result);
         }
 
+        [HttpGet("getAllForTourist/{id}")]
+        public ActionResult<List<PreferenceDto>> GetAllForForTourist(int id)
+        {
+            var result = _preferenceService.GetAllForTourist(id);
+            return CreateResponse(result);
+        }
+
         [HttpPost]
         public ActionResult<PreferenceDto> Create([FromBody] PreferenceDto preference)
         {

@@ -1,21 +1,16 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Explorer.Blog.Core.Domain
 {
-    public class BlogComment : Entity
+    public class BlogComment : ValueObject
     {
         public int UserId { get; init; }
         public int BlogId { get; init; }
-        public string Comment { get; init; }
+        public string Comment { get; private set; }
         public DateTime TimeCreated { get; init; }
-        public DateTime TimeUpdated { get; init; }
+        public DateTime TimeUpdated { get; private set; }
 
+        [Newtonsoft.Json.JsonConstructor]
         public BlogComment(int userId, int blogId, string comment, DateTime timeCreated, DateTime timeUpdated)
         {
 
@@ -28,6 +23,19 @@ namespace Explorer.Blog.Core.Domain
             TimeCreated = timeCreated;
             TimeUpdated = timeUpdated;
         }
+        public void UpdateComment(BlogComment newComment)
+        {
+            Comment = newComment.Comment;
+            TimeUpdated = newComment.TimeUpdated;
+        }
 
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return UserId;
+            yield return BlogId;
+            yield return Comment;
+            yield return TimeCreated;
+            yield return TimeUpdated;
+        }
     }
 }
