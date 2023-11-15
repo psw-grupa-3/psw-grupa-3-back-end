@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.Core.Domain.Users;
 using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Core.Converters;
+using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
 
@@ -10,9 +13,10 @@ namespace Explorer.Tours.Core.UseCases.Administration
 {
     public class TourService : CrudService<TourDto,Tour>, ITourService
     {
-        public TourService(ICrudRepository<Tour> repository, IMapper mapper) : base(repository, mapper) 
+        private readonly ICrudRepository<TourExecution> _tourExecutionRepository;
+        public TourService(ICrudRepository<Tour> repository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
         {
-
+            _tourExecutionRepository = tourExecutionRepository;
         }
 
         public Result<TourDto> PublishTour(long id)
@@ -64,13 +68,34 @@ namespace Explorer.Tours.Core.UseCases.Administration
             CrudRepository.Update(tourDb);
             return MapToDto(tourDb);
         }
+       
+      
+          
         public Result<TourDto> RateTour(int tourId, TourReviewDto review)
         {
             var tourReview = TourReviewConverter.ToDomain(review);
             Tour tour = CrudRepository.Get(tourId);
-            tour.Reviews.Add(tourReview);
-            CrudRepository.Update(tour);
-            return MapToDto(tour);
+
+            bool hasReviewWithUserId = tour.Reviews.Any(r => r.TouristId == review.TouristId);
+
+            var sortedTourExecutions = _tourExecutionRepository.GetPaged(0, 0).Results.Where(te => te.TourId == tourId).OrderByDescending(te => te.Id).ToList();
+
+            TourExecution tourExecution = sortedTourExecutions.FirstOrDefault();
+
+            double percentageOfDone = tourExecution.PercentageOfDone(tourExecution);
+            bool isLastActivityBad=tourExecution.IsLastActivityWithinWeek(tourExecution);
+            if (percentageOfDone > 35.0 && !isLastActivityBad )
+            {
+                if (!hasReviewWithUserId) {
+                    tour.Reviews.Add(tourReview);
+                    CrudRepository.Update(tour);
+
+                    return MapToDto(tour); }
+                else return Result.Fail("You already gave a review.");
+            }
+
+            return Result.Fail("You must complete more than 35% of tour in the last 7 days.");
+
         }
 
         public Result<double> GetAverageRating(int tourId)
