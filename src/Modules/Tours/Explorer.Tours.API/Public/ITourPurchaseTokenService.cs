@@ -15,6 +15,7 @@ namespace Explorer.Tours.API.Public
         Result<TourPurchaseTokenDto> Get(int id);
         Result<TourPurchaseTokenDto> Update(TourPurchaseTokenDto tourPurchaseToken);
         Result Delete(int id);
+        Result<bool> GetToken(int idUser, int idTour);
         Result<List<TourPurchaseTokenDto>> PurchaseItemsFromCart(ShoppingCartDto shoppingCart);
         Result<List<TourPurchaseTokenDto>> GetAllForUser(int userId);
     }

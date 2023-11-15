@@ -16,7 +16,7 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> PublishPoint(long id, string pointName);
         Result<TourDto> RateTour(int tourId, TourReviewDto review);
         Result<double> GetAverageRating(int tourId);
-
+        Result<TourDto> Get(int id);
         Result<List<TourDto>> GetAllPublic();
     }
 }
