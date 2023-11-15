@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Explorer.API.Controllers.Author.Tour
 {
     [Route("api/author/problems")]
-    [Authorize(Policy = "authorPolicy")]
+    //[Authorize(Policy = "authorPolicy")]
     public class ProblemController : BaseApiController
     {
         private readonly IProblemService _problemService;
@@ -43,7 +43,7 @@ namespace Explorer.API.Controllers.Author.Tour
             var problem = result.Value;
             return Ok(result);
         }
-        
+
         [HttpGet("getToursProblems/{id}")]
         public ActionResult<PagedResult<ProblemDto>> GetToursProblems(long id)
         {

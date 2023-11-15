@@ -106,7 +106,14 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             var problems = _context.Problems.ToList();
             var last = problems.LastOrDefault();
-            return (int)last.Id;
+            if( last == null)
+            {
+                return 1;
+            }
+            else
+            {
+                return (int)last.Id;
+            }
         }
         public List<ProblemDto> GetUnresolvedProblemsWithDeadline(List<ProblemDto> problems)
         {

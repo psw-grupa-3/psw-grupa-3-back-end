@@ -14,7 +14,7 @@ using Explorer.Stakeholders.API.Public;
 namespace Explorer.API.Controllers.Tourist
 {
     [Route("api/tourist/problem")]
-    [Authorize(Policy = "touristPolicy")]
+    //[Authorize(Policy = "touristPolicy")]
 
     public class ProblemController : BaseApiController
     {
@@ -37,13 +37,13 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
         [HttpPatch("addProblem")]
-        public ActionResult<TourDto> AddProblem( [FromBody] ProblemDto problem)
+        public ActionResult<TourDto> AddProblem([FromBody] ProblemDto problem)
         {
 
             int count = _problemRepository.GetProblemCount();
-            problem.Id = (long)count + 1;
+            problem.Id = (long)count+1;
             var result = _problemService.Create(problem);
-            var result2 = _tourService.AddProblem(problem.TourId,problem);
+            var result2 = _tourService.AddProblem(problem.TourId, problem);
             return CreateResponse(result);
         }
         [HttpPatch("problemNotSolved/{id}/{comment}")]
@@ -78,5 +78,5 @@ namespace Explorer.API.Controllers.Tourist
             }
         }
     }
-    
+
 }

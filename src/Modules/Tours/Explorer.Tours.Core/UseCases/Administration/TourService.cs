@@ -18,7 +18,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
         private readonly IProblemRepository _problemRepository;
         private readonly ICrudRepository<TourExecution> _tourExecutionRepository;
-        public TourService(ICrudRepository<Tour> repository, ICrudRepository<TourExecution> tourExecutionRepository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
+        public TourService(ICrudRepository<Tour> repository, IProblemRepository problemRepository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
         {
             _tourExecutionRepository = tourExecutionRepository;
             _problemRepository = problemRepository;

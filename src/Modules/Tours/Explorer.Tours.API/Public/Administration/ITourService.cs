@@ -16,7 +16,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> AddProblem(long tourId,ProblemDto problem);
         //Result<TourDto> RespondToProblem(Problem problem);
         //Result<TourDto> UpdateProblem(ProblemDto problem, );
-        Result<List<TourDto>> SearchByPointDistance(double longitude, double latitude, int distance);
         Result<TourDto> PublishPoint(long id, string pointName);
         Result<TourDto> RateTour(int tourId, TourReviewDto review);
         Result<double> GetAverageRating(int tourId);
