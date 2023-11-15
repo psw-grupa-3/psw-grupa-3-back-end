@@ -1,4 +1,4 @@
-﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Users;
 using Microsoft.Spatial;
 using Newtonsoft.Json;
@@ -41,12 +41,15 @@ namespace Explorer.Tours.Core.Domain.Tours
         public DateTime? PublishTime { get; private set; }
         [NotMapped][JsonProperty]
         public DateTime? ArhiveTime { get; private set; }
+        [NotMapped]
+        [JsonProperty]
+        public List<Problem>? Problems { get; private set; } = new List<Problem>();
 
         public Tour() {}
 
         [JsonConstructor]
         public Tour(string name, string description, int difficult, TourStatus status, Guide guide, double price, float length, DateTime? publishTime,
-            DateTime? arhiveTime, int authorId, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews)
+            DateTime? arhiveTime, int authorId, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews, List<Problem>? problems)
         {
             Name = name;
             Description = description;
@@ -62,6 +65,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Length = length;
             PublishTime = publishTime;
             ArhiveTime = arhiveTime;
+            Problems = problems;
             Validate();
         }
 
@@ -189,6 +193,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             AuthorId = tour.AuthorId;
             PublishTime = tour.PublishTime;
             ArhiveTime = tour.ArhiveTime;
+            Problems = tour.Problems;
         }
     }
 }

@@ -32,7 +32,32 @@ public class ToursProfile : Profile
         CreateMap<ObjectDto, Object>().ReverseMap();
         CreateMap<TouristPositionDto, TouristPosition>().ReverseMap();
         CreateMap<PublicRegistrationRequestDto, PublicRegistrationRequest>().ReverseMap();
-        CreateMap<TourPurchaseTokenDto, TourPurchaseToken>();
-        CreateMap<OrderItemDto, OrderItem>().ReverseMap();
+        CreateMap<TourPurchaseTokenDto, TourPurchaseToken>().ReverseMap();
+
+        CreateMap<TourDto, Tour>()
+            .ForMember(dest => dest.Problems, opt =>
+                opt.MapFrom(src =>
+                    src.Problems.Select(x =>
+                        new Problem(x.Id, x.Category, x.Priority, x.Description, x.Time, x.TourId, x.TouristId, x.AuthorsSolution, x.IsSolved, x.UnsolvedProblemComment, x.Deadline)
+                        )));
+
+        CreateMap<Tour, TourDto>()
+            .ForMember(dest => dest.Problems, opt =>
+                opt.MapFrom(src =>
+                    src.Problems.Select(x =>
+                        new ProblemDto
+                        {
+                            Category = x.Category,
+                            Priority = x.Priority,
+                            Description = x.Description,
+                            Time = x.Time,
+                            TourId = (int)x.TourId,
+                            TouristId = (int)x.TouristId,
+                            AuthorsSolution = x.AuthorsSolution,
+                            IsSolved = x.IsSolved,
+                            UnsolvedProblemComment = x.UnsolvedProblemComment,
+                            Deadline = x.Deadline
+                        }
+                    )));
     }
 }

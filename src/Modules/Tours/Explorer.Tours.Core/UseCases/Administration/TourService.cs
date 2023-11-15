@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.Core.Domain.Users;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.API.Public.Administration;
 using Explorer.Tours.Core.Converters;
@@ -8,15 +9,19 @@ using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
+using System.Xml.Linq;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
     public class TourService : CrudService<TourDto,Tour>, ITourService
     {
+
+        private readonly IProblemRepository _problemRepository;
         private readonly ICrudRepository<TourExecution> _tourExecutionRepository;
-        public TourService(ICrudRepository<Tour> repository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
+        public TourService(ICrudRepository<Tour> repository, IProblemRepository problemRepository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
         {
             _tourExecutionRepository = tourExecutionRepository;
+            _problemRepository = problemRepository;
         }
 
         public Result<TourDto> PublishTour(long id)
@@ -34,6 +39,37 @@ namespace Explorer.Tours.Core.UseCases.Administration
             CrudRepository.Update(tourDb);
             return MapToDto(tourDb);
         }
+
+        public Result<TourDto> AddProblem(long tourId,ProblemDto problem)
+        {
+            var tour = CrudRepository.Get(tourId);
+            if (tour is null)
+            {
+                return Result.Fail<TourDto>($"Tour not found ({FailureCode.NotFound}).");
+            }
+            try
+            {
+
+                var currentProblem = ProblemConverter.ToDomain(problem);
+                tour.Problems.Add(currentProblem);
+                CrudRepository.Update(tour);
+
+                return MapToDto(tour);
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail<TourDto>(ex.Message);
+            }
+        }
+        /*public Result<TourDto> RespondToProblem(int tourId, ProblemDto problem)
+        {
+           var problemDomain = ProblemConverter.ToDomain(problem);
+           var oldTour = CrudRepository.Get(tourId);
+           oldTour.RespondToProblem(problemDomain);
+           CrudRepository.Update(oldTour);
+           return MapToDto(oldTour);
+        }*/
+        //za update
 
         public Result<List<TourDto>> GetAllPublic()
         {
