@@ -36,6 +36,17 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return retVal;
         }
+        public Result<bool> GetToken(int idUser, int idTour)
+        {
+            foreach(var token in _dbSet)
+            {
+                if(token.TourId == idTour && token.UserId == idUser)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public Result<List<TourPurchaseToken>> GetAllForUser(int userId)
         {

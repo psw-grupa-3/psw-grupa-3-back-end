@@ -42,6 +42,12 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.Update(dataIn));
         }
 
+        [HttpGet("getById/{id}")]
+        public ActionResult<TourDto> GetTour(long id)
+        {
+            return CreateResponse(_tourService.Get((int)id));
+        }
+
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id) 
         {
