@@ -33,6 +33,7 @@ public class ToursProfile : Profile
         CreateMap<TouristPositionDto, TouristPosition>().ReverseMap();
         CreateMap<PublicRegistrationRequestDto, PublicRegistrationRequest>().ReverseMap();
         CreateMap<TourPurchaseTokenDto, TourPurchaseToken>().ReverseMap();
+        CreateMap<OrderItemDto, OrderItem>().ReverseMap();
 
         CreateMap<TourDto, Tour>()
             .ForMember(dest => dest.Problems, opt =>
