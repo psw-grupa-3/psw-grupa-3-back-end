@@ -68,8 +68,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             CrudRepository.Update(tourDb);
             return MapToDto(tourDb);
         }
-       
-      
+    
           
         public Result<TourDto> RateTour(int tourId, TourReviewDto review)
         {
@@ -96,13 +95,23 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
 
             return Result.Fail("You must complete more than 35% of tour in the last 7 days.");
-
         }
 
         public Result<double> GetAverageRating(int tourId)
         {
             Tour tour = CrudRepository.Get(tourId);
             return tour.GetAverageRating();
+        }
+
+        public Result<TourDto> GetById(long id)
+        {
+            var tourDb = CrudRepository.Get(id);
+
+            var publicPoints = tourDb.Points.Where(point => point.Public).ToList();
+            var tourDto = MapToDto(tourDb);
+            tourDto.Points = publicPoints.Select(PointConverter.ToDto).ToList();
+
+            return tourDto;
         }
 
     }

@@ -34,6 +34,8 @@ namespace Explorer.Tours.Core.Domain.Tours
         /*[NotMapped][JsonProperty]
         public Guide Guide { get; private set; }*/
         [NotMapped][JsonProperty]
+        public int AuthorId { get; private set; }
+        [NotMapped][JsonProperty]
         public float? Length { get; private set; }
         [NotMapped][JsonProperty]
         public DateTime? PublishTime { get; private set; }
@@ -44,7 +46,7 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         [JsonConstructor]
         public Tour(string name, string description, int difficult, TourStatus status, Guide guide, double price, float length, DateTime? publishTime,
-            DateTime? arhiveTime, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews)
+            DateTime? arhiveTime, int authorId, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews)
         {
             Name = name;
             Description = description;
@@ -56,6 +58,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             RequiredTimes = requiredTimes;
             Reviews = reviews;
             //Guide = guide;
+            AuthorId = authorId;
             Length = length;
             PublishTime = publishTime;
             ArhiveTime = arhiveTime;
@@ -183,6 +186,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Length = tour.Length;
             Reviews = tour.Reviews;
             //Guide = tour.Guide;
+            AuthorId = tour.AuthorId;
             PublishTime = tour.PublishTime;
             ArhiveTime = tour.ArhiveTime;
         }
