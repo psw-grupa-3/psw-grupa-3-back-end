@@ -43,5 +43,26 @@ namespace Explorer.API.Controllers.Administrator.Administration
                 return BadRequest("Failed to retrieve unresolved problems with expired deadlines.");
             }
         }
+        [HttpPatch("set-deadline/{id}")]
+        public ActionResult SetProblemDeadline(long id, [FromBody] DateTime newDeadline)
+        {
+            var result = _problemService.SetProblemDeadline(id, newDeadline);
+
+
+
+            return Ok(result);
+        }
+        [HttpDelete("{id}/delete")]
+        public IActionResult DeleteProblemOrTour(long id)
+        {
+            var result = _problemService.DeleteProblem(id);
+
+            if (result.IsSuccess)
+            {
+                return Ok("Problem or Tour successfully deleted.");
+            }
+
+            return BadRequest("Failed to delete Problem or Tour.");
+        }
     }
 }

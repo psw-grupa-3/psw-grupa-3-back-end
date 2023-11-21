@@ -113,5 +113,45 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var problems = _problemRepository.GetToursProblems(id);
             return problems;
         }
+          public object SetProblemDeadline(long id, DateTime newDeadline)
+        {
+            var problemDto = _problemRepository.GetProblemById(id);
+            var problem = ProblemConverter.ToDomain(problemDto);
+            problem.SetDeadline(newDeadline);
+            CrudRepository.Update(problem);
+            _problemRepository.SaveChanges(problem);
+
+            problemDto = ProblemConverter.ToDto(problem);
+            problemDto.Id = problem.Id;
+            return problemDto;
+        }
+
+
+
+        public Result<ProblemDto> DeleteProblem(long Id)
+        {
+
+            var problemDto = _problemRepository.GetProblemById(Id);
+            var problem = ProblemConverter.ToDomain(problemDto);
+            if (problem.Deadline < DateTime.Now)
+            {
+                if (problem.IsSolved)
+                {
+                    CrudRepository.Delete(problem.Id); 
+                }
+                else
+                {
+                   _problemRepository.TourFromProblem(problemDto);
+                    CrudRepository.Delete(problem.Id);
+
+                }
+
+            }
+
+            problemDto = ProblemConverter.ToDto(problem);
+            problemDto.Id = problem.Id;
+            return problemDto;
+        }
+
     }
 }

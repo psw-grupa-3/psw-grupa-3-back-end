@@ -32,15 +32,27 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public ProblemDto GetProblemById(long id)
         {
-
             var dbProblems = _context.Problems.ToList();
             var p = dbProblems.Find(p => p.Id == id);
-            var problem = ExtractProblem(p.JsonObject);
-            var problemDto = ProblemConverter.ToDto(problem);
-            problemDto.Id = p.Id;
-            
-            return problemDto;
+
+            if (p != null)
+            {
+                var problem = ExtractProblem(p.JsonObject);
+                var problemDto = ProblemConverter.ToDto(problem);
+                problemDto.Id = p.Id;
+
+                return problemDto;
+            }
+            else
+            {
+                // Ako problem sa traženim ID-om nije pronađen, možete obraditi ovu situaciju prema potrebi.
+                // Na primer, možete baciti izuzetak, vratiti odgovarajući rezultat ili uraditi nešto drugo.
+                throw new Exception($"Problem with ID {id} not found.");
+            }
         }
+
+
+
         public static Problem ExtractProblem(string jsonString)
         {
             jsonString = jsonString.Trim();
@@ -174,5 +186,23 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return problemDtos;
         }
+        public TourDto TourFromProblem(ProblemDto problem)
+        {
+            var associatedTour = _context.Tours.FirstOrDefault(t => t.Id == problem.TourId);
+
+            if (associatedTour != null)
+            {
+                var tourDto = JsonConvert.DeserializeObject<TourDto>(associatedTour.JsonObject);
+                // Ako je potrebno dodatno mapiranje ili manipulacija podacima, obavite to ovde
+
+                _context.Tours.Remove(associatedTour);
+                _context.SaveChanges();
+
+                return tourDto;
+            }
+
+            return null; // Vrati null ukoliko tura nije pronađena
+        }
+
     }
 }
