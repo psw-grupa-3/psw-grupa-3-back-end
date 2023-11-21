@@ -28,11 +28,11 @@ namespace Explorer.Tours.Core.Domain.Tours
         [JsonPropertyName("authorsSolution")]
         public string AuthorsSolution { get; private set; }
         [JsonPropertyName("isSolved")]
-        public bool IsSolved { get; private set; }
+        public bool IsSolved { get; set; }
         [JsonPropertyName("unsolvedProblemComment")]
         public string UnsolvedProblemComment { get; private set; }
         [JsonPropertyName("deadline")]
-        public DateTime Deadline { get; private set; }
+        public DateTime Deadline { get; set; }
         public Problem()
         {
         }
@@ -77,6 +77,14 @@ namespace Explorer.Tours.Core.Domain.Tours
         public void SolveProblem()
         {
             IsSolved = true;
+        }
+        public void SetDeadline(DateTime deadline)
+        {
+            Deadline = deadline;
+        }
+        public bool IsDeadlineExpired()
+        {
+            return !IsSolved && Deadline < DateTime.Now;
         }
     }
 }
