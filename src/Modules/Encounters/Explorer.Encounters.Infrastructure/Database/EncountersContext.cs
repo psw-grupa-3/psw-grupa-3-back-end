@@ -11,9 +11,11 @@ namespace Explorer.Encounters.Infrastructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("encounter");
+            modelBuilder.HasDefaultSchema("encounters");
 
             modelBuilder.Entity<Encounter>().ToTable("Encounters");
+            modelBuilder.Entity<Encounter>().Property(x => x.Location).HasColumnType("jsonb");
+
         }
 
     }

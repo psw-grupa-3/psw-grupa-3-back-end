@@ -8,6 +8,7 @@ namespace Explorer.Encounters.Core.Mappers
     {
         public EncounterProfile()
         {
+            CreateMap<LocationDto, Location>().ReverseMap();
             CreateMap<EncounterDto, Encounter>().ReverseMap();
         }
     }
