@@ -15,16 +15,12 @@ namespace Explorer.Blog.Core.UseCases
 
         public Result<List<BlogDto>> GetFiltered(BlogStatus filter)
         {
-            var filtered = new List<Domain.Blog>();
-            switch (filter)
+            var filtered = filter switch
             {
-                case BlogStatus.Active: filtered = CrudRepository.GetFiltered(isActive);
-                    break;
-                case BlogStatus.Famous: filtered = CrudRepository.GetFiltered(isFamous);
-                    break;
-                default: filtered = CrudRepository.GetFiltered(isPublished);
-                    break;
-            }
+                BlogStatus.Active => CrudRepository.GetFiltered(isActive),
+                BlogStatus.Famous => CrudRepository.GetFiltered(isFamous),
+                _ => CrudRepository.GetFiltered(isEligible)
+            };
             return MapToDto(filtered);
         }
 
