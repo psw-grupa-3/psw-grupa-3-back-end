@@ -70,7 +70,7 @@ namespace Explorer.Blog.Core.UseCases
 
         private Predicate<Domain.Blog> isFamous = blog => blog.Status == BlogEnums.BlogStatus.Famous;
         private Predicate<Domain.Blog> isActive = blog => blog.Status == BlogEnums.BlogStatus.Active;
-        private Predicate<Domain.Blog> isPublished = blog => blog.Status != BlogStatus.Closed && blog.Status != BlogStatus.Draft;
+        private Predicate<Domain.Blog> isEligible = blog => blog.Status != BlogStatus.Draft;
 
     }
 }
