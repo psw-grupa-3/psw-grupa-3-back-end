@@ -65,7 +65,7 @@ namespace Explorer.API.Controllers.Community
         }
 
         [Authorize(Policy = "authorOrTouristPolicy")]
-        [HttpPut("publish/{blogId:int}")]
+        [HttpPatch("publish/{blogId:int}")]
         public ActionResult<BlogRatingDto> Publish([FromRoute] int blogId)
         {
             return CreateResponse(_blogService.PublishBlog(blogId));
