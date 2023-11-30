@@ -47,15 +47,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Blog.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Blog.Tests", "Modules\Blog\Explorer.Blog.Tests\Explorer.Blog.Tests.csproj", "{DF1A942F-E72F-4C8F-9E92-21C35A98087D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Encounters.API", "Modules\Encounters\Explorer.Encounters.API\Explorer.Encounters.API.csproj", "{7A0DC798-6BFE-41C4-83B0-48B5BBC81A1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Encounters.API", "Modules\Encounters\Explorer.Encounters.API\Explorer.Encounters.API.csproj", "{7A0DC798-6BFE-41C4-83B0-48B5BBC81A1E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Encounters", "Encounters", "{CD9D89B0-EA3F-444E-9754-669597EBE637}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Encounters.Core", "Modules\Encounters\Explorer.Encounters.Core\Explorer.Encounters.Core.csproj", "{DEBE051E-7861-47CA-9FCD-D50ABF06D191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Encounters.Core", "Modules\Encounters\Explorer.Encounters.Core\Explorer.Encounters.Core.csproj", "{DEBE051E-7861-47CA-9FCD-D50ABF06D191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Encounters.Infrastructure", "Modules\Encounters\Explorer.Encounters.Infrastructure\Explorer.Encounters.Infrastructure.csproj", "{DE2022C5-DE94-4398-B5B5-77702678A115}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Explorer.Encounters.Infrastructure", "Modules\Encounters\Explorer.Encounters.Infrastructure\Explorer.Encounters.Infrastructure.csproj", "{DE2022C5-DE94-4398-B5B5-77702678A115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Encounters.Tests", "Modules\Encounters\Explorer.Encounters.Tests\Explorer.Encounters.Tests.csproj", "{79FA04A5-2D33-4F8B-99EF-3E0C5C60B77A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Encounters.Tests", "Modules\Encounters\Explorer.Encounters.Tests\Explorer.Encounters.Tests.csproj", "{7B9D0E94-78B8-4969-89E0-3D51F14248D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,10 +143,10 @@ Global
 		{DE2022C5-DE94-4398-B5B5-77702678A115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE2022C5-DE94-4398-B5B5-77702678A115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE2022C5-DE94-4398-B5B5-77702678A115}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79FA04A5-2D33-4F8B-99EF-3E0C5C60B77A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79FA04A5-2D33-4F8B-99EF-3E0C5C60B77A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79FA04A5-2D33-4F8B-99EF-3E0C5C60B77A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79FA04A5-2D33-4F8B-99EF-3E0C5C60B77A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B9D0E94-78B8-4969-89E0-3D51F14248D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B9D0E94-78B8-4969-89E0-3D51F14248D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B9D0E94-78B8-4969-89E0-3D51F14248D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B9D0E94-78B8-4969-89E0-3D51F14248D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -174,7 +174,7 @@ Global
 		{CD9D89B0-EA3F-444E-9754-669597EBE637} = {B8BD4B35-C40B-4BC6-9A8D-7FBE215FD1CE}
 		{DEBE051E-7861-47CA-9FCD-D50ABF06D191} = {CD9D89B0-EA3F-444E-9754-669597EBE637}
 		{DE2022C5-DE94-4398-B5B5-77702678A115} = {CD9D89B0-EA3F-444E-9754-669597EBE637}
-		{79FA04A5-2D33-4F8B-99EF-3E0C5C60B77A} = {CD9D89B0-EA3F-444E-9754-669597EBE637}
+		{7B9D0E94-78B8-4969-89E0-3D51F14248D0} = {CD9D89B0-EA3F-444E-9754-669597EBE637}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C378FE87-3A2E-4BB0-8E39-FB8767789244}
