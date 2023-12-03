@@ -6,26 +6,24 @@ namespace Explorer.Encounters.Core.Domain
     public class Participant: ValueObject
     {
         public string Username { get; init; }
-        public DateTime CompletionDate { get; private set; } = DateTime.MinValue;
 
         public Participant(){}
 
+        [JsonConstructor]
         public Participant(string username)
         {
+            Validate(username);
             Username = username;
         }
 
-        [JsonConstructor]
-        public Participant(string username, DateTime completionDate)
+        private static void Validate(string username)
         {
-            Username = username;
-            CompletionDate = completionDate;
+            if(string.IsNullOrEmpty(username)) throw new ArgumentNullException("Exception! Username should not be empty");
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Username;
-            yield return CompletionDate;
         }
     }
 }

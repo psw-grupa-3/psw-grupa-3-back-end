@@ -16,6 +16,7 @@ namespace Explorer.Encounters.Infrastructure.Database
             modelBuilder.Entity<Encounter>().ToTable("Encounters");
             modelBuilder.Entity<Encounter>().Property(x => x.Location).HasColumnType("jsonb");
             modelBuilder.Entity<Encounter>().Property(x => x.Participants).HasColumnType("jsonb");
+            modelBuilder.Entity<Encounter>().Property(x => x.Completers).HasColumnType("jsonb");
 
         }
 

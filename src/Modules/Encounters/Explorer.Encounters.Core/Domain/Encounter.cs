@@ -14,6 +14,7 @@ namespace Explorer.Encounters.Core.Domain
         public EncounterType Type { get; init; }
         public int Radius { get; init; }
         public List<Participant> Participants { get; set; } = new List<Participant>();
+        public List<Completer> Completers { get; set; } = new List<Completer>();
         public Encounter() {}
 
         public Encounter(string name, string description, Location location, int experience, EncounterStatus status, EncounterType type, int radius)
@@ -30,7 +31,7 @@ namespace Explorer.Encounters.Core.Domain
         public bool Activate(string username, double longitude, double latitude)
         {
             if (Participants.Any(x => x.Username.Equals(username))) return false; //Already activated
-
+            if (Completers.Any(x => x.Username.Equals(username))) return false; //Already completed
             var personsLocation = new Location(longitude, latitude);
             var inProximity =  DistanceCalculator.CalculateDistance(personsLocation, Location) * 1000 <= Radius;
             if (inProximity) Participants.Append(new Participant(username));
