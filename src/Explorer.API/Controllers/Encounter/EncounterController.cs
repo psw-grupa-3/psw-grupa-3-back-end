@@ -39,7 +39,7 @@ namespace Explorer.API.Controllers.Encounter
         [HttpPut("activate/{encounterId:int}")]
         public ActionResult<EncounterDto> Activate([FromRoute] int encounterId, [FromBody] PersonLocationDto locationDto)
         {
-            throw new NotImplementedException("Exception! Method not implemented!");
+            return CreateResponse(_encounterService.Activate(encounterId, locationDto));
         }
 
     }

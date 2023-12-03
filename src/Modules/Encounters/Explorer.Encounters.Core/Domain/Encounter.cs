@@ -10,9 +10,12 @@ namespace Explorer.Encounters.Core.Domain
         public Location Location { get; set; }
         public int Experience { get; set; }
         public EncounterStatus Status { get; set; }
-        public EncounterType Type { get; set; }
+        public EncounterType Type { get; init; }
+        public int Radius { get; init; }
+        public int[] Participants { get; set; } = Array.Empty<int>();
+        public Encounter() {}
 
-        public Encounter(string name, string description, Location location, int experience, EncounterStatus status, EncounterType type)
+        public Encounter(string name, string description, Location location, int experience, EncounterStatus status, EncounterType type, int radius)
         {
             Name = name;
             Description = description;
@@ -20,6 +23,12 @@ namespace Explorer.Encounters.Core.Domain
             Status = status;
             Type = type;
             Experience = experience;
+            Radius = radius;
+        }
+
+        public bool Activate(int personId, double longitude, double latitude)
+        {
+            throw new NotImplementedException();
         }
     }
 }

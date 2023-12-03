@@ -1,1 +1,1 @@
-DELETE FROM encounter."Encounters";
+DELETE FROM encounters."Encounters";
