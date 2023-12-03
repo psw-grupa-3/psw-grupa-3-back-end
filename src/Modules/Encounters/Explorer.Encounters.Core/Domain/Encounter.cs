@@ -1,5 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Encounters.API.Enums;
+using Explorer.Encounters.Core.Domain.Utilities;
 
 namespace Explorer.Encounters.Core.Domain
 {
@@ -12,7 +13,7 @@ namespace Explorer.Encounters.Core.Domain
         public EncounterStatus Status { get; set; }
         public EncounterType Type { get; init; }
         public int Radius { get; init; }
-        public int[] Participants { get; set; } = Array.Empty<int>();
+        public List<Participant> Participants { get; set; } = new List<Participant>();
         public Encounter() {}
 
         public Encounter(string name, string description, Location location, int experience, EncounterStatus status, EncounterType type, int radius)
@@ -26,9 +27,14 @@ namespace Explorer.Encounters.Core.Domain
             Radius = radius;
         }
 
-        public bool Activate(int personId, double longitude, double latitude)
+        public bool Activate(string username, double longitude, double latitude)
         {
-            throw new NotImplementedException();
+            if (Participants.Any(x => x.Username.Equals(username))) return false; //Already activated
+
+            var personsLocation = new Location(longitude, latitude);
+            var inProximity =  DistanceCalculator.CalculateDistance(personsLocation, Location) * 1000 <= Radius;
+            if (inProximity) Participants.Append(new Participant(username));
+            return inProximity; //Activation result, positive/negative
         }
     }
 }

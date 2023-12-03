@@ -19,9 +19,9 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                 using var scope = Factory.Services.CreateScope();
                 var controller = CreateController(scope);
                 var encounterId = -1;
-                var personLocation = new PersonLocationDto
+                var personLocation = new ParticipantLocationDto
                 {
-                    PersonId = -1,
+                    Username = "participant1",
                     Latitude = 45.243952,
                     Longitude = 19.841275
                 };
@@ -42,9 +42,9 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                using var scope = Factory.Services.CreateScope();
                var controller = CreateController(scope);
                var encounterId = -1;
-               var personLocation = new PersonLocationDto
+               var personLocation = new ParticipantLocationDto
                {
-                   PersonId = -1,
+                   Username = "participant1",
                    Latitude = 45.241695,
                    Longitude = 19.842555
                };
@@ -65,9 +65,9 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                using var scope = Factory.Services.CreateScope();
                var controller = CreateController(scope);
                var encounterId = -2;
-               var personLocation = new PersonLocationDto
+               var personLocation = new ParticipantLocationDto
                {
-                   PersonId = -1,
+                   Username = "participant1",
                    Latitude = 45.244230,
                    Longitude = 19.841414
                };

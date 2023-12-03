@@ -13,10 +13,11 @@ namespace Explorer.Encounters.Core.UseCases
         {
         }
 
-        public Result<EncounterDto> Activate(int id, PersonLocationDto personLocation)
+        public Result<EncounterDto> Activate(int id, ParticipantLocationDto participantLocation)
         {
             var encounter = CrudRepository.Get(id);
-            var result = encounter.Activate((int)personLocation.PersonId, personLocation.Longitude, personLocation.Latitude);
+            var result = encounter.Activate(participantLocation.Username, participantLocation.Longitude, participantLocation.Latitude);
+            if (result) CrudRepository.Update(encounter);
             return MapToDto(encounter);
         }
     }

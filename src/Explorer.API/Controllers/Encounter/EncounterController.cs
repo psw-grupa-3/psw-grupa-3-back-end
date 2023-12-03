@@ -37,7 +37,7 @@ namespace Explorer.API.Controllers.Encounter
 
         [Authorize(Policy = "touristPolicy")]
         [HttpPut("activate/{encounterId:int}")]
-        public ActionResult<EncounterDto> Activate([FromRoute] int encounterId, [FromBody] PersonLocationDto locationDto)
+        public ActionResult<EncounterDto> Activate([FromRoute] int encounterId, [FromBody] ParticipantLocationDto locationDto)
         {
             return CreateResponse(_encounterService.Activate(encounterId, locationDto));
         }
