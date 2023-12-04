@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using Explorer.BuildingBlocks.Core.Domain;
-using Microsoft.Extensions.Options;
 
-namespace Explorer.Tours.Core.Domain.Order
+namespace Explorer.Payments.Core.Domain.Order
 {
     public class OrderItem : ValueObject
     {
