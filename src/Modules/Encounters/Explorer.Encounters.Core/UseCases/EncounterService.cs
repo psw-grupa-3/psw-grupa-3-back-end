@@ -3,6 +3,7 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Encounters.API.Dtos;
 using Explorer.Encounters.API.Public;
 using Explorer.Encounters.Core.Domain;
+using FluentResults;
 
 namespace Explorer.Encounters.Core.UseCases
 {
@@ -10,6 +11,14 @@ namespace Explorer.Encounters.Core.UseCases
     {
         public EncounterService(ICrudRepository<Encounter> crudRepository, IMapper mapper) : base(crudRepository, mapper)
         {
+        }
+
+        public Result<EncounterDto> Activate(int id, ParticipantLocationDto participantLocation)
+        {
+            var encounter = CrudRepository.Get(id);
+            var result = encounter.Activate(participantLocation.Username, participantLocation.Longitude, participantLocation.Latitude);
+            if (result) CrudRepository.Update(encounter);
+            return MapToDto(encounter);
         }
     }
 }

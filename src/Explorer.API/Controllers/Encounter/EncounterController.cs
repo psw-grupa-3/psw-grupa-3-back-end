@@ -1,12 +1,10 @@
-﻿using Explorer.Blog.API.Dtos;
-using Explorer.Encounters.API.Dtos;
+﻿using Explorer.Encounters.API.Dtos;
 using Explorer.Encounters.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Encounter
 {
-    //[Authorize(Policy = "administratorPolicy")]
     [Route("api/encounters")]
     public class EncounterController: BaseApiController
     {
@@ -35,6 +33,13 @@ namespace Explorer.API.Controllers.Encounter
         public ActionResult<EncounterDto> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
             return CreateResponse(_encounterService.GetPaged(page, pageSize));
+        }
+
+        [Authorize(Policy = "touristPolicy")]
+        [HttpPut("activate/{encounterId:int}")]
+        public ActionResult<EncounterDto> Activate([FromRoute] int encounterId, [FromBody] ParticipantLocationDto locationDto)
+        {
+            return CreateResponse(_encounterService.Activate(encounterId, locationDto));
         }
 
     }
