@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Explorer.BuildingBlocks.Core.Domain;
-using Microsoft.Extensions.Options;
+﻿using Explorer.BuildingBlocks.Core.Domain;
 
-namespace Explorer.Tours.Core.Domain.Order
+namespace Explorer.Payments.Core.Domain.Order
 {
     public class ShoppingCart : Entity
     {

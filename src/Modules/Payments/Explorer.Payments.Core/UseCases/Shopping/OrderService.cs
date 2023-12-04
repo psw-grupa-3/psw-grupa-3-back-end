@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Shopping;
-using Explorer.Tours.Core.Domain.Order;
-using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Payments.API.Dtos;
+using Explorer.Payments.API.Public.Shopping;
+using Explorer.Payments.Core.Domain.Order;
+using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 
-namespace Explorer.Tours.Core.UseCases.Shopping
+namespace Explorer.Payments.Core.UseCases.Shopping
 {
     public class OrderService : CrudService<ShoppingCartDto, ShoppingCart>, IOrderService
     {

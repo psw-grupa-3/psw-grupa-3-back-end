@@ -1,17 +1,18 @@
 ﻿using Explorer.BuildingBlocks.Infrastructure.Database;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.Core.Domain.Order;
-using Explorer.Tours.Core.Domain.RepositoryInterfaces;
+using Explorer.Payments.API.Dtos;
+using Explorer.Payments.Core.Domain.Order;
+using Explorer.Payments.Core.Domain.RepositoryInterfaces;
+using Explorer.Payments.Infrastructure.Database;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
-    public class OrderRepository : CrudDatabaseRepository<ShoppingCart, ToursContext>, IOrderRepository
+    public class OrderRepository : CrudDatabaseRepository<ShoppingCart, PaymentsContext>, IOrderRepository
     {
-        private readonly ToursContext _context;
+        private readonly PaymentsContext _context;
         private readonly DbSet<ShoppingCart> _dbSet;
-        public OrderRepository(ToursContext dbContext) : base(dbContext) 
+        public OrderRepository(PaymentsContext dbContext) : base(dbContext) 
         {
             _context = dbContext;
             _dbSet = DbContext.Set<ShoppingCart>();
