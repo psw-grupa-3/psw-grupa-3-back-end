@@ -52,14 +52,11 @@ namespace Explorer.Encounters.Core.UseCases
             }
         }
 
-        public Result<SocialEncounterDto> Activate(int id, ParticipantLocationDto participantLocation)
-        {
-            throw new NotImplementedException();
-        }
-
         public Result<SocialEncounterDto> Solve(int id, ParticipantLocationDto participantLocation)
         {
-            throw new NotImplementedException();
+            var encounter = _repository.Get(id);
+            encounter.Solve(participantLocation.Username, participantLocation.Longitude, participantLocation.Latitude);
+            return MapToDto(encounter);
         }
     }
 }

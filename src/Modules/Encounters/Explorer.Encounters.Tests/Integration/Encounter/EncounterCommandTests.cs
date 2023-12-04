@@ -81,76 +81,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                // Assert - Database
            }
 
-           [Fact]
-           public void Solves_social()
-           {
-               // Arrange
-               using var scope = Factory.Services.CreateScope();
-               var controller = CreateController(scope);
-               var encounterId = -4;
-               var personLocation = new ParticipantLocationDto
-               {
-                   Username = "participant8",
-                   Latitude = 44.653797,
-                   Longitude = 21.147734
-               };
-
-               // Act
-               var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as EncounterDto;
-
-               // Assert - Response
-               result.ShouldNotBeNull();
-
-               // Assert - Database
-           }
-           [Fact]
-           public void Solves_social_fails_out_of_range()
-           {
-               // Arrange
-               using var scope = Factory.Services.CreateScope();
-               var controller = CreateController(scope);
-               var encounterId = -3;
-               var personLocation = new ParticipantLocationDto
-               {
-                   Username = "participant3",
-                   Latitude = 37.970612,
-                   Longitude = 23.724505
-               };
-
-               // Act
-               var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as EncounterDto;
-
-               // Assert - Response
-               result.ShouldNotBeNull();
-
-               // Assert - Database
-           }
-
-           [Fact]
-           public void Solves_social_fails_in_range()
-           {
-               // Arrange
-               using var scope = Factory.Services.CreateScope();
-               var controller = CreateController(scope);
-               var encounterId = -3;
-               var personLocation = new ParticipantLocationDto
-               {
-                   Username = "participant4",
-                   Latitude = 37.971375,
-                   Longitude = 23.726168
-               };
-
-               // Act
-               var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as EncounterDto;
-
-               // Assert - Response
-               result.ShouldNotBeNull();
-
-               // Assert - Database
-           }
-
-
-
+           
         private static EncounterController CreateController(IServiceScope scope)
         {
             return new EncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>())

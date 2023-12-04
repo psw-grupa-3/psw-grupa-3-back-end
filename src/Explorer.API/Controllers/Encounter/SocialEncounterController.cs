@@ -36,17 +36,10 @@ namespace Explorer.API.Controllers.Encounter
             }
 
             [Authorize(Policy = "touristPolicy")]
-            [HttpPut("activate/{encounterId:int}")]
-            public ActionResult<SocialEncounterDto> Activate([FromRoute] int encounterId, [FromBody] ParticipantLocationDto locationDto)
-            {
-                return CreateResponse(_encounterService.Activate(encounterId, locationDto));
-            }
-
-            [Authorize(Policy = "touristPolicy")]
             [HttpPut("solve-social/{encounterId:int}")]
-            public ActionResult<List<SocialEncounterDto>> SolveSocial([FromRoute] int encounterId, [FromBody] ParticipantLocationDto locationDto)
+            public ActionResult<SocialEncounterDto> SolveSocial([FromRoute] int encounterId, [FromBody] ParticipantLocationDto locationDto)
             {
-                throw new NotImplementedException("Exception! SolveSocial is not yet implemented!");
+                return CreateResponse(_encounterService.Solve(encounterId, locationDto));
             }
         }
 }
