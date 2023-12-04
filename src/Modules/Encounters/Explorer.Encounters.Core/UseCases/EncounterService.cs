@@ -20,5 +20,10 @@ namespace Explorer.Encounters.Core.UseCases
             if (result) CrudRepository.Update(encounter);
             return MapToDto(encounter);
         }
+
+        public Result<List<EncounterDto>> SolveSocial(int id, ParticipantLocationDto participantLocation)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

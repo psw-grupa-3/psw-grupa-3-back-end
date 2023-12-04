@@ -37,5 +37,11 @@ namespace Explorer.Encounters.Core.Domain
             if (inProximity) Participants.Append(new Participant(username));
             return inProximity; //Activation result, positive/negative
         }
+
+        public List<string> SolveSocial(string username, double longitude, double latitude)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
