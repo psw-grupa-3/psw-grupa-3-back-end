@@ -81,6 +81,29 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                // Assert - Database
            }
 
+           [Fact]
+           public void Solves_social()
+           {
+               // Arrange
+               using var scope = Factory.Services.CreateScope();
+               var controller = CreateController(scope);
+               var encounterId = -1;
+               var personLocation = new ParticipantLocationDto
+               {
+                   Username = "participant1",
+                   Latitude = 45.241695,
+                   Longitude = 19.842555
+               };
+
+               // Act
+               var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as EncounterDto;
+
+               // Assert - Response
+               result.ShouldNotBeNull();
+
+               // Assert - Database
+        }
+
 
 
         private static EncounterController CreateController(IServiceScope scope)
