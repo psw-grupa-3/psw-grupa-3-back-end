@@ -1,5 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Encounters.API.Enums;
+using Explorer.Encounters.Core.Domain.Participants;
 using Explorer.Encounters.Core.Domain.Utilities;
 
 namespace Explorer.Encounters.Core.Domain
@@ -36,11 +37,6 @@ namespace Explorer.Encounters.Core.Domain
             var inProximity =  DistanceCalculator.CalculateDistance(personsLocation, Location) * 1000 <= Radius;
             if (inProximity) Participants.Append(new Participant(username));
             return inProximity; //Activation result, positive/negative
-        }
-
-        public List<string> SolveSocial(string username, double longitude, double latitude)
-        {
-            throw new NotImplementedException();
         }
 
     }

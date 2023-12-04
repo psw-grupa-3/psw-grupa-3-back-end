@@ -1,13 +1,13 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using Newtonsoft.Json;
 
-namespace Explorer.Encounters.Core.Domain
+namespace Explorer.Encounters.Core.Domain.Participants
 {
-    public class Participant: ValueObject
+    public class Participant : ValueObject
     {
         public string Username { get; init; }
 
-        public Participant(){}
+        public Participant() {}
 
         [JsonConstructor]
         public Participant(string username)
@@ -18,7 +18,7 @@ namespace Explorer.Encounters.Core.Domain
 
         private static void Validate(string username)
         {
-            if(string.IsNullOrEmpty(username)) throw new ArgumentNullException("Exception! Username should not be empty");
+            if (string.IsNullOrEmpty(username)) throw new ArgumentNullException("Exception! Username should not be empty");
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

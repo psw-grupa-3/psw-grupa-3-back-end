@@ -26,8 +26,8 @@ namespace Explorer.Encounters.Infrastructure
                 typeof(CrudDatabaseRepository<Encounter, EncountersContext>));
 
             services.AddDbContext<EncountersContext>(opt =>
-                opt.UseNpgsql(DbConnectionStringBuilder.Build("encounter"),
-                    x => x.MigrationsHistoryTable("__EFMigrationsHistory", "encounter")));
+                opt.UseNpgsql(DbConnectionStringBuilder.Build("encounters"),
+                    x => x.MigrationsHistoryTable("__EFMigrationsHistory", "encounters")));
 
         }
 
