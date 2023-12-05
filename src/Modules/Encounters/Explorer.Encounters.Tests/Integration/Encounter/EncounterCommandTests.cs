@@ -81,8 +81,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                // Assert - Database
            }
 
-
-
+           
         private static EncounterController CreateController(IServiceScope scope)
         {
             return new EncounterController(scope.ServiceProvider.GetRequiredService<IEncounterService>())

@@ -12,5 +12,6 @@ namespace Explorer.Encounters.API.Public
         Result<EncounterDto> Update(EncounterDto encounter);
         Result Delete(int encounterId);
         Result<EncounterDto> Activate(int id, ParticipantLocationDto  participantLocation);
+        Result<List<EncounterDto>> SolveSocial(int id, ParticipantLocationDto participantLocation);
     }
 }
