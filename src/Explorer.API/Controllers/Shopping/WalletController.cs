@@ -26,11 +26,17 @@ namespace Explorer.API.Controllers.Shopping
             return CreateResponse(result);
         }
 
-        [HttpPost("createWallet")]
-        public ActionResult<WalletDto> CreateWallet([FromBody] int userId)
+        [HttpPost("createWallet/{userId:int}")]
+        public ActionResult<WalletDto> CreateWallet([FromRoute] int userId)
         {
             var result = _walletService.CreateWallet(userId);
             return CreateResponse(result);
+        }
+
+        [HttpPatch]
+        public ActionResult<WalletDto> AddCoinsToWallet(int userId, int coins)
+        {
+            throw new NotImplementedException();
         }
     }
 }
