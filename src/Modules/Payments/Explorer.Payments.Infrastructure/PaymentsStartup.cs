@@ -36,8 +36,8 @@ public static class PaymentsStartup
             typeof(CrudDatabaseRepository<Payment, PaymentsContext>));
 
         services.AddDbContext<PaymentsContext>(opt =>
-            opt.UseNpgsql(DbConnectionStringBuilder.Build("payment"),
-                x => x.MigrationsHistoryTable("__EFMigrationsHistory", "payment")));
+            opt.UseNpgsql(DbConnectionStringBuilder.Build("payments"),
+                x => x.MigrationsHistoryTable("__EFMigrationsHistory", "payments")));
 
         services.AddScoped(typeof(ICrudRepository<ShoppingCart>), typeof(CrudDatabaseRepository<ShoppingCart, PaymentsContext>));
         services.AddScoped(typeof(ICrudRepository<TourPurchaseToken>), typeof(CrudDatabaseRepository<TourPurchaseToken, PaymentsContext>));
