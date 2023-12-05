@@ -10,6 +10,7 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
         User Create(User user);
         long GetPersonId(long userId);
         void Block(string username);
+        bool ActivateAccount(int id);
         List<UserPerson> GetAll();
         Person GetPersonById(long personId);
     }

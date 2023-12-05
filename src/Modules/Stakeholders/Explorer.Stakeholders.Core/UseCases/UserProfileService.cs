@@ -32,6 +32,6 @@ namespace Explorer.Stakeholders.Core.UseCases
 
             return Result.Fail<UserProfileDto>(FailureCode.NotFound);
 
-        } 
+        }
     }
 }
