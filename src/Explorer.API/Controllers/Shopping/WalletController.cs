@@ -3,13 +3,14 @@ using Explorer.Payments.API.Dtos;
 using Explorer.Payments.API.Public;
 using Explorer.Payments.API.Public.Shopping;
 using Explorer.Payments.Core.UseCases.Shopping;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Shopping
 {
     //[Authorize(Policy = "touristPolicy")]
-    [Route("api/tourist/wallet")]
+    [Route("api/tourist/wallet/")]
     public class WalletController : BaseApiController
     {
         private readonly IWalletService _walletService;
@@ -25,9 +26,11 @@ namespace Explorer.API.Controllers.Shopping
             return CreateResponse(result);
         }
 
-        public ActionResult<WalletDto> CreateWallet(int userId)
+        [HttpPost("createWallet")]
+        public ActionResult<WalletDto> CreateWallet([FromBody] int userId)
         {
-            throw new NotImplementedException();
+            var result = _walletService.CreateWallet(userId);
+            return CreateResponse(result);
         }
     }
 }
