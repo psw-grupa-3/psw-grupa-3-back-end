@@ -2,9 +2,12 @@
 {
     public class OrderItemDto
     {
-        public int IdTour { get; init; }
-        public string Name { get; init; }
-        public double Price { get; init; }
-        public string Image { get; init; }
+        public int IdTour { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public string Image { get; set; }
+        public string CouponCode { get; set; }  
+
+        
     }
 }
