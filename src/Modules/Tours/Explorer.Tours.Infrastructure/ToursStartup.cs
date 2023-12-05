@@ -16,6 +16,7 @@ using Explorer.Tours.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Object = Explorer.Tours.Core.Domain.Object;
+using Explorer.Tours.Core.Domain.Bundles;
 
 namespace Explorer.Tours.Infrastructure;
 
@@ -43,6 +44,7 @@ public static class ToursStartup
         services.AddScoped<ITouristPositionService, TouristPositionService>();
         services.AddScoped<IPublicRegistrationRequestService, PublicRegistrationRequestService>();
         services.AddScoped<ITourExecutionService, TourExecutionService>();
+        services.AddScoped<IBundleService, BundleService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -62,6 +64,7 @@ public static class ToursStartup
         services.AddScoped(typeof(IPublicRegistrationRequestRepository), typeof(PublicRegistrationRequestRepository));
         services.AddScoped(typeof(ITourExecutionRepository), typeof(TourExecutionRepository));
         services.AddScoped(typeof(IProblemRepository), typeof(ProblemRepository));
+        services.AddScoped(typeof(ICrudRepository<Bundle>), typeof(CrudDatabaseRepository<Bundle, ToursContext>));
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),
