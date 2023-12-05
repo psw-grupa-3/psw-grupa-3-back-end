@@ -56,6 +56,7 @@ namespace Explorer.Encounters.Core.UseCases
         {
             var encounter = _repository.Get(id);
             encounter.Solve(participantLocation.Username, participantLocation.Longitude, participantLocation.Latitude);
+            //TODO: Give users additional XP points after completion of the encounter
             return MapToDto(encounter);
         }
     }

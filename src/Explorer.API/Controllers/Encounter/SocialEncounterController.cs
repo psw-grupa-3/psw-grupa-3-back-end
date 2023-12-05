@@ -22,6 +22,13 @@ namespace Explorer.API.Controllers.Encounter
                 return CreateResponse(result);
             }
 
+            [HttpPut]
+            public ActionResult<SocialEncounterDto> Update([FromBody] SocialEncounterDto encounter)
+            {
+                var result = _encounterService.Update(encounter);
+                return CreateResponse(result);
+            }
+
             [HttpGet("get/{encounterId:int}")]
             public ActionResult<SocialEncounterDto> Get([FromRoute] int encounterId)
             {

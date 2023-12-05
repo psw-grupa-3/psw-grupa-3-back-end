@@ -27,11 +27,12 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                 };
 
                 // Act
-                var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as EncounterDto;
+                var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as SocialEncounterDto;
 
                 // Assert - Response
                 result.ShouldNotBeNull();
-
+                result.Participants.Count.ShouldBe(0);
+                
                 // Assert - Database
             }
             [Fact]
@@ -49,10 +50,11 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                 };
 
                 // Act
-                var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as EncounterDto;
+                var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as SocialEncounterDto;
 
                 // Assert - Response
                 result.ShouldNotBeNull();
+                result.Participants.Count.ShouldBe(4);
 
                 // Assert - Database
             }
@@ -72,11 +74,11 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                 };
 
                 // Act
-                var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as EncounterDto;
+                var result = ((ObjectResult)controller.SolveSocial(encounterId, personLocation).Result)?.Value as SocialEncounterDto;
 
                 // Assert - Response
                 result.ShouldNotBeNull();
-
+            
                 // Assert - Database
             }
 
