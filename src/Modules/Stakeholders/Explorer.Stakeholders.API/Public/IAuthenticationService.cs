@@ -7,5 +7,6 @@ public interface IAuthenticationService
 {
     Result<AuthenticationTokensDto> Login(CredentialsDto credentials);
     Result<AuthenticationTokensDto> RegisterTourist(AccountRegistrationDto account);
-  
+    Result<bool> ActivateAccount(int id);
+
 }

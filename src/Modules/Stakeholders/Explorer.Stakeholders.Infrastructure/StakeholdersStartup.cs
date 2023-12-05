@@ -9,6 +9,8 @@ using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Stakeholders.Infrastructure.Authentication;
 using Explorer.Stakeholders.Infrastructure.Database;
 using Explorer.Stakeholders.Infrastructure.Database.Repositories;
+using ISAProject.Modules.Stakeholders.API.Public;
+using ISAProject.Modules.Stakeholders.Core.UseCases;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,6 +39,7 @@ public static class StakeholdersStartup
         services.AddScoped<IClubInvitationService, ClubInvitationService>();
         services.AddScoped<IMembershipRequestService, MembershipRequestService>();
         services.AddScoped<IClubMemberService, ClubMemberService>();
+        services.AddScoped<IEmailService, EmailService>();
 
     }
 

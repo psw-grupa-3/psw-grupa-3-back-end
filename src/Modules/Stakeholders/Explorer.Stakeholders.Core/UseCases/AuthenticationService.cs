@@ -47,7 +47,7 @@ public class AuthenticationService : IAuthenticationService
 
         try
         {
-            var user = _userRepository.Create(new User(account.Username, account.Password, UserRole.Tourist, true, new(), new()));
+            var user = _userRepository.Create(new User(account.Username, account.Password, UserRole.Tourist, true, new(), new(), isProfileActivated: false));
             var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, account.Email, " ", " ", " "));
 
             return _tokenGenerator.GenerateAccessToken(user, person.Id);
@@ -59,6 +59,12 @@ public class AuthenticationService : IAuthenticationService
         }
     }
 
-    
+
+    public Result<bool> ActivateAccount(int id)
+    {
+        var res = _userRepository.ActivateAccount(id);
+        if (res == true) return true;
+        return false;
+    }
 
 }
