@@ -24,5 +24,10 @@ namespace Explorer.API.Controllers.Shopping
             var result = _walletService.Create(wallet);
             return CreateResponse(result);
         }
+
+        public ActionResult<WalletDto> CreateWallet(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
