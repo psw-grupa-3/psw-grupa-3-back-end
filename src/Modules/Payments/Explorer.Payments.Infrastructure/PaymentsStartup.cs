@@ -8,6 +8,7 @@ using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using Explorer.Payments.Core.Mappers;
 using Explorer.Payments.Core.UseCases.Shopping;
 using Explorer.Payments.Infrastructure.Database;
+using Explorer.Payments.Infrastructure.Database.Repositories;
 using Explorer.Tours.Core.UseCases.Shopping;
 using Explorer.Tours.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -40,9 +41,11 @@ public static class PaymentsStartup
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "payments")));
 
         services.AddScoped(typeof(ICrudRepository<ShoppingCart>), typeof(CrudDatabaseRepository<ShoppingCart, PaymentsContext>));
+        services.AddScoped(typeof(ICrudRepository<Wallet>), typeof(CrudDatabaseRepository<Wallet, PaymentsContext>));
         services.AddScoped(typeof(ICrudRepository<TourPurchaseToken>), typeof(CrudDatabaseRepository<TourPurchaseToken, PaymentsContext>));
         services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
         services.AddScoped(typeof(ITourPurchaseTokenRepository), typeof(TourPurchaseTokenRepository));
+        services.AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
 
     }
 
@@ -50,5 +53,6 @@ public static class PaymentsStartup
     {
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
+        services.AddScoped<IWalletService, WalletService>();
     }
 }
