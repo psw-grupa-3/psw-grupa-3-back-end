@@ -6,11 +6,14 @@ namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Guide : Entity
     {
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public string Name { get; init; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public string Surname { get; init; }
-        [NotMapped][JsonProperty]
+        [NotMapped]
+        [JsonProperty]
         public string Email { get; init; }
 
         public Guide() { }
@@ -22,7 +25,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Name = name;
             Surname = surname;
             Email = email;
-            Validate();
+            //Validate();
         }
 
         private void Validate()
