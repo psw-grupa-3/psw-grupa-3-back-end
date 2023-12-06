@@ -1,24 +1,22 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Explorer.Tours.Core.Domain.Tours
 {
     public class TourReview : ValueObject
     {
-        
+
         public int Rating { get; set; }
-        
+
         public string Comment { get; set; }
-       
+
         public int TouristId { get; set; }
-      
+
         public string TouristUsername { get; set; }
-    
+
         public DateTime TourDate { get; set; }
-    
+
         public DateTime CreationDate { get; set; } = DateTime.Now;
-       
+
         public List<string> Images { get; set; }
 
         [Newtonsoft.Json.JsonConstructor]
@@ -39,7 +37,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             if (string.IsNullOrWhiteSpace(Comment)) throw new ArgumentException("Invalid or empty comment");
             if (TouristId == 0) throw new ArgumentException("Invalid TouristId");
             if (string.IsNullOrWhiteSpace(TouristUsername)) throw new ArgumentException("Invalid or empty tourist username");
-            if (TourDate > DateTime.Now) throw new ArgumentException("Invalid tour date.");
+            //if (TourDate > DateTime.Now) throw new ArgumentException("Invalid tour date.");
         }
 
         protected override IEnumerable<object> GetEqualityComponents()

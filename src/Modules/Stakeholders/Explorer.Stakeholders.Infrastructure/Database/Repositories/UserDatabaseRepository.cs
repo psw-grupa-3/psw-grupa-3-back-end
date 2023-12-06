@@ -54,6 +54,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
                 {
                     var userWithPersonInfo = new UserPerson
                     {
+                        UserId = user.Id,
                         Username = user.Username,
                         Email = person.Email,
                         Role = user.GetPrimaryRoleName(),

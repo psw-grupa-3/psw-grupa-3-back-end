@@ -60,12 +60,13 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         }
 
 
-        public Result<ShoppingCartDto>? GetByUserId(int id)
+        public Result<ShoppingCart>? GetByUserId(int userId)
         {
-            var cart = _dbSet.Where(i => i.IdUser == id).FirstOrDefault();
+            var cart = _dbSet.Where(i => i.IdUser == userId).FirstOrDefault();
 
             if(cart == null)
             {
+
                 throw new KeyNotFoundException("Not found: " + id);
             }
             List<OrderItemDto> list = new List<OrderItemDto>();
@@ -80,14 +81,15 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                     CouponCode= item.CouponCode,
                 };
                 list.Add(itemDto);
+
+                var orderItems = new List<OrderItem>();
+                var newCart = new ShoppingCart(userId, orderItems);
+                _dbSet.Add(newCart);
+                DbContext.SaveChanges();
+                return newCart;
+
             }
-            ShoppingCartDto result = new ShoppingCartDto
-            {
-                Id = cart.Id,
-                IdUser = cart.IdUser,
-                Items = list,
-            };
-            return result;
+            return cart;
         }
     }
 }

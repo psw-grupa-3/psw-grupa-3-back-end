@@ -40,21 +40,21 @@ namespace Explorer.API.Controllers.Shopping
             return CreateResponse(result);
         }
 
-        [HttpGet("/get/{userId:int}")]
-        public ActionResult<WalletDto> GetByUserId([FromRoute] int userId)
+        [HttpGet("getByUserId/{userId:int}")]
+        public ActionResult<WalletDto> GetByUserId(int userId)
         {
             var result = _walletService.GetByUserId(userId);
             return CreateResponse(result);
         }
 
-        [HttpPost("/createWallet/{userId:int}")]
-        public ActionResult<WalletDto> CreateWallet([FromRoute] int userId)
+        [HttpGet]
+        public ActionResult<PagedResult<WalletDto>> GetPaged(int page, int pageSize)
         {
-            var result = _walletService.CreateWallet(userId);
+            var result = _walletService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
 
-        [HttpPatch("/addCoins/{userId:int}")]
+        [HttpPatch("addCoins/{userId:int}")]
         public ActionResult<WalletDto> AddCoinsToWallet([FromRoute]int userId, [FromBody]int coins)
         {
             var result = _walletService.AddCoinsToWallet(userId, coins);

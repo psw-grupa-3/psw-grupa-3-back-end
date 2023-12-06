@@ -29,23 +29,28 @@ public class WalletTests : BasePaymentsIntegrationTest
         using var scope = Factory.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
         var controller = CreateController(scope);
-        int userId = 2;
+        var walletDto = new WalletDto
+        {
+            Id = 0,
+            UserId = 1,
+            Coins = 0,
+        };
 
         //Act
-        var createWalletResponse = ((ObjectResult)controller.CreateWallet(userId).Result).Value as WalletDto;
+        var createWalletResponse = ((ObjectResult)controller.Create(walletDto).Result).Value as WalletDto;
 
         // Assert - Response
         createWalletResponse.ShouldNotBeNull();
         createWalletResponse.Id.ShouldBeGreaterThan(0);
-        createWalletResponse.UserId.ShouldBe(userId);
+        createWalletResponse.UserId.ShouldBe(walletDto.UserId);
         createWalletResponse.Coins.ShouldBe(0);
 
         // Assert - Database
         dbContext.ChangeTracker.Clear();
-        var storedWallet = dbContext.Wallets.FirstOrDefault(x => x.UserId == userId);
+        var storedWallet = dbContext.Wallets.FirstOrDefault(x => x.UserId == walletDto.UserId);
         storedWallet.ShouldNotBeNull();
         storedWallet.Id.ShouldBeGreaterThan(0);
-        storedWallet.UserId.ShouldBe(userId);
+        storedWallet.UserId.ShouldBe(walletDto.UserId);
         storedWallet.Coins.ShouldBe(0);
     }
 
@@ -55,7 +60,7 @@ public class WalletTests : BasePaymentsIntegrationTest
         using var scope = Factory.Services.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<PaymentsContext>();
         var controller = CreateController(scope);
-        int userId = 1;
+        int userId = 50;
         int coins = 50;
 
         //Act
@@ -63,7 +68,7 @@ public class WalletTests : BasePaymentsIntegrationTest
 
         // Assert - Response
         createWalletResponse.ShouldNotBeNull();
-        createWalletResponse.Id.ShouldBe(1);
+        createWalletResponse.Id.ShouldBe(50);
         createWalletResponse.UserId.ShouldBe(userId);
         createWalletResponse.Coins.ShouldBe(125);
 
@@ -71,7 +76,7 @@ public class WalletTests : BasePaymentsIntegrationTest
         dbContext.ChangeTracker.Clear();
         var storedWallet = dbContext.Wallets.FirstOrDefault(x => x.UserId == userId);
         storedWallet.ShouldNotBeNull();
-        storedWallet.Id.ShouldBe(1);
+        storedWallet.Id.ShouldBe(50);
         storedWallet.UserId.ShouldBe(userId);
         storedWallet.Coins.ShouldBe(125);
     }

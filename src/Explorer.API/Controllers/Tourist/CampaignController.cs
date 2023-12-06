@@ -8,7 +8,7 @@ namespace Explorer.API.Controllers.Tourist;
 public class CampaignController : BaseApiController
 {
     private readonly ICampaignService _campaignService;
-    public CampaignController(ICampaignService campaignService) 
+    public CampaignController(ICampaignService campaignService)
     {
         _campaignService = campaignService;
     }
@@ -18,6 +18,7 @@ public class CampaignController : BaseApiController
     {
         return CreateResponse(_campaignService.Create(dto));
     }
+
     [HttpGet("getAll")]
     public ActionResult<PagedResult<CampaignDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
     {
@@ -31,4 +32,18 @@ public class CampaignController : BaseApiController
             return BadRequest("Failed to retrieve campaigns.");
         }
     }
- }
+
+    [HttpGet("getAll/{touristId:int}")]
+    public ActionResult<PagedResult<CampaignDto>> GetAllByTouristId(int touristId)
+    {
+        var result = _campaignService.GetByTouristId(touristId);
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        else
+        {
+            return BadRequest($"Failed to retrieve campaigns for tourist id: {touristId}");
+        }
+    }
+}
