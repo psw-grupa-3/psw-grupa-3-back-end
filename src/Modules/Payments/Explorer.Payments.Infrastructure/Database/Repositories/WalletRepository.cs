@@ -45,5 +45,10 @@ namespace Explorer.Payments.Infrastructure.Database.Repositories
             _context.SaveChanges();
             return wallet;
         }
+
+        public Result<Wallet> GetByUserId(int userId)
+        {
+            return _dbSet.FirstOrDefault(x => x.UserId == userId);
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace Explorer.Payments.Core.Domain.RepositoryInterfaces
     {
         Result<Wallet> CreateWallet(int userId);
         Result<Wallet> AddCoinsToWallet(int userId, int coins);
+        Result<Wallet> GetByUserId(int userId);
     }
 }
