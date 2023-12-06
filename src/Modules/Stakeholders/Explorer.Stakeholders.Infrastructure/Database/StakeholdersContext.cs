@@ -1,5 +1,4 @@
-﻿using Explorer.BuildingBlocks.Infrastructure.Database;
-using Explorer.Stakeholders.Core.Domain;
+﻿using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,5 +1,5 @@
 INSERT INTO tours."Campaign"("Id", "JsonObject")
-VALUES (-1, '{
+VALUES (-1, '{{
     "Id": 1,
     "Title": "Title",
     "Tours":[{
@@ -46,12 +46,6 @@ VALUES (-1, '{
             ]
           }
         ],
-        "guide": {
-          "id": 22,
-          "name": "Carlos",
-          "surname": "Gomez",
-          "email": "carlos.gomez@example.com"
-        },
         "authorId": 34,
         "length": 150,
         "publishTime": "2023-10-01T08:00:00.000Z",
@@ -83,12 +77,6 @@ VALUES (-1, '{
             "name": "Hiking"
           }
         ],
-        "guide": {
-          "id": 45,
-          "name": "Helena",
-          "email": "helena.berger@example.com",
-          "surname": "Berger"
-        },
         "price": 350,
         "length": 200,
         "points": [
@@ -154,4 +142,4 @@ VALUES (-1, '{
     "TouristId": 1,
     "Difficult": 3,
     "Length": 5.8
-}')
+}}')

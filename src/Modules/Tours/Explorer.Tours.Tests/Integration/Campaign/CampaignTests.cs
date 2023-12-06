@@ -75,13 +75,13 @@ public class CampaignTests : BaseToursIntegrationTest
                             Images = new List<string> { "review1.jpg" }
                         }
                     },
-                    Guide = new GuideDto
-                    {
-                        Id = 22,
-                        Name = "Carlos",
-                        Surname = "Gomez",
-                        Email = "carlos.gomez@example.com"
-                    },
+                    ////Guide = new GuideDto
+                    //{
+                    //    Id = 22,
+                    //    Name = "Carlos",
+                    //    Surname = "Gomez",
+                    //    Email = "carlos.gomez@example.com"
+                    //},
                     AuthorId = 34,
                     Length = 150,
                     PublishTime = Convert.ToDateTime("2023-10-01T08:00:00.000Z"),
@@ -113,13 +113,13 @@ public class CampaignTests : BaseToursIntegrationTest
                         new TagDto { Name = "Nature" },
                         new TagDto { Name = "Hiking" }
                     },
-                    Guide = new GuideDto
-                    {
-                        Id = 45,
-                        Name = "Helena",
-                        Email = "helena.berger@example.com",
-                        Surname = "Berger"
-                    },
+                    //Guide = new GuideDto
+                    //{
+                    //    Id = 45,
+                    //    Name = "Helena",
+                    //    Email = "helena.berger@example.com",
+                    //    Surname = "Berger"
+                    //},
                     Price = 350,
                     Length = 200,
                     Points = new List<PointDto>
@@ -272,13 +272,13 @@ public class CampaignTests : BaseToursIntegrationTest
                             Images = new List<string> { "review1.jpg" }
                         }
                     },
-                    Guide = new GuideDto
-                    {
-                        Id = 22,
-                        Name = "Carlos",
-                        Surname = "Gomez",
-                        Email = "carlos.gomez@example.com"
-                    },
+                    //Guide = new GuideDto
+                    //{
+                    //    Id = 22,
+                    //    Name = "Carlos",
+                    //    Surname = "Gomez",
+                    //    Email = "carlos.gomez@example.com"
+                    //},
                     AuthorId = 34,
                     Length = 150,
                     PublishTime = Convert.ToDateTime("2023-10-01T08:00:00.000Z"),
@@ -310,13 +310,13 @@ public class CampaignTests : BaseToursIntegrationTest
                         new TagDto { Name = "Nature" },
                         new TagDto { Name = "Hiking" }
                     },
-                    Guide = new GuideDto
-                    {
-                        Id = 45,
-                        Name = "Helena",
-                        Email = "helena.berger@example.com",
-                        Surname = "Berger"
-                    },
+                    //Guide = new GuideDto
+                    //{
+                    //    Id = 45,
+                    //    Name = "Helena",
+                    //    Email = "helena.berger@example.com",
+                    //    Surname = "Berger"
+                    //},
                     Price = 350,
                     Length = 200,
                     Points = new List<PointDto>
@@ -403,7 +403,6 @@ public class CampaignTests : BaseToursIntegrationTest
         {
             ControllerContext = BuildContext("-1")
         };
-        }
+    }
 
 }
-

@@ -1,4 +1,6 @@
-﻿namespace Explorer.Payments.API.Dtos
+﻿using static Explorer.Payments.API.Enums.OrderItemEnums;
+
+namespace Explorer.Payments.API.Dtos
 {
     public class OrderItemDto
     {
@@ -8,6 +10,5 @@
         public string Image { get; set; }
         public string CouponCode { get; set; }  
 
-        
     }
 }

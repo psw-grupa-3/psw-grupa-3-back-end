@@ -4,6 +4,7 @@ using Explorer.Encounters.API.Dtos;
 using Explorer.Encounters.API.Public;
 using Explorer.Encounters.Core.Domain.RepositoryInterfaces;
 using Explorer.Encounters.Core.Domain.SolvingStrategies;
+using Explorer.Stakeholders.API.Internal;
 using FluentResults;
 
 namespace Explorer.Encounters.Core.UseCases
@@ -11,10 +12,12 @@ namespace Explorer.Encounters.Core.UseCases
     public class SocialEncounterService: BaseService<SocialEncounterDto, SocialEncounter>, ISocialEncounterService
     {
         private readonly ISocialEncounterRepository _repository;
+        private readonly IInternalPersonService _personService;
 
-        public SocialEncounterService(IMapper mapper, ISocialEncounterRepository repository) : base(mapper)
+        public SocialEncounterService(IMapper mapper, ISocialEncounterRepository repository, IInternalPersonService personService) : base(mapper)
         {
             _repository = repository;
+            _personService = personService;
         }
 
         public Result<SocialEncounterDto> Get(int id)
@@ -55,8 +58,9 @@ namespace Explorer.Encounters.Core.UseCases
         public Result<SocialEncounterDto> Solve(int id, ParticipantLocationDto participantLocation)
         {
             var encounter = _repository.Get(id);
-            encounter.Solve(participantLocation.Username, participantLocation.Longitude, participantLocation.Latitude);
-            //TODO: Give users additional XP points after completion of the encounter
+            var completers = encounter.Solve(participantLocation.Username, participantLocation.Longitude, participantLocation.Latitude);
+            if (completers.Count > 0) _personService.RewardWithXp(completers.Select(u => u.Username).ToList(), encounter.Experience);
+            _repository.Update(encounter);
             return MapToDto(encounter);
         }
     }

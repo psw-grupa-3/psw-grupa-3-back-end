@@ -1,6 +1,6 @@
 ﻿namespace Explorer.Stakeholders.API.Dtos;
 
-public class UserProfileDto
+public class PersonDto
 {
     public int Id { get; set; }
     public long UserId { get; init; }
@@ -10,5 +10,7 @@ public class UserProfileDto
     public string Picture { get; init; }
     public string Bio { get; init; }
     public string Quote { get; init; }
+    public int Xp { get; init; }
+    public int Level { get; init; }
 
 }

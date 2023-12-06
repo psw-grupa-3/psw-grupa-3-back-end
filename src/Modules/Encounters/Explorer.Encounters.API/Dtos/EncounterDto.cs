@@ -10,6 +10,7 @@ namespace Explorer.Encounters.API.Dtos
         public LocationDto Location { get; set; }
         public int Experience { get; set; }
         public EncounterStatus Status { get; set; }
+        public int Radius { get; set; }
         public EncounterType Type { get; set; }
         public List<ParticipantDto> Participants { get; set; }
         public List<CompleterDto> Completers { get; set; }
