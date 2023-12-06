@@ -35,33 +35,19 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return cart;
         }
 
-        public Result<ShoppingCartDto>? GetByUserId(int id)
+        public Result<ShoppingCart>? GetByUserId(int userId)
         {
-            var cart = _dbSet.Where(i => i.IdUser == id).FirstOrDefault();
+            var cart = _dbSet.Where(i => i.IdUser == userId).FirstOrDefault();
 
             if(cart == null)
             {
-                throw new KeyNotFoundException("Not found: " + id);
+                var orderItems = new List<OrderItem>();
+                var newCart = new ShoppingCart(userId, orderItems);
+                _dbSet.Add(newCart);
+                DbContext.SaveChanges();
+                return newCart;
             }
-            List<OrderItemDto> list = new List<OrderItemDto>();
-            foreach(var item in cart.Items)
-            {
-                OrderItemDto itemDto = new OrderItemDto
-                {
-                    IdTour = item.IdTour,
-                    Name = item.Name,
-                    Price = item.Price,
-                    Image = item.Image,
-                };
-                list.Add(itemDto);
-            }
-            ShoppingCartDto result = new ShoppingCartDto
-            {
-                Id = cart.Id,
-                IdUser = cart.IdUser,
-                Items = list,
-            };
-            return result;
+            return cart;
         }
     }
 }

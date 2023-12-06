@@ -8,6 +8,6 @@ namespace Explorer.Payments.Core.Domain.RepositoryInterfaces
     public interface IOrderRepository : ICrudRepository<ShoppingCart>
     {
         Result<ShoppingCart> AddToCart(OrderItem orderItem, int userId);
-        Result<ShoppingCartDto>? GetByUserId(int id);
+        Result<ShoppingCart> GetByUserId(int id);
     }
 }

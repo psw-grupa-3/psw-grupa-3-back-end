@@ -26,7 +26,8 @@ namespace Explorer.Payments.Core.UseCases.Shopping
 
         public Result<ShoppingCartDto>? GetByIdUser(int id)
         {
-            return _orderRepository.GetByUserId(id);
+            var shoppingCart = _orderRepository.GetByUserId(id);
+            return MapToDto(shoppingCart.Value);
         }
     }
 }
