@@ -9,5 +9,6 @@ namespace Explorer.Payments.Core.Domain.RepositoryInterfaces
     {
         Result<ShoppingCart> AddToCart(OrderItem orderItem, int userId);
         Result<ShoppingCartDto>? GetByUserId(int id);
+
     }
 }

@@ -8,6 +8,7 @@ using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using Explorer.Payments.Core.Mappers;
 using Explorer.Payments.Core.UseCases.Shopping;
 using Explorer.Payments.Infrastructure.Database;
+using Explorer.Payments.Infrastructure.Database.Repositories;
 using Explorer.Tours.Core.UseCases.Shopping;
 using Explorer.Tours.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -44,11 +45,17 @@ public static class PaymentsStartup
         services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
         services.AddScoped(typeof(ITourPurchaseTokenRepository), typeof(TourPurchaseTokenRepository));
 
+        services.AddScoped(typeof(ICrudRepository<Coupon>), typeof(CrudDatabaseRepository<Coupon, PaymentsContext>));
+
+
     }
 
     private static void SetupCore(IServiceCollection services)
     {
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
+        services.AddScoped<ICouponRepository, CouponRepository>();
+        services.AddScoped<ICouponService, CouponService>();
+
     }
 }

@@ -7,13 +7,13 @@ namespace Explorer.Payments.Core.Domain.Order
     {
         public int IdTour { get; init; }
         public string Name { get; init; }
-        public double Price { get; init; }
+        public double Price { get; set; }
         public string Image { get; init; }
         public string CouponCode { get; init; }
 
 
         [JsonConstructor]
-        public OrderItem(int idTour, string name, double price, string image, string couponCode = null)
+        public OrderItem(int idTour, string name, double price, string image, string couponCode )
         {
             IdTour = idTour;
             Name = name;
@@ -37,7 +37,7 @@ namespace Explorer.Payments.Core.Domain.Order
             if (Price < 0) throw new ArgumentException("Invalid price");
             if (IdTour == 0) throw new ArgumentException("Invalid TourId");
             if (Image == string.Empty || Image == null) throw new ArgumentException("Invalid image");
-            if (!string.IsNullOrEmpty(CouponCode) && CouponCode.Length != 8)
+            if (string.IsNullOrEmpty(CouponCode) )
                 throw new ArgumentException("Invalid coupon code");
         }
     }

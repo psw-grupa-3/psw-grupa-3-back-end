@@ -16,5 +16,6 @@ public class PaymentsProfile : Profile
         CreateMap<TourPurchaseToken, TourPurchaseTokenDto>().ForMember(dest => dest.PurchaseTime, opt => opt.MapFrom(src => src.PurchaseTime.ToShortDateString()));
         CreateMap<TourPurchaseTokenDto, TourPurchaseToken>().ReverseMap();
         CreateMap<OrderItemDto, OrderItem>().ReverseMap();
+        CreateMap<CouponDto, Coupon>().ReverseMap();
     }
 }

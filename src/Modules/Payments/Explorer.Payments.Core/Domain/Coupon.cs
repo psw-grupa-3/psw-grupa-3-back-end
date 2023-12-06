@@ -1,18 +1,22 @@
-﻿using System;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using System;
 
 namespace Explorer.Payments.Core.Domain
 {
-    internal class Coupon
+    public class Coupon : Entity
     {
-        
-        public string Code { get; init; }
-        public decimal Discount { get; init; }
-        public DateTime? ExpiryDate { get; init; }
-        public int TourId { get; init; }
-        public int AuthorId { get; init; }
-
        
-        public Coupon(string code, decimal discount, DateTime? expiryDate, int tourId, int authorId)
+        public string Code { get; set; }
+        public double Discount { get; set; }
+        public DateTime? ExpiryDate { get; set; }
+        public int TourId { get; set; }
+        public int AuthorId { get; set; }
+
+        public Coupon()
+        {
+       
+        }
+        public Coupon(string code, double discount, DateTime? expiryDate, int tourId, int authorId)
         {
             Code = code;
             Discount = discount;
