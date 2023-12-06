@@ -11,7 +11,6 @@ namespace Explorer.Payments.Core.Domain.RepositoryInterfaces
 {
     public interface IWalletRepository : ICrudRepository<Wallet>
     {
-       Wallet GetByUserId(int id);
         Result<Wallet> CreateWallet(int userId);
         Result<Wallet> AddCoinsToWallet(int userId, int coins);
         Result<Wallet> GetByUserId(int userId);

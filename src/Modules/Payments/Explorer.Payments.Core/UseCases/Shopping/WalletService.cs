@@ -39,12 +39,6 @@ namespace Explorer.Payments.Core.UseCases.Shopping
         {
             var wallet = _walletRepository.GetByUserId(userId);
             return MapToDto(wallet.Value);
-            _walletRepository = walletRepository;
-            _mapper = mapper;
-        }
-        public Result<WalletDto> GetByIdUser(int id)
-        {
-            return MapToDto(_walletRepository.GetByUserId(id));
         }
     }
 }

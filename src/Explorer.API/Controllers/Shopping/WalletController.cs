@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Shopping
 {
-    [Authorize(Policy = "touristPolicy")]
+    //[Authorize(Policy = "touristPolicy")]
     [Route("api/tourist/wallet")]
     public class WalletController : BaseApiController
     {
@@ -29,7 +29,7 @@ namespace Explorer.API.Controllers.Shopping
         [HttpGet("{id:int}")]
         public ActionResult<WalletDto> GetByIdUser(int id)
         {
-            var result = _walletService.GetByIdUser(id);
+            var result = _walletService.GetByUserId(id);
             return CreateResponse(result);
         }
 

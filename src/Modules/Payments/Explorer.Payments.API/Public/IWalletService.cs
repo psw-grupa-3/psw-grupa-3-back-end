@@ -15,6 +15,5 @@ namespace Explorer.Payments.API.Public
         Result<WalletDto> Update(WalletDto walletDto);
         Result<WalletDto> AddCoinsToWallet(int userId, int coins);
         Result<WalletDto> GetByUserId(int userId);
-        Result<WalletDto> GetByIdUser(int id);
     }
 }
