@@ -8,6 +8,7 @@ namespace Explorer.Payments.API.Dtos
 {
     public class WalletDto
     {
+        public long Id { get; set; }
         public int UserId { get; set; }
         public int Coins { get; set; }
     }

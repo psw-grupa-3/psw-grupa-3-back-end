@@ -11,6 +11,9 @@ namespace Explorer.Payments.API.Public
     public interface IWalletService
     {
         Result<WalletDto> Create(WalletDto walletDto);
+        Result<WalletDto> CreateWallet(int userId);
         Result<WalletDto> Update(WalletDto walletDto);
+        Result<WalletDto> AddCoinsToWallet(int userId, int coins);
+        Result<WalletDto> GetByUserId(int userId);
     }
 }
