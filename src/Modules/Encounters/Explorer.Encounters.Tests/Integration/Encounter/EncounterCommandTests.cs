@@ -21,7 +21,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                 var encounterId = -1;
                 var personLocation = new ParticipantLocationDto
                 {
-                    Username = "participant1",
+                    Username = "turista1",
                     Latitude = 45.243952,
                     Longitude = 19.841275
                 };
@@ -44,7 +44,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                var encounterId = -1;
                var personLocation = new ParticipantLocationDto
                {
-                   Username = "participant1",
+                   Username = "turista1",
                    Latitude = 45.241695,
                    Longitude = 19.842555
                };
@@ -67,7 +67,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                var encounterId = -2;
                var personLocation = new ParticipantLocationDto
                {
-                   Username = "participant1",
+                   Username = "turista1",
                    Latitude = 45.244230,
                    Longitude = 19.841414
                };

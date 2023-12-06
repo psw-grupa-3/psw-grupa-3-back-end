@@ -1,8 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
-using Explorer.Stakeholders.Core.UseCases;
-using Explorer.Tours.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,22 +8,20 @@ namespace Explorer.API.Controllers
 {
     [Authorize(Policy = "allRolesPolicy")]
     [Route("api/userprofile")]
-    public class UserProfileController : BaseApiController
+    public class PersonController : BaseApiController
     {
-        private readonly IUserProfileService _userProfileService;
+        private readonly IPersonService _personService;
         private readonly IUserFollowerService _userFollowerService;
-        private readonly IUserService _userService;
 
-        public UserProfileController(IUserProfileService userProfileService, IUserFollowerService userFollowerService, IUserService userService)
+        public PersonController(IPersonService personService, IUserFollowerService userFollowerService)
         {
-            _userProfileService = userProfileService;
+            _personService = personService;
             _userFollowerService = userFollowerService;
-            _userService = userService;
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<PagedResult<UserProfileDto>> GetUser(int id) {
-            var result = _userProfileService.GetPersonByUserId(id);
+        public ActionResult<PagedResult<PersonDto>> GetPerson(int id) {
+            var result = _personService.GetPersonByUserId(id);
             return CreateResponse(result);
         }
 
@@ -37,14 +33,14 @@ namespace Explorer.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<UserProfileDto> Update([FromBody] UserProfileDto profile)
+        public ActionResult<PersonDto> Update([FromBody] PersonDto personDto)
         {
-            var result = _userProfileService.Update(profile);
+            var result = _personService.Update(personDto);
             return CreateResponse(result);
         }
 
         [HttpPatch("followers/{userId:int}/follow/{userToFollowId:int}")]
-        public ActionResult<UserProfileDto> Follow(int userId, int userToFollowId)
+        public ActionResult<PersonDto> Follow(int userId, int userToFollowId)
         {
             var result = _userFollowerService.Follow(userId, userToFollowId);
             return CreateResponse(result);
@@ -58,7 +54,7 @@ namespace Explorer.API.Controllers
         }
 
         [HttpPatch("followers/{userId:int}/unfollow/{userToUnfollowId:int}")]
-        public ActionResult<UserProfileDto> Unfollow(int userId, int userToUnfollowId)
+        public ActionResult<PersonDto> Unfollow(int userId, int userToUnfollowId)
         {
             var result = _userFollowerService.Unfollow(userId, userToUnfollowId);
             return CreateResponse(result);

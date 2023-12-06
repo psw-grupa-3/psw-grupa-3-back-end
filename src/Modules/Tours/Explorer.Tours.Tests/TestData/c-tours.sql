@@ -1,9 +1,5 @@
 ﻿INSERT INTO tours."Tours"(
-    "Id", "Name", "Description", "Difficult", "Tags", "Status", "Price", "AuthorId")
-VALUES (-1, 'Test', 'Proba', 1, 'city', 0, 0, 1);
-INSERT INTO tours."Tours"(
-    "Id", "Name", "Description", "Difficult", "Tags", "Status", "Price", "AuthorId")
-VALUES (-2, 'Test 2', 'Proba 2', 2, 'city', 0, 0, 1);
-INSERT INTO tours."Tours"(
-    "Id", "Name", "Description", "Difficult", "Tags", "Status", "Price", "AuthorId")
-VALUES (-3, 'Test 3', 'Proba 3', 3, 'city', 0, 0, 1);
+	"Id", "JsonObject")
+	VALUES (1, '{{"Name" : "Test -1", "Description" : "Test -1", "Difficult": 5, "Status": 1, "Price": 15.99, "Points": [], "Tags": [], "RequiredTimes": [],
+	"Reviews": [], "AuthorId" : -11, "Lenght": 10.0, "PublishTime": "2023-11-12T21:39:33.787Z", "ArhiveTime" : null, "Problems": [],
+	"MyOwn": false}}');

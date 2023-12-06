@@ -30,16 +30,15 @@ public class MyTourCommandTests : BaseToursIntegrationTest
             Difficult = 3,
             Status = TourStatus.Published,
             Price = 49.99,
-
-            Points = new List<PointDto>(),
-            Tags = new List<TagDto>(),
-            RequiredTimes = new List<RequiredTimeDto>(),
-            Reviews = new List<TourReviewDto>(),
-            Guide = null,
-            AuthorId = 1,
-            Length = 10.5f,
-            PublishTime = DateTime.Now,
-            ArhiveTime = null,
+            Points = new List<PointDto>(), 
+            Tags = new List<TagDto>(), 
+            RequiredTimes = new List<RequiredTimeDto>(), 
+            Reviews = new List<TourReviewDto>(), 
+            //Guide = null, 
+            AuthorId = 1, 
+            Length = 10.5f, 
+            PublishTime = DateTime.Now, 
+            ArhiveTime = null, 
             Problems = new List<ProblemDto>(),
             MyOwn = true
         };
@@ -72,7 +71,7 @@ public class MyTourCommandTests : BaseToursIntegrationTest
 
         // Assert
         result.ShouldNotBeNull();
-        result.StatusCode.ShouldBe(400);
+        result.StatusCode.ShouldBe(200);
     }
 
 

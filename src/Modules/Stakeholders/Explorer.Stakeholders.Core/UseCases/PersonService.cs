@@ -7,14 +7,14 @@ using FluentResults;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
-    public class UserProfileService : CrudService<UserProfileDto, Person>, IUserProfileService
+    public class PersonService : CrudService<PersonDto, Person>, IPersonService
     {
-        public UserProfileService(ICrudRepository<Person> repository, IMapper mapper) : base(repository, mapper) { }
+        public PersonService(ICrudRepository<Person> repository, IMapper mapper) : base(repository, mapper) { }
 
-        public Result<UserProfileDto> GetPersonByUserId(int id)
+        public Result<PersonDto> GetPersonByUserId(int id)
         {
             //Trying to get all users
-            Result<PagedResult<UserProfileDto>> allUsers = GetPaged(1, int.MaxValue);
+            Result<PagedResult<PersonDto>> allUsers = GetPaged(1, int.MaxValue);
 
             //Cheking if there is any user
             if (allUsers.IsSuccess)
@@ -30,7 +30,7 @@ namespace Explorer.Stakeholders.Core.UseCases
                 }
             }
 
-            return Result.Fail<UserProfileDto>(FailureCode.NotFound);
+            return Result.Fail<PersonDto>(FailureCode.NotFound);
 
         }
     }

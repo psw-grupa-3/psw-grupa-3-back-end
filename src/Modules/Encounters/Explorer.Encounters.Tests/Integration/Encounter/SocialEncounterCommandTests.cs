@@ -21,7 +21,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                 var encounterId = -4;
                 var personLocation = new ParticipantLocationDto
                 {
-                    Username = "participant8",
+                    Username = "turista3@gmail.com",
                     Latitude = 44.653797,
                     Longitude = 21.147734
                 };
@@ -44,7 +44,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                 var encounterId = -3;
                 var personLocation = new ParticipantLocationDto
                 {
-                    Username = "participant3",
+                    Username = "turista3@gmail.com",
                     Latitude = 37.970612,
                     Longitude = 23.724505
                 };
@@ -54,7 +54,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
 
                 // Assert - Response
                 result.ShouldNotBeNull();
-                result.Participants.Count.ShouldBe(4);
+                result.Participants.Count.ShouldBe(3);
 
                 // Assert - Database
             }
@@ -68,7 +68,7 @@ namespace Explorer.Encounters.Tests.Integration.Encounter
                 var encounterId = -3;
                 var personLocation = new ParticipantLocationDto
                 {
-                    Username = "participant4",
+                    Username = "turista2@gmail.com",
                     Latitude = 37.971375,
                     Longitude = 23.726168
                 };

@@ -27,10 +27,11 @@ namespace Explorer.Encounters.Core.Domain.SolvingStrategies
             var isSolved = RequiredParticipants == CurrentlyInRange.Count;
             if (isSolved)
             {
-                var completers = Participants.Select(participant => new Completer(participant.Username, DateTime.Now));
+                List<Completer> completers = Participants.Select(participant => new Completer(participant.Username, DateTime.Now)).ToList();
                 Completers.AddRange(completers);
                 Participants.Clear();
-                return completers.ToList();
+                CurrentlyInRange.Clear();
+                return completers;
             }
             return new List<Completer>();
         }
