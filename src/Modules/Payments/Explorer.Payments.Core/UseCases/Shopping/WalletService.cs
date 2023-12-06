@@ -10,12 +10,14 @@ using Explorer.Payments.API.Public;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using Explorer.Payments.Core.Domain;
 using FluentResults;
+using Explorer.Payments.Core.Domain.Order;
 
 namespace Explorer.Payments.Core.UseCases.Shopping
 {
     public class WalletService : CrudService<WalletDto, Wallet>, IWalletService
     {
         private readonly IWalletRepository _walletRepository;
+        private readonly IMapper _mapper;
         public WalletService(ICrudRepository<Wallet> repository, IMapper mapper, IWalletRepository walletRepository) : base(repository, mapper)
         {
             _walletRepository = walletRepository;
@@ -37,6 +39,12 @@ namespace Explorer.Payments.Core.UseCases.Shopping
         {
             var wallet = _walletRepository.GetByUserId(userId);
             return MapToDto(wallet.Value);
+            _walletRepository = walletRepository;
+            _mapper = mapper;
+        }
+        public Result<WalletDto> GetByIdUser(int id)
+        {
+            return MapToDto(_walletRepository.GetByUserId(id));
         }
     }
 }
