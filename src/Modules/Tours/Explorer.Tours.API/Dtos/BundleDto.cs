@@ -5,6 +5,7 @@ namespace Explorer.Tours.API.Dtos
 {
     public class BundleDto
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public List<TourDto> Tours { get; set; }
