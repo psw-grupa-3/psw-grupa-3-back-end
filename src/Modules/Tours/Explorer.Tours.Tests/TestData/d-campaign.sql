@@ -1,6 +1,7 @@
 INSERT INTO tours."Campaign"("Id", "JsonObject")
 VALUES (-1, '{
     "Id": 1,
+    "Title": "Title",
     "Tours":[{
         "id": 1,
         "name": "Excursion to Spain",

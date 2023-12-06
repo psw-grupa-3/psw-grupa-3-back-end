@@ -1,7 +1,7 @@
-﻿using Explorer.Tours.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace Explorer.API.Controllers.Tourist;
 [Route("api/tourist/campaign")]
@@ -16,6 +16,19 @@ public class CampaignController : BaseApiController
     [HttpPost]
     public ActionResult<CampaignDto> Create([FromBody] CampaignDto dto)
     {
-        throw new NotImplementedException();
+        return CreateResponse(_campaignService.Create(dto));
     }
-}
+    [HttpGet("getAll")]
+    public ActionResult<PagedResult<CampaignDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+    {
+        var result = _campaignService.GetPaged(page, pageSize);
+        if (result.IsSuccess)
+        {
+            return Ok(result.Value);
+        }
+        else
+        {
+            return BadRequest("Failed to retrieve campaigns.");
+        }
+    }
+ }

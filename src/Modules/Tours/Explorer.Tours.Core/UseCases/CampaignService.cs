@@ -8,10 +8,6 @@ using FluentResults;
 namespace Explorer.Tours.Core.UseCases;
 public class CampaignService : CrudService<CampaignDto, Campaign>, ICampaignService
 {
-    private readonly ICrudRepository<Campaign> _campaignRepository;
-    public CampaignService(ICrudRepository<Campaign> repository, IMapper mapper) : base(repository, mapper)
-    {
-        _campaignRepository = repository;
-    }
+    public CampaignService(ICrudRepository<Campaign> repository, IMapper mapper) : base(repository, mapper){    }
 }
 
