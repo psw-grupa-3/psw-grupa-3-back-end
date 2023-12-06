@@ -1,5 +1,7 @@
 ﻿using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 {
     public class PersonRepository: IPersonRepository
@@ -13,9 +15,27 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 
         public List<Person> GetAll(List<string> usernames)
         {
-            var userIds = _dbContext.Users.Where(u => usernames.Any(username => username.Equals(u.Username)))
-                .Select(user => user.Id).Distinct();
-            return _dbContext.People.Where(p => userIds.Any(u => u.Equals(p.UserId))).ToList();
+            var lowercasedUsernames = usernames.Select(username => username.ToLower());
+            var userIds = _dbContext.Users.AsEnumerable()
+                .Where(u => lowercasedUsernames.Contains(u.Username.ToLower()))
+                .Select(user => user.Id)
+                .ToList();
+            return _dbContext.People.ToList()
+                .Where(p => userIds.Contains(p.UserId))
+                .ToList();
+        }
+        public Person Update(Person person)
+        {
+            try
+            {
+                _dbContext.Update(person);
+                _dbContext.SaveChanges();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new KeyNotFoundException(e.Message);
+            }
+            return person;
         }
     }
 }

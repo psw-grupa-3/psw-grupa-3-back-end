@@ -4,6 +4,6 @@ namespace Explorer.Stakeholders.API.Internal
 {
     public interface IInternalPersonService
     {
-        Result RewardWithXp(List<string> usernames);
+        Result RewardWithXp(List<string> usernames, int xp);
     }
 }
