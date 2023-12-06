@@ -1,5 +1,4 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using System.Text.Json.Serialization;
 using static Explorer.Stakeholders.API.Enums.NotificationEnums;
 using static Explorer.Stakeholders.API.Enums.UserEnums;
 
