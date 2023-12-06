@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Explorer.API.Controllers.Author.Tour
 {
-    [Authorize(Policy = "authorPolicy")]
+    //[Authorize(Policy = "authorPolicy")]
     [Route("api/author/tour")]
     public class TourController : BaseApiController
     {
