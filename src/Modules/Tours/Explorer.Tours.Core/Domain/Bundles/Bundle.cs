@@ -83,6 +83,7 @@ namespace Explorer.Tours.Core.Domain.Bundles
             Name = bundle.Name;
             Price = bundle.Price;
             Tours = bundle.Tours;
+            Status = bundle.Status;
         }
 
         public override void ToJson()
