@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Explorer.API.Controllers.Shopping
 {
     //[Authorize(Policy = "touristPolicy")]
-    [Route("api/tourist/wallet/")]
+    [Route("api/tourist/wallet")]
     public class WalletController : BaseApiController
     {
         private readonly IWalletService _walletService;
@@ -20,27 +20,41 @@ namespace Explorer.API.Controllers.Shopping
         }
 
         [HttpPost]
-        public ActionResult<ShoppingCartDto> Create([FromBody] WalletDto wallet)
+        public ActionResult<WalletDto> Create([FromBody] WalletDto wallet)
         {
             var result = _walletService.Create(wallet);
             return CreateResponse(result);
         }
 
-        [HttpGet("get/{userId:int}")]
+        [HttpGet("{id:int}")]
+        public ActionResult<WalletDto> GetByIdUser(int id)
+        {
+            var result = _walletService.GetByUserId(id);
+            return CreateResponse(result);
+        }
+
+        [HttpPut]
+        public ActionResult<WalletDto> Update([FromBody] WalletDto wallet)
+        {
+            var result = _walletService.Update(wallet);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("/get/{userId:int}")]
         public ActionResult<WalletDto> GetByUserId([FromRoute] int userId)
         {
             var result = _walletService.GetByUserId(userId);
             return CreateResponse(result);
         }
 
-        [HttpPost("createWallet/{userId:int}")]
+        [HttpPost("/createWallet/{userId:int}")]
         public ActionResult<WalletDto> CreateWallet([FromRoute] int userId)
         {
             var result = _walletService.CreateWallet(userId);
             return CreateResponse(result);
         }
 
-        [HttpPatch("addCoins/{userId:int}")]
+        [HttpPatch("/addCoins/{userId:int}")]
         public ActionResult<WalletDto> AddCoinsToWallet([FromRoute]int userId, [FromBody]int coins)
         {
             var result = _walletService.AddCoinsToWallet(userId, coins);
