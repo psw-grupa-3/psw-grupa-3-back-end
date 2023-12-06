@@ -26,7 +26,7 @@ namespace Explorer.Payments.Infrastructure.Database.Repositories
         public Result<Wallet> CreateWallet(int userId)
         {
             var userWallet = _dbSet.FirstOrDefault(x => x.UserId == userId);
-            if (userWallet != null)
+            if (userWallet == null)
             {
                 var wallet = new Wallet(userId, 0);
                 _dbSet.Add(wallet);
