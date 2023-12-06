@@ -2,7 +2,7 @@
 
 namespace Explorer.Stakeholders.API.Internal
 {
-    public interface IInternalProfileService
+    public interface IInternalPersonService
     {
         Result RewardWithXp(List<string> usernames);
     }

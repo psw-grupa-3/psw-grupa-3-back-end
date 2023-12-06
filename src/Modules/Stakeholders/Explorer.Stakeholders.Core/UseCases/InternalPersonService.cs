@@ -4,11 +4,11 @@ using FluentResults;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
-    public class InternalProfileService: IInternalProfileService
+    public class InternalPersonService: IInternalPersonService
     {
-        private readonly IProfileRepository _profileRepository;
+        private readonly IPersonRepository _profileRepository;
 
-        public InternalProfileService(IProfileRepository profileRepository)
+        public InternalPersonService(IPersonRepository profileRepository)
         {
             _profileRepository = profileRepository;
         }

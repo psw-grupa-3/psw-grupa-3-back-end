@@ -1,5 +1,6 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
+using Explorer.Stakeholders.API.Internal;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
@@ -30,7 +31,7 @@ public static class StakeholdersStartup
     {
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<ITokenGenerator, JwtGenerator>();
-        services.AddScoped<IUserProfileService, UserProfileService>();
+        services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserFollowerService, UserFollowerService>();
         services.AddScoped<IUserNotificationService, UserNotificationService>();
@@ -40,6 +41,7 @@ public static class StakeholdersStartup
         services.AddScoped<IMembershipRequestService, MembershipRequestService>();
         services.AddScoped<IClubMemberService, ClubMemberService>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IInternalPersonService, InternalPersonService>();
 
     }
 
@@ -49,7 +51,7 @@ public static class StakeholdersStartup
         services.AddScoped(typeof(ICrudRepository<Club>), typeof(CrudDatabaseRepository<Club, StakeholdersContext>));
 
         services.AddScoped<IUserRepository, UserDatabaseRepository>();
-
+        services.AddScoped<IPersonRepository, PersonRepository>();
         services.AddScoped(typeof(ICrudRepository<User>), typeof(CrudDatabaseRepository<User, StakeholdersContext>));
 
         services.AddScoped(typeof(ICrudRepository<ClubInvitation>), typeof(CrudDatabaseRepository<ClubInvitation,  StakeholdersContext>));

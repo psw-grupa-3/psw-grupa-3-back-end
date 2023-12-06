@@ -2,11 +2,11 @@
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 {
-    public class ProfileRepository: IProfileRepository
+    public class PersonRepository: IPersonRepository
     {
         private readonly StakeholdersContext _dbContext;
 
-        public ProfileRepository(StakeholdersContext dbContext)
+        public PersonRepository(StakeholdersContext dbContext)
         {
             _dbContext = dbContext;
         }
