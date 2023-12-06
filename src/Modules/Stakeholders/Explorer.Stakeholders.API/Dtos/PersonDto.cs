@@ -10,5 +10,7 @@ public class PersonDto
     public string Picture { get; init; }
     public string Bio { get; init; }
     public string Quote { get; init; }
+    public int Xp { get; init; }
+    public int Level { get; init; }
 
 }
