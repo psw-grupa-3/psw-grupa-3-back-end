@@ -15,7 +15,7 @@ namespace Explorer.Tours.Tests.Integration.Tourist;
 public class MyTourCommandTests : BaseToursIntegrationTest
 {
     public MyTourCommandTests(ToursTestFactory factory) : base(factory) { }
-    /*
+
     [Fact]
     public void Creates()
     {
@@ -28,20 +28,21 @@ public class MyTourCommandTests : BaseToursIntegrationTest
             Name = "Katarinina tura",
             Description = "Obilazimo muzeje i parkove.",
             Difficult = 3,
-            Status = TourStatus.Published, 
+            Status = TourStatus.Published,
             Price = 49.99,
 
-            Points = new List<PointDto>(), 
-            Tags = new List<TagDto>(), 
-            RequiredTimes = new List<RequiredTimeDto>(), 
-            Reviews = new List<TourReviewDto>(), 
-            Guide = null, 
-            AuthorId = 1, 
-            Length = 10.5f, 
-            PublishTime = DateTime.Now, 
-            ArhiveTime = null, 
+            Points = new List<PointDto>(),
+            Tags = new List<TagDto>(),
+            RequiredTimes = new List<RequiredTimeDto>(),
+            Reviews = new List<TourReviewDto>(),
+            Guide = null,
+            AuthorId = 1,
+            Length = 10.5f,
+            PublishTime = DateTime.Now,
+            ArhiveTime = null,
             Problems = new List<ProblemDto>(),
-            MyOwn=true};
+            MyOwn = true
+        };
 
         // Act
         var result = ((ObjectResult)controller.Create(newEntity).Result)?.Value as TourDto;
@@ -50,9 +51,9 @@ public class MyTourCommandTests : BaseToursIntegrationTest
         result.ShouldNotBeNull();
         result.Id.ShouldNotBe(0);
         result.Name.ShouldBe(newEntity.Name);
-        
+
         // Assert - Database
-       
+
     }
 
     [Fact]
@@ -74,7 +75,7 @@ public class MyTourCommandTests : BaseToursIntegrationTest
         result.StatusCode.ShouldBe(400);
     }
 
-    
+
     private static TourController CreateController(IServiceScope scope)
     {
         return new TourController(scope.ServiceProvider.GetRequiredService<ITourService>())
@@ -82,5 +83,4 @@ public class MyTourCommandTests : BaseToursIntegrationTest
             ControllerContext = BuildContext("-1")
         };
     }
-    */
 }

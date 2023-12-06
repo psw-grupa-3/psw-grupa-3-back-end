@@ -26,7 +26,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             foreach(var item in shoppingCart.Items)
             {
                 var tokenType = TourPurchaseTokenType.SingleTour;
-                if (item.Type == Payments.API.Enums.OrderItemEnums.OrderItemType.Bundle) tokenType = TourPurchaseTokenType.Bundle;
+                if (item.Type.Equals("Bundle")) tokenType = TourPurchaseTokenType.Bundle;
 
                 var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdType, DateTime.Now.ToUniversalTime(), item.Name, item.Image, tokenType);
                 _dbSet.Add(token);

@@ -4,7 +4,7 @@ namespace Explorer.Payments.API.Dtos
 {
     public class OrderItemDto
     {
-        public OrderItemType Type { get; set; }
+        public string Type { get; set; }
         public int IdType { get; init; }
         public string Name { get; init; }
         public double Price { get; init; }
