@@ -20,5 +20,6 @@ namespace Explorer.Tours.API.Dtos.Tours
         public DateTime? PublishTime { get; set; }
         public DateTime? ArhiveTime { get; set; }
         public List<ProblemDto>? Problems { get; set; }
+        public bool MyOwn { get; set; }
     }
 }

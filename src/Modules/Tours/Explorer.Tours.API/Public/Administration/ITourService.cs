@@ -1,6 +1,7 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos.Tours;
 using FluentResults;
+using System.Drawing;
 
 namespace Explorer.Tours.API.Public.Administration
 {
@@ -22,5 +23,8 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> Get(int id);
         Result<TourDto> GetById(long id);
         Result<List<TourDto>> GetAllPublic();
+
+        Result<List<PointDto>> GetAllPublicPointsForTours();
+        Result<List<TourDto>> FindToursContainingPoints(List<PointDto> pointsToFind);
     }
 }

@@ -1,5 +1,6 @@
 using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Users;
+using Explorer.Tours.API.Dtos.Tours;
 using Microsoft.Spatial;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -44,12 +45,15 @@ namespace Explorer.Tours.Core.Domain.Tours
         [NotMapped]
         [JsonProperty]
         public List<Problem>? Problems { get; private set; } = new List<Problem>();
+        [NotMapped]
+        [JsonProperty]
+        public bool? MyOwn { get; private set; }
 
         public Tour() {}
 
         [JsonConstructor]
         public Tour(string name, string description, int difficult, TourStatus status, Guide guide, double price, float length, DateTime? publishTime,
-            DateTime? arhiveTime, int authorId, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews, List<Problem>? problems)
+            DateTime? arhiveTime, int authorId, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews, List<Problem>? problems, bool myOwn)
         {
             Name = name;
             Description = description;
@@ -67,6 +71,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             ArhiveTime = arhiveTime;
             Problems = problems;
             Validate();
+            MyOwn = myOwn;
         }
 
         private void Validate()
@@ -129,6 +134,12 @@ namespace Explorer.Tours.Core.Domain.Tours
                 }
             }
             return false;
+        }
+
+        public bool AreEqualPoints(PointDto point1, PointDto point2)
+        {
+
+            return point1.Latitude == point2.Latitude && point1.Longitude == point2.Longitude;
         }
 
         public void PublishPoint(string pointName)
@@ -194,6 +205,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             PublishTime = tour.PublishTime;
             ArhiveTime = tour.ArhiveTime;
             Problems = tour.Problems;
+            MyOwn= tour.MyOwn;
         }
     }
 }

@@ -150,5 +150,61 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return tourDto;
         }
 
+
+
+
+        public Result<List<TourDto>> FindToursContainingPoints(List<PointDto> pointsToFind)
+        {
+            if (pointsToFind.Count < 2)
+            {
+                return Result.Fail("Tour must contain at least 2 points.");
+                
+            }
+
+            var searchResults = new List<TourDto>();
+            var allTours = CrudRepository.GetPaged(0, 0).Results;
+
+            foreach (var tour in allTours)
+            {
+                var tourPoints = tour.Points.Select(PointConverter.ToDto).ToList(); 
+
+                
+                bool containsAllPoints = pointsToFind.All(point => tourPoints.Any(tourPoint => tour.AreEqualPoints(point, tourPoint)));
+
+                if (containsAllPoints)
+                {
+                    searchResults.Add(MapToDto(tour));
+                }
+            }
+
+            return searchResults;
+        }
+
+
+        public Result<List<PointDto>> GetAllPublicPointsForTours()
+        {
+            var allTours = CrudRepository.GetPaged(0, 0).Results;
+            var uniquePublicPoints = new HashSet<PointDto>();
+
+            foreach (var tour in allTours)
+            {
+                if ((bool)tour.MyOwn==false)
+                {
+                    var publicPoints = tour.Points.Where(point => point.Public);
+                    foreach (var point in publicPoints)
+                    {
+                        var pointDto = PointConverter.ToDto(point);
+                        if (!uniquePublicPoints.Any(existingPoint => tour.AreEqualPoints(existingPoint, pointDto)))
+                        {
+                            uniquePublicPoints.Add(pointDto);
+                        }
+                    }
+                }
+            }
+
+            return uniquePublicPoints.ToList();
+        }
+
+
     }
 }
