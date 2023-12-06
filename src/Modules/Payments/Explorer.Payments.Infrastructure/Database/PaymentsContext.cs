@@ -1,6 +1,7 @@
 ﻿using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.Order;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace Explorer.Payments.Infrastructure.Database;
 
@@ -21,6 +22,8 @@ public class PaymentsContext : DbContext
         modelBuilder.Entity<Payment>().ToTable("Payments");
         modelBuilder.Entity<ShoppingCart>().Property(item => item.Items).HasColumnType("jsonb");
         modelBuilder.Entity<Wallet>().ToTable("Wallet");
-        modelBuilder.Entity<Sale>().ToTable("Sale");
+        modelBuilder.Entity<Sale>().ToTable("Sales");
+        modelBuilder.Entity<Sale>()
+            .Property(item => item.JsonObject).HasColumnType("jsonb");
     }
 }
