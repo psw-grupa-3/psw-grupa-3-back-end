@@ -4,10 +4,11 @@ namespace Explorer.Payments.API.Dtos
 {
     public class OrderItemDto
     {
-        public string Type { get; set; }
-        public int IdType { get; init; }
-        public string Name { get; init; }
-        public double Price { get; init; }
-        public string Image { get; init; }
+        public int IdTour { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public string Image { get; set; }
+        public string CouponCode { get; set; }  
+
     }
 }

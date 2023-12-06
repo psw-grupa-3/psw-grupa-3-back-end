@@ -49,13 +49,21 @@ public static class PaymentsStartup
         services.AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
         services.AddScoped(typeof(ISaleRepository), typeof(SaleRepository));
 
+        services.AddScoped(typeof(ICrudRepository<Coupon>), typeof(CrudDatabaseRepository<Coupon, PaymentsContext>));
+
+
     }
 
     private static void SetupCore(IServiceCollection services)
     {
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
+
+        services.AddScoped<ICouponRepository, CouponRepository>();
+        services.AddScoped<ICouponService, CouponService>();
+
         services.AddScoped<IWalletService, WalletService>();
         services.AddScoped<ISaleService, SaleService>();
+
     }
 }

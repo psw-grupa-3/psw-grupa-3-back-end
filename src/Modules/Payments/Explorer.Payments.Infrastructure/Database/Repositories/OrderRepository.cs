@@ -30,10 +30,35 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 return newCart;
             }
             cart.Items.Add(orderItem);
+            ApplyDiscount(orderItem, orderItem.CouponCode);
+            
             DbContext.Update(cart);
             DbContext.SaveChanges();
             return cart;
         }
+        private void ApplyDiscount(OrderItem orderItem, string couponCode)
+        {
+            if (orderItem != null && !string.IsNullOrEmpty(couponCode))
+            {
+                var coupon = DbContext.Coupons.FirstOrDefault(c => c.Code == couponCode);
+
+                if (coupon != null && couponCode == orderItem.CouponCode)
+                {
+                    orderItem.Price -= (orderItem.Price * coupon.Discount / 100);
+                }
+                else
+                {
+                    // Handle the case where the coupon code doesn't match the one associated with the order item
+                    // You can throw an exception, log a message, or handle it in any other way
+                }
+            }
+            else
+            {
+                // Handle the case where either orderItem is null or couponCode is empty
+                // You can throw an exception, log a message, or handle it in any other way
+            }
+        }
+
 
         public Result<ShoppingCart>? GetByUserId(int userId)
         {
@@ -41,11 +66,28 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             if(cart == null)
             {
+
+                throw new KeyNotFoundException("Not found: " + id);
+            }
+            List<OrderItemDto> list = new List<OrderItemDto>();
+            foreach(var item in cart.Items)
+            {
+                OrderItemDto itemDto = new OrderItemDto
+                {
+                    IdTour = item.IdTour,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Image = item.Image,
+                    CouponCode= item.CouponCode,
+                };
+                list.Add(itemDto);
+
                 var orderItems = new List<OrderItem>();
                 var newCart = new ShoppingCart(userId, orderItems);
                 _dbSet.Add(newCart);
                 DbContext.SaveChanges();
                 return newCart;
+
             }
             return cart;
         }
