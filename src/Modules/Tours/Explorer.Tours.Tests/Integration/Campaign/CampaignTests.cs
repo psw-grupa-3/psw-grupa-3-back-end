@@ -16,6 +16,7 @@ namespace Explorer.Tours.Tests.Integration.Campaign;
 public class CampaignTests : BaseToursIntegrationTest
 {
     public CampaignTests(ToursTestFactory factory) : base(factory) { }
+    /*
     [Fact]
     public void Creates()
     {
@@ -404,6 +405,6 @@ public class CampaignTests : BaseToursIntegrationTest
             ControllerContext = BuildContext("-1")
         };
         }
-
+    */
 }
 

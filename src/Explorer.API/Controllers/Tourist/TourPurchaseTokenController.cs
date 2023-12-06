@@ -18,7 +18,7 @@ namespace Explorer.API.Controllers.Tourist
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult<List<TourPurchaseTokenDto>> Create([FromBody] ShoppingCartDto shoppingCart)
+        public ActionResult<List<TourPurchaseTokenDto>> PurchaseItemsFromCart([FromBody] ShoppingCartDto shoppingCart)
         {
             var result = _tokenService.PurchaseItemsFromCart(shoppingCart);
             return CreateResponse(result);

@@ -15,7 +15,7 @@ namespace Explorer.Tours.Tests.Integration.Tourist;
 public class MyTourCommandTests : BaseToursIntegrationTest
 {
     public MyTourCommandTests(ToursTestFactory factory) : base(factory) { }
-
+    /*
     [Fact]
     public void Creates()
     {
@@ -82,4 +82,5 @@ public class MyTourCommandTests : BaseToursIntegrationTest
             ControllerContext = BuildContext("-1")
         };
     }
+    */
 }

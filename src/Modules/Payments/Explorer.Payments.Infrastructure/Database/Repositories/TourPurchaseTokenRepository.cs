@@ -5,6 +5,8 @@ using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using Explorer.Payments.Infrastructure.Database;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using static Explorer.Payments.API.Enums.TourPurchaseTokenEnums;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -23,7 +25,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             var retVal = new List<TourPurchaseToken>();
             foreach(var item in shoppingCart.Items)
             {
-                var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdTour, DateTime.Now.ToUniversalTime(), item.Name, item.Image);
+                var tokenType = TourPurchaseTokenType.SingleTour;
+                if (item.Type == Payments.API.Enums.OrderItemEnums.OrderItemType.Bundle) tokenType = TourPurchaseTokenType.Bundle;
+
+                var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdType, DateTime.Now.ToUniversalTime(), item.Name, item.Image, tokenType);
                 _dbSet.Add(token);
                 retVal.Add(token);
             }
@@ -31,11 +36,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             return retVal;
         }
-        public Result<bool> GetToken(int idUser, int idTour)
+        public Result<bool> GetToken(int idUser, int IdType)
         {
             foreach(var token in _dbSet)
             {
-                if(token.TourId == idTour && token.UserId == idUser)
+                if(token.TypeId == IdType && token.UserId == idUser)
                 {
                     return true;
                 }
