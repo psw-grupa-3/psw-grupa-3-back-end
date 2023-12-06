@@ -37,7 +37,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         [NotMapped][JsonProperty]
         public int AuthorId { get; private set; }
         [NotMapped][JsonProperty]
-        public float? Length { get; private set; }
+        public float Length { get; private set; }
         [NotMapped][JsonProperty]
         public DateTime? PublishTime { get; private set; }
         [NotMapped][JsonProperty]

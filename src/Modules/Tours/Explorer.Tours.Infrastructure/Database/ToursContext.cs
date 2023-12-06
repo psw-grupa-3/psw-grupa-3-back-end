@@ -23,6 +23,7 @@ public class ToursContext : DbContext
     public DbSet<Core.Domain.Object> Objects { get; set; }
     public DbSet<TourExecution> TourExecutions { get; set; }
     public DbSet<Bundle> Bundles { get; set; }
+    public DbSet<Campaign> Campaigns { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
