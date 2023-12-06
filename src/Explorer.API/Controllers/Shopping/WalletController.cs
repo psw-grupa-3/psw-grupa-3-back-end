@@ -33,10 +33,11 @@ namespace Explorer.API.Controllers.Shopping
             return CreateResponse(result);
         }
 
-        [HttpPatch]
-        public ActionResult<WalletDto> AddCoinsToWallet(int userId, int coins)
+        [HttpPatch("addCoins/{userId:int}")]
+        public ActionResult<WalletDto> AddCoinsToWallet([FromRoute]int userId, [FromBody]int coins)
         {
-            throw new NotImplementedException();
+            var result = _walletService.AddCoinsToWallet(userId, coins);
+            return CreateResponse(result);
         }
     }
 }

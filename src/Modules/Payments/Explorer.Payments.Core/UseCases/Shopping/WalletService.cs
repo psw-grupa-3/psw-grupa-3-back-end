@@ -26,5 +26,11 @@ namespace Explorer.Payments.Core.UseCases.Shopping
             var wallet = _walletRepository.CreateWallet(userId);
             return MapToDto(wallet.Value);
         }
+
+        public Result<WalletDto> AddCoinsToWallet(int userId, int coins)
+        {
+            var wallet = _walletRepository.AddCoinsToWallet(userId, coins);
+            return MapToDto(wallet.Value);
+        }
     }
 }

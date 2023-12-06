@@ -25,10 +25,25 @@ namespace Explorer.Payments.Infrastructure.Database.Repositories
 
         public Result<Wallet> CreateWallet(int userId)
         {
-            var wallet = new Wallet(userId, 0);
-            _dbSet.Add(wallet);
+            var userWallet = _dbSet.FirstOrDefault(x => x.UserId == userId);
+            if (userWallet != null)
+            {
+                var wallet = new Wallet(userId, 0);
+                _dbSet.Add(wallet);
+                _context.SaveChanges();
+                return _dbSet.FirstOrDefault(x => x.UserId == userId);
+            }
+            return userWallet;
+            
+        }
+
+        public Result<Wallet> AddCoinsToWallet(int userId, int coins)
+        {
+            var wallet = _dbSet.FirstOrDefault(x => x.UserId == userId);
+            wallet.AddCoins(coins);
+            _dbSet.Update(wallet);
             _context.SaveChanges();
-            return _dbSet.FirstOrDefault(x => x.UserId == userId);
+            return wallet;
         }
     }
 }

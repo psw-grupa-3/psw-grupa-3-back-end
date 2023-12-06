@@ -21,5 +21,10 @@ namespace Explorer.Payments.Core.Domain
             UserId = userId;
             Coins = coins;
         }
+
+        public void AddCoins(int coins)
+        {
+            Coins += coins;
+        }
     }
 }
