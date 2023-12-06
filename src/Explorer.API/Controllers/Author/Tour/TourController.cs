@@ -1,7 +1,9 @@
 ﻿using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.API.Public.Administration;
+using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Explorer.API.Controllers.Author.Tour
 {
@@ -16,6 +18,7 @@ namespace Explorer.API.Controllers.Author.Tour
             _tourService = tourService;
         }
 
+        [AllowAnonymous]
         [HttpGet("getAll")]
         public ActionResult<TourDto> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
@@ -27,6 +30,29 @@ namespace Explorer.API.Controllers.Author.Tour
         {
             return CreateResponse(_tourService.GetAllPublic());
         }
+
+        
+        [AllowAnonymous]
+        [HttpGet("getAllPointsForTours")]
+        public ActionResult<List<PointDto>> GetAllPublicPointsForTours()
+        {
+            var result = _tourService.GetAllPublicPointsForTours();
+            return CreateResponse(result);
+        }
+
+        [AllowAnonymous]
+        [HttpPut("findTours")]
+        public ActionResult<List<TourDto>> FindToursContainingPoints([FromBody] List<PointDto> pointsToFind)
+        {
+            if (pointsToFind.Count < 2)
+            {
+                return BadRequest("List must contain at least 2 points.");
+            }
+
+            return CreateResponse(_tourService.FindToursContainingPoints(pointsToFind));
+        }
+
+
 
         [AllowAnonymous]
         [HttpPost]

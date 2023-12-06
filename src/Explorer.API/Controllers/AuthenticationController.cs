@@ -1,6 +1,11 @@
-﻿using Explorer.Stakeholders.API.Dtos;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.UseCases;
+using ISAProject.Modules.Stakeholders.API.Public;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Explorer.API.Controllers;
 
@@ -8,16 +13,18 @@ namespace Explorer.API.Controllers;
 public class AuthenticationController : BaseApiController
 {
     private readonly IAuthenticationService _authenticationService;
-
-    public AuthenticationController(IAuthenticationService authenticationService)
+    private readonly IEmailService _emailService;
+    public AuthenticationController(IAuthenticationService authenticationService, IEmailService emailService)
     {
         _authenticationService = authenticationService;
+        _emailService = emailService;
     }
 
     [HttpPost]
     public ActionResult<AuthenticationTokensDto> RegisterTourist([FromBody] AccountRegistrationDto account)
     {
         var result = _authenticationService.RegisterTourist(account);
+        _emailService.SendActivationEmail(account.Email, result.Value.AccessToken);
         return CreateResponse(result);
     }
 
@@ -27,4 +34,13 @@ public class AuthenticationController : BaseApiController
         var result = _authenticationService.Login(credentials);
         return CreateResponse(result);
     }
+
+    [AllowAnonymous]
+    [HttpPatch("activate/{touristId:int}")]
+    public ActionResult<bool> ActivateAccount([FromRoute] int touristId, [FromBody] CredentialsDto credentialsDto)
+    {
+        var result = _authenticationService.ActivateAccount(touristId);
+        return CreateResponse(result);
+    }
+
 }

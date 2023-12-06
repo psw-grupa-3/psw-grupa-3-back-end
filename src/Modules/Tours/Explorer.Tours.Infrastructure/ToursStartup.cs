@@ -16,6 +16,7 @@ using Explorer.Tours.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Object = Explorer.Tours.Core.Domain.Object;
+using Explorer.Tours.Core.Domain.Bundles;
 
 namespace Explorer.Tours.Infrastructure;
 
@@ -38,11 +39,13 @@ public static class ToursStartup
         services.AddScoped<ITouristEquipmentService, TouristEquipmentService>();
         services.AddScoped<IPreferenceService, PreferenceService>();
         services.AddScoped<ITourService, TourService>();
+        services.AddScoped<ICampaignService, CampaignService>();
         services.AddScoped<IEquipmentManagmentService, EquipmentManagmentService>();
         services.AddScoped<IObjectService, ObjectService>();
         services.AddScoped<ITouristPositionService, TouristPositionService>();
         services.AddScoped<IPublicRegistrationRequestService, PublicRegistrationRequestService>();
         services.AddScoped<ITourExecutionService, TourExecutionService>();
+        services.AddScoped<IBundleService, BundleService>();
     }
 
     private static void SetupInfrastructure(IServiceCollection services)
@@ -52,6 +55,7 @@ public static class ToursStartup
         services.AddScoped(typeof(ICrudRepository<TouristEquipment>), typeof(CrudDatabaseRepository<TouristEquipment, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Preference>), typeof(CrudDatabaseRepository<Preference, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Tour>), typeof(JsonCrudRepo<Tour, ToursContext>));
+        services.AddScoped(typeof(ICrudRepository<Campaign>), typeof(JsonCrudRepo<Campaign, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<EquipmentManagment>), typeof(CrudDatabaseRepository<EquipmentManagment, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<TourExecution>), typeof(JsonCrudRepo<TourExecution, ToursContext>));
         services.AddScoped(typeof(ICrudRepository<Object>), typeof(CrudDatabaseRepository<Object, ToursContext>));
@@ -62,6 +66,7 @@ public static class ToursStartup
         services.AddScoped(typeof(IPublicRegistrationRequestRepository), typeof(PublicRegistrationRequestRepository));
         services.AddScoped(typeof(ITourExecutionRepository), typeof(TourExecutionRepository));
         services.AddScoped(typeof(IProblemRepository), typeof(ProblemRepository));
+        services.AddScoped(typeof(ICrudRepository<Bundle>), typeof(JsonCrudRepo<Bundle, ToursContext>));
 
         services.AddDbContext<ToursContext>(opt =>
             opt.UseNpgsql(DbConnectionStringBuilder.Build("tours"),

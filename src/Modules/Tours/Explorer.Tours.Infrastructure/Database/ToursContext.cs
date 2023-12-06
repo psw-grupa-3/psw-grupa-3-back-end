@@ -5,6 +5,7 @@ using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Microsoft.EntityFrameworkCore;
+using Explorer.Tours.Core.Domain.Bundles;
 
 namespace Explorer.Tours.Infrastructure.Database;
 
@@ -21,6 +22,8 @@ public class ToursContext : DbContext
     public DbSet<PublicRegistrationRequest> PublicRegistrationRequests { get; set; }
     public DbSet<Core.Domain.Object> Objects { get; set; }
     public DbSet<TourExecution> TourExecutions { get; set; }
+    public DbSet<Bundle> Bundles { get; set; }
+    public DbSet<Campaign> Campaigns { get; set; }
     public ToursContext(DbContextOptions<ToursContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,6 +49,10 @@ public class ToursContext : DbContext
 
         modelBuilder.Entity<DbEntity<Problem>>().ToTable("Problems");
         modelBuilder.Entity<DbEntity<Problem>>()
-            .Property(item => item.JsonObject).HasColumnType("jsonb"); 
+            .Property(item => item.JsonObject).HasColumnType("jsonb");
+
+        modelBuilder.Entity<Bundle>().ToTable("Bundles");
+        modelBuilder.Entity<Bundle>()
+            .Property(item => item.JsonObject).HasColumnType("jsonb");
     }
 }

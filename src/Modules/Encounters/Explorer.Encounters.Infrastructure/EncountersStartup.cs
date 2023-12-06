@@ -27,6 +27,7 @@ namespace Explorer.Encounters.Infrastructure
             services.AddScoped(typeof(ICrudRepository<Encounter>),
                 typeof(CrudDatabaseRepository<Encounter, EncountersContext>));
             services.AddScoped(typeof(ISocialEncounterRepository), typeof(SocialEncounterRepository));
+            services.AddScoped(typeof(IHiddenEncounterRepository), typeof(HiddenEncounterRepository));
 
 
 
@@ -40,6 +41,7 @@ namespace Explorer.Encounters.Infrastructure
         {
             services.AddScoped<IEncounterService, EncounterService>();
             services.AddScoped<ISocialEncounterService, SocialEncounterService>();
+            services.AddScoped<IHiddenEncounterService, HiddenEncounterService>();
         }
     }
 }

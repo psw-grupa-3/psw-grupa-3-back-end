@@ -35,7 +35,7 @@ namespace Explorer.Encounters.Core.Domain
             if (Completers.Any(x => x.Username.Equals(username))) return false; //Already completed
             var personsLocation = new Location(longitude, latitude);
             var inProximity =  DistanceCalculator.CalculateDistance(personsLocation, Location) * 1000 <= Radius;
-            if (inProximity) Participants.Append(new Participant(username));
+            if (inProximity) Participants.Add(new Participant(username));
             return inProximity; //Activation result, positive/negative
         }
 

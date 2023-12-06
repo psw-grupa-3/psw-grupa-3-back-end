@@ -4,6 +4,7 @@ using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.Core.Domain;
 using Object = Explorer.Tours.Core.Domain.Object;
 using Explorer.Tours.Core.Domain.Tours;
+using Explorer.Tours.Core.Domain.Bundles;
 
 namespace Explorer.Tours.Core.Mappers;
 
@@ -17,6 +18,7 @@ public class ToursProfile : Profile
         CreateMap<TouristEquipmentDto, TouristEquipment>().ReverseMap();
         CreateMap<PreferenceDto, Preference>().ReverseMap();
         CreateMap<TourDto, Tour>().ReverseMap();
+        CreateMap<CampaignDto, Campaign>().ReverseMap();
         CreateMap<PointDto, Point>().ReverseMap();
         CreateMap<RequiredTimeDto, RequiredTime>().ReverseMap();
         CreateMap<TagDto, Tag>().ReverseMap();
@@ -26,6 +28,7 @@ public class ToursProfile : Profile
         CreateMap<ObjectDto, Object>().ReverseMap();
         CreateMap<TouristPositionDto, TouristPosition>().ReverseMap();
         CreateMap<PublicRegistrationRequestDto, PublicRegistrationRequest>().ReverseMap();
+        CreateMap<BundleDto, Bundle>().ReverseMap();
 
 
         CreateMap<TourDto, Tour>()

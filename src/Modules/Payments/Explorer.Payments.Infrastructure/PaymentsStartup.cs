@@ -41,9 +41,13 @@ public static class PaymentsStartup
                 x => x.MigrationsHistoryTable("__EFMigrationsHistory", "payments")));
 
         services.AddScoped(typeof(ICrudRepository<ShoppingCart>), typeof(CrudDatabaseRepository<ShoppingCart, PaymentsContext>));
+        services.AddScoped(typeof(ICrudRepository<Wallet>), typeof(CrudDatabaseRepository<Wallet, PaymentsContext>));
+        services.AddScoped(typeof(ICrudRepository<Sale>), typeof(JsonCrudRepo<Sale, PaymentsContext>));
         services.AddScoped(typeof(ICrudRepository<TourPurchaseToken>), typeof(CrudDatabaseRepository<TourPurchaseToken, PaymentsContext>));
         services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
         services.AddScoped(typeof(ITourPurchaseTokenRepository), typeof(TourPurchaseTokenRepository));
+        services.AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
+        services.AddScoped(typeof(ISaleRepository), typeof(SaleRepository));
 
         services.AddScoped(typeof(ICrudRepository<Coupon>), typeof(CrudDatabaseRepository<Coupon, PaymentsContext>));
 
@@ -54,8 +58,12 @@ public static class PaymentsStartup
     {
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<ITourPurchaseTokenService, TourPurchaseTokenService>();
+
         services.AddScoped<ICouponRepository, CouponRepository>();
         services.AddScoped<ICouponService, CouponService>();
+
+        services.AddScoped<IWalletService, WalletService>();
+        services.AddScoped<ISaleService, SaleService>();
 
     }
 }

@@ -22,7 +22,7 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
 
         public User? GetActiveByName(string username)
         {
-            return _dbContext.Users.FirstOrDefault(user => user.Username == username && user.IsActive);
+            return _dbContext.Users.FirstOrDefault(user => user.Username == username && user.IsActive && user.IsProfileActivated);
         }
 
         public User Create(User user)
@@ -80,6 +80,21 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             user.IsActive = false;
             _dbContext.Entry(user).State = EntityState.Modified;
             _dbContext.SaveChanges();
+        }
+
+        public bool ActivateAccount(int id)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+
+            user.IsProfileActivated = true;
+            _dbContext.Update(user);
+            _dbContext.SaveChanges();
+            return true;
         }
 
 

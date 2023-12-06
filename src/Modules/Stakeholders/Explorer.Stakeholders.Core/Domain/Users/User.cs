@@ -13,8 +13,9 @@ public class User : Entity
     public bool IsActive { get; set; }
     public List<Follower>? Followers { get; private set; }
     public List<Notification>? Notifications { get; private set; }
+    public bool IsProfileActivated { get; set; }
 
-    public User(string username, string password, UserRole role, bool isActive, List<Follower> followers, List<Notification>? notifications)
+    public User(string username, string password, UserRole role, bool isActive, List<Follower> followers, List<Notification>? notifications, bool isProfileActivated)
     {
         Username = username;
         Password = password;
@@ -23,6 +24,7 @@ public class User : Entity
         Followers = followers;
         Notifications = notifications;
         Validate();
+        IsProfileActivated = isProfileActivated;
     }
 
     private void Validate()

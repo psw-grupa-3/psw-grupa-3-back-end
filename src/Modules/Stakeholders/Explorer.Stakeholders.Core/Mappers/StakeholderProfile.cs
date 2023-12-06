@@ -13,7 +13,6 @@ public class StakeholderProfile : Profile
         CreateMap<UserDto, User>().ReverseMap();
         CreateMap<FollowerDto, Follower>().ReverseMap();
         CreateMap<NotificationDto, Notification>().ReverseMap();
-
         CreateMap<UserAdminDto, User>().ReverseMap();
 
         CreateMap<AppRatingDto, AppRating>().ReverseMap();
