@@ -10,3 +10,9 @@ INSERT INTO encounters."Encounters"(
 INSERT INTO encounters."Encounters"(
 	"Id", "Name", "Description", "Location", "Experience", "Status", "Type", "Radius","Participants", "Completers")
 	VALUES (-4, 'Encounter -4', 'Encounter -4', '{{"Latitude": 44.654072, "Longitude": 21.147595}}', 20, 1, 1, 50, '[{{"Username": "participant1"}}, {{"Username": "participant2"}}, {{"Username": "participant3"}}, {{"Username": "participant4"}}, {{"Username": "participant5"}}, {{"Username": "participant6"}}, {{"Username": "participant7"}}]', '[]');
+INSERT INTO encounters."Encounters"(
+	"Id", "Name", "Description", "Location", "Experience", "Status", "Type",  "Radius", "Participants", "Completers")
+	VALUES (-5, 'Encounter -5', 'Encounter -5', '{{"Latitude": 45.244442, "Longitude": 19.841521}}', 10, 1, 1, 100,'[{{"Username": "participant1"}}]', '[]');
+INSERT INTO encounters."Encounters"(
+	"Id", "Name", "Description", "Location", "Experience", "Status", "Type", "Radius","Participants", "Completers")
+	VALUES (-6, 'Encounter -6', 'Encounter -6', '{{"Latitude": 45.244442, "Longitude": 19.841521}}', 15, 1, 1, 100, '[{{"Username": "participant1"}}]', '[]');
