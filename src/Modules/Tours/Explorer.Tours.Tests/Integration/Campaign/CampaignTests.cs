@@ -403,7 +403,6 @@ public class CampaignTests : BaseToursIntegrationTest
         {
             ControllerContext = BuildContext("-1")
         };
-        }
+    }
 
 }
-
