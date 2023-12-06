@@ -163,17 +163,20 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
             var searchResults = new List<TourDto>();
             var allTours = CrudRepository.GetPaged(0, 0).Results;
-
-            foreach (var tour in allTours)
-            {
-                var tourPoints = tour.Points.Select(PointConverter.ToDto).ToList(); 
-
-                
-                bool containsAllPoints = pointsToFind.All(point => tourPoints.Any(tourPoint => tour.AreEqualPoints(point, tourPoint)));
-
-                if (containsAllPoints)
+         
+           
+                foreach (var tour in allTours)
+            { if ((bool)tour.MyOwn==false) 
                 {
-                    searchResults.Add(MapToDto(tour));
+                    var tourPoints = tour.Points.Select(PointConverter.ToDto).ToList();
+
+
+                    bool containsAllPoints = pointsToFind.All(point => tourPoints.Any(tourPoint => tour.AreEqualPoints(point, tourPoint)));
+
+                    if (containsAllPoints)
+                    {
+                        searchResults.Add(MapToDto(tour));
+                    }
                 }
             }
 
