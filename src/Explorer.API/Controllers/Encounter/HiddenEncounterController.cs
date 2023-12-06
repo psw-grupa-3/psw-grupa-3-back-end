@@ -16,13 +16,38 @@ namespace Explorer.API.Controllers.Encounter
             _encounterService = service;
         }
 
+        [HttpPost]
+        public ActionResult<HiddenEncounterDto> Create([FromBody] HiddenEncounterDto encounter)
+        {
+            var result = _encounterService.Create(encounter);
+            return CreateResponse(result);
+        }
+
+        [HttpPut]
+        public ActionResult<HiddenEncounterDto> Update([FromBody] HiddenEncounterDto encounter)
+        {
+            var result = _encounterService.Update(encounter);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("get/{encounterId:int}")]
+        public ActionResult<HiddenEncounterDto> Get([FromRoute] int encounterId)
+        {
+            return CreateResponse(_encounterService.Get(encounterId));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("getAll")]
+        public ActionResult<HiddenEncounterDto> GetAll()
+        {
+            return CreateResponse(_encounterService.GetAll());
+        }
 
         [Authorize(Policy = "touristPolicy")]
         [HttpPut("solve-hidden/{encounterId:int}")]
         public ActionResult<HiddenEncounterDto> SolveHidden([FromRoute] int encounterId, [FromBody] ParticipantLocationDto locationDto)
         {
-            //return CreateResponse(_encounterService.Solve(encounterId, locationDto));
-            throw new NotImplementedException();
+            return CreateResponse(_encounterService.Solve(encounterId, locationDto));
         }
     }
 }

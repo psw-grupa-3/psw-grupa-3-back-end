@@ -15,4 +15,7 @@ INSERT INTO encounters."Encounters"(
 	VALUES (-5, 'Encounter -5', 'Encounter -5', '{{"Latitude": 45.244442, "Longitude": 19.841521}}', 10, 1, 1, 100,'[{{"Username": "participant1"}}]', '[]');
 INSERT INTO encounters."Encounters"(
 	"Id", "Name", "Description", "Location", "Experience", "Status", "Type", "Radius","Participants", "Completers")
-	VALUES (-6, 'Encounter -6', 'Encounter -6', '{{"Latitude": 45.244442, "Longitude": 19.841521}}', 15, 1, 1, 100, '[{{"Username": "participant1"}}]', '[]');
+	VALUES (-6, 'Encounter -6', 'Encounter -6', '{{"Latitude": 45.244442, "Longitude": 19.841521}}', 15, 1, 1, 100, '[{{"Username": "participant1"}}, {{"Username": "participant2"}}]', '[]');
+INSERT INTO encounters."Encounters"(
+	"Id", "Name", "Description", "Location", "Experience", "Status", "Type", "Radius","Participants", "Completers")
+	VALUES (-7, 'Encounter -7', 'Encounter -7', '{{"Latitude": 35.244442, "Longitude": 29.841521}}', 15, 1, 1, 100, '[{{"Username": "participant1"}}]', '[]');
