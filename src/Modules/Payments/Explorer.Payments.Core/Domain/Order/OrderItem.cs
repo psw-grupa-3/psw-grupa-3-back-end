@@ -15,10 +15,10 @@ namespace Explorer.Payments.Core.Domain.Order
 
 
         [JsonConstructor]
-        public OrderItem(int idTour, string name, double price, string image, string couponCode )
+        public OrderItem(int idType, string name, double price, string image, string couponCode )
 
         {
-            IdType = idTour;
+            IdType = idType;
             Name = name;
             Price = price;
             Image = image;
