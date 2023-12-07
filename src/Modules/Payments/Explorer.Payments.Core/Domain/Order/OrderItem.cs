@@ -18,7 +18,7 @@ namespace Explorer.Payments.Core.Domain.Order
         public OrderItem(int idTour, string name, double price, string image, string couponCode )
 
         {
-            IdType = idType;
+            IdType = idTour;
             Name = name;
             Price = price;
             Image = image;
