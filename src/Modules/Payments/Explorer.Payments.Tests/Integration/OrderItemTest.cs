@@ -23,7 +23,7 @@ public class MyOrderCommandTests : BasePaymentsIntegrationTest
         // Set up initial conditions with valid data
         var orderItemDto = new OrderItemDto
         {
-            IdTour = 1,
+            IdType = 1,
             Name = "Sample Tour",
             Price = 29.99,
             Image = "sample-image.jpg",

@@ -66,28 +66,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
             if(cart == null)
             {
-
-                throw new KeyNotFoundException("Not found: " + id);
-            }
-            List<OrderItemDto> list = new List<OrderItemDto>();
-            foreach(var item in cart.Items)
-            {
-                OrderItemDto itemDto = new OrderItemDto
-                {
-                    IdTour = item.IdTour,
-                    Name = item.Name,
-                    Price = item.Price,
-                    Image = item.Image,
-                    CouponCode= item.CouponCode,
-                };
-                list.Add(itemDto);
-
-                var orderItems = new List<OrderItem>();
+                var orderItems=new List<OrderItem>();
                 var newCart = new ShoppingCart(userId, orderItems);
                 _dbSet.Add(newCart);
                 DbContext.SaveChanges();
                 return newCart;
-
             }
             return cart;
         }

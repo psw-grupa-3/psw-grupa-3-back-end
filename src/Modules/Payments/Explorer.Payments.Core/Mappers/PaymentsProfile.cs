@@ -10,7 +10,7 @@ public class PaymentsProfile : Profile
     public PaymentsProfile()
     {
         CreateMap<ShoppingCartDto, ShoppingCart>()
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(itemDto => new OrderItem(itemDto.IdTour, itemDto.Name, itemDto.Price, itemDto.Image,itemDto.CouponCode))));
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items.Select(itemDto => new OrderItem(itemDto.IdType, itemDto.Name, itemDto.Price, itemDto.Image,itemDto.CouponCode))));
 
 
         CreateMap<ShoppingCart, ShoppingCartDto>()
