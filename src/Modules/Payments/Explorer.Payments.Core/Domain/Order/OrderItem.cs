@@ -40,8 +40,8 @@ namespace Explorer.Payments.Core.Domain.Order
             if (Price < 0) throw new ArgumentException("Invalid price");
             if (IdType == 0) throw new ArgumentException("Invalid TourId");
             if (Image == string.Empty || Image == null) throw new ArgumentException("Invalid image");
-            if (string.IsNullOrEmpty(CouponCode) )
-                throw new ArgumentException("Invalid coupon code");
+            //if (string.IsNullOrEmpty(CouponCode) )
+             //   throw new ArgumentException("Invalid coupon code");
         }
     }
 
