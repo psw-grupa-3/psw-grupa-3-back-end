@@ -1,15 +1,12 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
-using Explorer.Tours.Core.Domain;
+using Explorer.Payments.API.Dtos;
+using Explorer.Payments.API.Public;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist
 {
-    [Authorize(Policy = "touristPolicy")]
+    //[Authorize(Policy = "touristPolicy")]
     [Route("api/tourist/tourPurchaseToken")]
     public class TourPurchaseTokenController : BaseApiController
     {
@@ -21,7 +18,7 @@ namespace Explorer.API.Controllers.Tourist
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult<List<TourPurchaseTokenDto>> Create([FromBody] ShoppingCartDto shoppingCart)
+        public ActionResult<List<TourPurchaseTokenDto>> PurchaseItemsFromCart([FromBody] ShoppingCartDto shoppingCart)
         {
             var result = _tokenService.PurchaseItemsFromCart(shoppingCart);
             return CreateResponse(result);
