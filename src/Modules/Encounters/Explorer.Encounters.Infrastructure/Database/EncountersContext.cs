@@ -8,6 +8,7 @@ namespace Explorer.Encounters.Infrastructure.Database
     {
         public DbSet<Encounter> Encounters { get; set; }
         public DbSet<SocialEncounter> SocialEncounters { get; set; }
+        public DbSet<MiscEncounter> MiscEncounters { get; set; }
         public DbSet<HiddenEncounter> HiddenEncounters { get; set; }
 
         public EncountersContext(DbContextOptions<EncountersContext> options) : base(options) {}
@@ -32,6 +33,11 @@ namespace Explorer.Encounters.Infrastructure.Database
             modelBuilder.Entity<HiddenEncounter>().Property(x => x.Participants).HasColumnType("jsonb");
             modelBuilder.Entity<HiddenEncounter>().Property(x => x.Completers).HasColumnType("jsonb");
             modelBuilder.Entity<HiddenEncounter>().Property(x => x.PointLocation).HasColumnType("jsonb");
+
+            modelBuilder.Entity<MiscEncounter>().ToTable("MiscEncounters");
+            modelBuilder.Entity<MiscEncounter>().Property(x => x.Location).HasColumnType("jsonb");
+            modelBuilder.Entity<MiscEncounter>().Property(x => x.Participants).HasColumnType("jsonb");
+            modelBuilder.Entity<MiscEncounter>().Property(x => x.Completers).HasColumnType("jsonb");
         }
 
     }
