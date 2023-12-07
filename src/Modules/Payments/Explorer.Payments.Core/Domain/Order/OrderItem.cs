@@ -38,7 +38,7 @@ namespace Explorer.Payments.Core.Domain.Order
         {
             if (string.IsNullOrEmpty(Name)) throw new ArgumentException("Invalid name");
             if (Price < 0) throw new ArgumentException("Invalid price");
-            if (IdType == 0) throw new ArgumentException("Invalid TourId");
+            if (IdType == 0) throw new ArgumentException("Invalid TypeId");
             if (Image == string.Empty || Image == null) throw new ArgumentException("Invalid image");
             //if (string.IsNullOrEmpty(CouponCode) )
              //   throw new ArgumentException("Invalid coupon code");

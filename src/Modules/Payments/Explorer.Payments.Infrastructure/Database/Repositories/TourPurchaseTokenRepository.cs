@@ -22,7 +22,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
         public Result<List<TourPurchaseToken>> PurchaseItemsFromCart(ShoppingCartDto shoppingCart)
         {
-            var retVal = new List<TourPurchaseToken>();
             foreach(var item in shoppingCart.Items)
             {
                 var tokenType = TourPurchaseTokenType.SingleTour;
@@ -30,11 +29,10 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
 
                 var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdType, DateTime.Now.ToUniversalTime(), item.Name, item.Image, tokenType);
                 _dbSet.Add(token);
-                retVal.Add(token);
             }
             DbContext.SaveChanges();
 
-            return retVal;
+            return _dbSet.ToList();
         }
         public Result<bool> GetToken(int idUser, int IdType)
         {

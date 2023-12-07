@@ -21,7 +21,8 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         public Result<ShoppingCart> AddToCart(OrderItem orderItem, int userId)
         {
             var cart = _dbSet.Where(x => x.IdUser ==  userId).FirstOrDefault();
-            if(cart == null)
+            ApplyDiscount(orderItem, orderItem.CouponCode);
+            if (cart == null)
             {
                 var orderItems = new List<OrderItem> { orderItem };
                 var newCart = new ShoppingCart(userId, orderItems);
@@ -30,7 +31,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 return newCart;
             }
             cart.Items.Add(orderItem);
-            ApplyDiscount(orderItem, orderItem.CouponCode);
             
             DbContext.Update(cart);
             DbContext.SaveChanges();
@@ -38,11 +38,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         }
         private void ApplyDiscount(OrderItem orderItem, string couponCode)
         {
-            if (orderItem != null && !string.IsNullOrEmpty(couponCode))
+            if (!string.IsNullOrEmpty(couponCode))
             {
                 var coupon = DbContext.Coupons.FirstOrDefault(c => c.Code == couponCode);
 
-                if (coupon != null && couponCode == orderItem.CouponCode)
+                if (coupon != null)
                 {
                     orderItem.Price -= (orderItem.Price * coupon.Discount / 100);
                 }
