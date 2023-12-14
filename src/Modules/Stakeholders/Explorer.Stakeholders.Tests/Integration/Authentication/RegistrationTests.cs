@@ -6,7 +6,6 @@ using Explorer.API.Controllers;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
-using Explorer.Stakeholders.Core.Domain;
 using ISAProject.Modules.Stakeholders.API.Public;
 using static Explorer.Stakeholders.API.Enums.UserEnums;
 
@@ -50,7 +49,7 @@ public class RegistrationTests : BaseStakeholdersIntegrationTest
         storedAccount.ShouldNotBeNull();
 
         storedAccount.Role.ShouldBe(UserRole.Tourist);
-        var storedPerson = dbContext.People.FirstOrDefault(i => i.Email == account.Email);
+        var storedPerson = dbContext.People.FirstOrDefault(i => i.UserId == storedAccount.Id);
         storedPerson.ShouldNotBeNull();
         storedPerson.UserId.ShouldBe(storedAccount.Id);
         storedPerson.Name.ShouldBe(account.Name);

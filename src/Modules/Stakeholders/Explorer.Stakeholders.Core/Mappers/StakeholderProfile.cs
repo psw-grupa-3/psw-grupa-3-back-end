@@ -1,5 +1,4 @@
 using AutoMapper;
-using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Users;
@@ -13,7 +12,6 @@ public class StakeholderProfile : Profile
         CreateMap<UserDto, User>().ReverseMap();
         CreateMap<FollowerDto, Follower>().ReverseMap();
         CreateMap<NotificationDto, Notification>().ReverseMap();
-        CreateMap<UserAdminDto, User>().ReverseMap();
 
         CreateMap<AppRatingDto, AppRating>().ReverseMap();
         CreateMap<ClubRegistrationDto, Club>().ReverseMap();

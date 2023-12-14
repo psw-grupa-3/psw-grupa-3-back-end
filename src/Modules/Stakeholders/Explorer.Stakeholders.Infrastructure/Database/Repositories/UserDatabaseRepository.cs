@@ -1,5 +1,4 @@
-﻿using Explorer.Stakeholders.API.Dtos;
-using Explorer.Stakeholders.Core.Domain;
+﻿using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -42,29 +41,9 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return person.Id;
         }
 
-        public List<UserPerson> GetAll()
+        public List<User> GetAll()
         {
-            var users = _dbContext.Users.ToList();
-            var userWithPersonInfoList = new List<UserPerson>();
-
-            foreach (var user in users)
-            {
-                var person = _dbContext.People.FirstOrDefault(p => p.UserId == user.Id);
-                if (person != null)
-                {
-                    var userWithPersonInfo = new UserPerson
-                    {
-                        UserId = user.Id,
-                        Username = user.Username,
-                        Email = person.Email,
-                        Role = user.GetPrimaryRoleName(),
-                        IsActive = user.IsActive
-                    };
-                    userWithPersonInfoList.Add(userWithPersonInfo);
-                }
-            }
-
-            return userWithPersonInfoList;
+            return _dbContext.Users.ToList();
         }
 
 

@@ -11,7 +11,7 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
         long GetPersonId(long userId);
         void Block(string username);
         bool ActivateAccount(int id);
-        List<UserPerson> GetAll();
+        List<User> GetAll();
         Person GetPersonById(long personId);
     }
 }
