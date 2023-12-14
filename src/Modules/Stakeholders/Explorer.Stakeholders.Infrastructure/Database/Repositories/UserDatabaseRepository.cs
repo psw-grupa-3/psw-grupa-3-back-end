@@ -45,21 +45,18 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
         {
             return _dbContext.Users.ToList();
         }
-
-
-
-        public void Block(string username)
+        public User Update(User user)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Username == username);
-
-            if (user == null)
+            try
             {
-                throw new KeyNotFoundException("User not found.");
+                _dbContext.Update(user);
+                _dbContext.SaveChanges();
             }
-
-            user.IsActive = false;
-            _dbContext.Entry(user).State = EntityState.Modified;
-            _dbContext.SaveChanges();
+            catch (DbUpdateException e)
+            {
+                throw new KeyNotFoundException(e.Message);
+            }
+            return user;
         }
 
         public bool ActivateAccount(int id)

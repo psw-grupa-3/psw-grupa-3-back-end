@@ -17,16 +17,20 @@ namespace Explorer.Stakeholders.Core.UseCases
             _userRepository = userRepository;
         }
 
-        public Result Block(string username)
+        public Result<UserDto> Block(string username)
         {
             try
             {
-                _userRepository.Block(username);
-                return Result.Ok();
+                var user = _userRepository.GetActiveByName(username);
+                if (user == null) return Result.Fail("User not found");
+                user.IsActive = false;
+                _userRepository.Update(user);
+                user.HashPassword();
+                return MapToDto(user);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return Result.Fail($"Error blocking the user: {ex.Message}");
+                return Result.Fail($"Error blocking the user: {e.Message}");
             }
         }
 
