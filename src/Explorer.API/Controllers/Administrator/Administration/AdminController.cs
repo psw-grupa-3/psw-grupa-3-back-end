@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Explorer.Stakeholders.API.Dtos;
-using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Stakeholders.API.Public;
 
 namespace Explorer.API.Controllers.Admin
@@ -17,32 +16,16 @@ namespace Explorer.API.Controllers.Admin
             _userService = userService;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<UserAdminDto>> GetAllUsers()
+        [HttpGet("getAll")]
+        public ActionResult<UserDto> GetAll()
         {
-            var users = _userService.GetAll();
-            return Ok(users);
+            return CreateResponse(_userService.GetAll());
         }
 
-
-        [HttpPost("block-users")]
-        public IActionResult BlockUsers([FromBody] List<string> usernames)
+        [HttpPost("block-user")]
+        public ActionResult<UserDto> BlockUsers([FromQuery] string username)
         {
-            try
-            {
-                foreach (var username in usernames)
-                {
-                    _userService.Block(username);
-                }
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Greška prilikom blokiranja korisnika: {ex.Message}");
-            }
+            return CreateResponse(_userService.Block(username));
         }
-
-
-
     }
 }

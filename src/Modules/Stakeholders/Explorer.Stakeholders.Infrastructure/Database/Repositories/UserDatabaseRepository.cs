@@ -1,5 +1,4 @@
-﻿using Explorer.Stakeholders.API.Dtos;
-using Explorer.Stakeholders.Core.Domain;
+﻿using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -42,45 +41,22 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return person.Id;
         }
 
-        public List<UserPerson> GetAll()
+        public List<User> GetAll()
         {
-            var users = _dbContext.Users.ToList();
-            var userWithPersonInfoList = new List<UserPerson>();
-
-            foreach (var user in users)
-            {
-                var person = _dbContext.People.FirstOrDefault(p => p.UserId == user.Id);
-                if (person != null)
-                {
-                    var userWithPersonInfo = new UserPerson
-                    {
-                        UserId = user.Id,
-                        Username = user.Username,
-                        Email = person.Email,
-                        Role = user.GetPrimaryRoleName(),
-                        IsActive = user.IsActive
-                    };
-                    userWithPersonInfoList.Add(userWithPersonInfo);
-                }
-            }
-
-            return userWithPersonInfoList;
+            return _dbContext.Users.ToList();
         }
-
-
-
-        public void Block(string username)
+        public User Update(User user)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Username == username);
-
-            if (user == null)
+            try
             {
-                throw new KeyNotFoundException("User not found.");
+                _dbContext.Update(user);
+                _dbContext.SaveChanges();
             }
-
-            user.IsActive = false;
-            _dbContext.Entry(user).State = EntityState.Modified;
-            _dbContext.SaveChanges();
+            catch (DbUpdateException e)
+            {
+                throw new KeyNotFoundException(e.Message);
+            }
+            return user;
         }
 
         public bool ActivateAccount(int id)
