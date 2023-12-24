@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+﻿using System.Reflection.Metadata.Ecma335;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
@@ -59,10 +60,23 @@ public class AuthenticationService : IAuthenticationService
         }
     }
 
-
     public Result<bool> ActivateAccount(int id)
     { 
         return _userRepository.ActivateAccount(id);
     }
 
+    public Result<AuthenticationTokensDto> ForgotPassword(string email)
+    {
+        if(!_userRepository.ExistsByEmail(email)) return Result.Fail(FailureCode.NotFound);
+
+        try
+        {
+            var user = _userRepository.GetActiveByEmail(email) ?? throw new ArgumentException("Not found");
+            return _tokenGenerator.GeneratePasswordResetToken(user);
+        }
+        catch (ArgumentException e)
+        {
+            return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+        }
+    }
 }

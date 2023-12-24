@@ -7,6 +7,7 @@ namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
         bool Exists(string username);
         bool ExistsByEmail(string email);
         User? GetActiveByName(string username);
+        User? GetActiveByEmail(string email);
         User Create(User user);
         long GetPersonId(long userId);
         User Update(User user);

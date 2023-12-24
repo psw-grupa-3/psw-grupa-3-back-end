@@ -1,6 +1,5 @@
 ﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
-using ISAProject.Modules.Stakeholders.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +37,15 @@ public class AuthenticationController : BaseApiController
     {
         var result = _authenticationService.ActivateAccount(touristId);
         return CreateResponse(result);
+    }
+
+    [HttpPost("forgotPassword")]
+    public ActionResult<bool> ForgotPassword([FromBody] string email)
+    {
+        var result = _authenticationService.ForgotPassword(email);
+        if (result.IsFailed) return false;
+        _emailService.SendPasswordResetEmail(email, result.Value.AccessToken);
+        return true;
     }
 
 }

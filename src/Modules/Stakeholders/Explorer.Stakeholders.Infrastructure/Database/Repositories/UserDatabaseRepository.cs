@@ -29,6 +29,11 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return _dbContext.Users.FirstOrDefault(user => user.Username == username && user.IsActive && user.IsProfileActivated);
         }
 
+        public User? GetActiveByEmail(string email)
+        {
+            return _dbContext.Users.FirstOrDefault(user => user.Email == email && user.IsActive && user.IsProfileActivated); 
+        }
+
         public User Create(User user)
         {
             _dbContext.Users.Add(user);

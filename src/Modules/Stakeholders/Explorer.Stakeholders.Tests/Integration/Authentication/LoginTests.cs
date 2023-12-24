@@ -5,7 +5,6 @@ using Shouldly;
 using Explorer.API.Controllers;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
-using ISAProject.Modules.Stakeholders.API.Public;
 
 namespace Explorer.Stakeholders.Tests.Integration.Authentication;
 
