@@ -81,7 +81,9 @@ public class AuthenticationService : IAuthenticationService
         try
         {
             var user = _userRepository.GetActiveByEmail(passwordChangeDto.Email) ?? throw new ArgumentException("Not found");
-            return user.ChangePassword(passwordChangeDto.OldPassword, passwordChangeDto.NewPassword);
+            var result = user.ChangePassword(passwordChangeDto.OldPassword, passwordChangeDto.NewPassword);
+            if (result) _userRepository.Update(user);
+            return result;
         }
         catch (Exception e)
         {

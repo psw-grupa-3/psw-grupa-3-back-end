@@ -48,10 +48,10 @@ public class AuthenticationController : BaseApiController
         return true;
     }
 
+    [Authorize(Policy= "allRolesPolicy")]
     [HttpPost("changePassword")]
     public ActionResult<bool> ChangePassword([FromBody] PasswordChangeDto passwordChangeDto)
     {
         return CreateResponse(_authenticationService.ChangePassword(passwordChangeDto));
     }
-
 }
