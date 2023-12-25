@@ -39,9 +39,6 @@ public class AuthenticationService : IAuthenticationService
         }
         return _tokenGenerator.GenerateAccessToken(user, personId);
     }
-
-
-
     public Result<AuthenticationTokensDto> RegisterTourist(AccountRegistrationDto account)
     {
         if (_userRepository.Exists(account.Username)) return Result.Fail(FailureCode.NonUniqueUsername);
@@ -77,6 +74,18 @@ public class AuthenticationService : IAuthenticationService
         catch (ArgumentException e)
         {
             return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+        }
+    }
+    public Result<bool> ChangePassword(PasswordChangeDto passwordChangeDto)
+    {
+        try
+        {
+            var user = _userRepository.GetActiveByEmail(passwordChangeDto.Email) ?? throw new ArgumentException("Not found");
+            return user.ChangePassword(passwordChangeDto.OldPassword, passwordChangeDto.NewPassword);
+        }
+        catch (Exception e)
+        {
+            return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
         }
     }
 }

@@ -82,6 +82,13 @@ public class User : Entity
         }
     }
 
+    public bool ChangePassword(string oldPassword, string newPassword)
+    {
+        if(Password != oldPassword || Password == newPassword || string.IsNullOrEmpty(newPassword)) return false;
+        Password = newPassword;
+        return true;
+    }
+
     public void HashPassword()
     {
         using (SHA256 sha256 = SHA256.Create())
