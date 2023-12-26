@@ -39,8 +39,8 @@ public class AuthenticationController : BaseApiController
         return CreateResponse(result);
     }
 
-    [HttpPost("forgotPassword")]
-    public ActionResult<bool> ForgotPassword([FromBody] string email)
+    [HttpGet("forgotPassword")]
+    public ActionResult<bool> ForgotPassword([FromQuery] string email)
     {
         var result = _authenticationService.ForgotPassword(email);
         if (result.IsFailed) return false;

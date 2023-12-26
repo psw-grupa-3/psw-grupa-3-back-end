@@ -77,9 +77,9 @@ public class User : Entity
         }
     }
 
-    public bool ChangePassword(string oldPassword, string newPassword)
+    public bool ChangePassword(string newPassword)
     {
-        if (!VerifyPassword(oldPassword) || VerifyPassword(newPassword) || string.IsNullOrEmpty(newPassword))
+        if (VerifyPassword(newPassword) || string.IsNullOrEmpty(newPassword))
             return false;
         SecurePassword(newPassword);
         return true;
