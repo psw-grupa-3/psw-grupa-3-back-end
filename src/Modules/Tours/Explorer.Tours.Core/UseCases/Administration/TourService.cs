@@ -10,18 +10,23 @@ using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
 using System.Xml.Linq;
+using Explorer.Stakeholders.Core.UseCases;
+using Explorer.Stakeholders.API.Public;
+using System.Linq;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
     public class TourService : CrudService<TourDto,Tour>, ITourService
     {
-
+        
         private readonly IProblemRepository _problemRepository;
         private readonly ICrudRepository<TourExecution> _tourExecutionRepository;
-        public TourService(ICrudRepository<Tour> repository, IProblemRepository problemRepository, ICrudRepository<TourExecution> tourExecutionRepository, IMapper mapper) : base(repository, mapper) 
+        private readonly IUserFollowerService _userFollowerService;
+        public TourService(ICrudRepository<Tour> repository, IProblemRepository problemRepository, ICrudRepository<TourExecution> tourExecutionRepository, IUserFollowerService userFollowerService, IMapper mapper) : base(repository, mapper) 
         {
             _tourExecutionRepository = tourExecutionRepository;
             _problemRepository = problemRepository;
+            _userFollowerService = userFollowerService;
         }
 
         public Result<TourDto> PublishTour(long id)
@@ -206,6 +211,50 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
 
             return uniquePublicPoints.ToList();
+        }
+
+
+        public Result<List<TourDto>> GetToursReviewedByUsersIFollow(int currentUserId, int ratedTourId)
+        {
+            var allUsersResult = _userFollowerService.GetAll();
+            if (!allUsersResult.IsSuccess)
+            {
+                return Result.Fail<List<TourDto>>("Unable to retrieve users.");
+            }
+
+            var usersIFollowIds = allUsersResult.Value
+                                    .Where(user => user.Followers.Any(follower => follower.UserId == currentUserId))
+                                    .Select(user => user.Id)
+                                    .ToList();
+
+
+            var allTours = GetAllPublic().Value;
+
+            var ratedToursByCurrentUser = allTours
+                                    .Where(tour => tour.Reviews.Any(review => review.TouristId == currentUserId))
+                                    .Select(tour => tour.Id)
+                                    .ToList();
+
+            List<int> usersWhoReviewedSameTour = new List<int>();
+            var ratedTour = allTours.FirstOrDefault(tour => tour.Id == ratedTourId);
+            if (ratedTour != null)
+            {
+                foreach (var review in ratedTour.Reviews)
+                {
+                    if (usersIFollowIds.Contains(review.TouristId))
+                    {
+                        usersWhoReviewedSameTour.Add(review.TouristId);
+                    }
+                }
+            }
+
+            var filteredTours = allTours.Where(tour =>
+                tour.Reviews.Any(review => usersWhoReviewedSameTour.Contains(review.TouristId)) &&
+                !ratedToursByCurrentUser.Contains(tour.Id) &&
+                tour.Id != ratedTourId).ToList();
+
+            return filteredTours;
+            
         }
 
 
