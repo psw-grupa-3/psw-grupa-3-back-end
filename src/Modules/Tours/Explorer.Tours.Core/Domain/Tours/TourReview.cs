@@ -33,10 +33,10 @@ namespace Explorer.Tours.Core.Domain.Tours
         }
         private void Validate()
         {
-            if (Rating < 1 || Rating > 5) throw new ArgumentException("Invalid rating");
-            if (string.IsNullOrWhiteSpace(Comment)) throw new ArgumentException("Invalid or empty comment");
-            if (TouristId == 0) throw new ArgumentException("Invalid TouristId");
-            if (string.IsNullOrWhiteSpace(TouristUsername)) throw new ArgumentException("Invalid or empty tourist username");
+            //if (Rating < 1 || Rating > 5) throw new ArgumentException("Invalid rating");
+            //if (string.IsNullOrWhiteSpace(Comment)) throw new ArgumentException("Invalid or empty comment");
+            //if (TouristId == 0) throw new ArgumentException("Invalid TouristId");
+            //if (string.IsNullOrWhiteSpace(TouristUsername)) throw new ArgumentException("Invalid or empty tourist username");
             //if (TourDate > DateTime.Now) throw new ArgumentException("Invalid tour date.");
         }
 

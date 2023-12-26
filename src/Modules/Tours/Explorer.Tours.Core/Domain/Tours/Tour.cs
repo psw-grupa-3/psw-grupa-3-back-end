@@ -42,9 +42,9 @@ namespace Explorer.Tours.Core.Domain.Tours
         public DateTime? PublishTime { get; private set; }
         [NotMapped][JsonProperty]
         public DateTime? ArhiveTime { get; private set; }
-        [NotMapped]
-        [JsonProperty]
-        public List<Problem>? Problems { get; private set; } = new List<Problem>();
+        //[NotMapped]
+        //[JsonProperty]
+        //public List<Problem>? Problems { get; private set; } = new List<Problem>();
         [NotMapped]
         [JsonProperty]
         public bool? MyOwn { get; private set; }
@@ -69,7 +69,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             Length = length;
             PublishTime = publishTime;
             ArhiveTime = arhiveTime;
-            Problems = problems;
+            //Problems = problems;
             Validate();
             MyOwn = myOwn;
         }
@@ -181,9 +181,16 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         public override void ToJson()
         {
-            JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ??
+            var settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+            };
+
+            JsonObject = JsonConvert.SerializeObject(this, settings) ??
                          throw new JsonSerializationException("Exception! Could not serialize object!");
         }
+
         public override void FromJson()
         {
             var tour = JsonConvert.DeserializeObject<Tour>(JsonObject ??
@@ -204,7 +211,7 @@ namespace Explorer.Tours.Core.Domain.Tours
             AuthorId = tour.AuthorId;
             PublishTime = tour.PublishTime;
             ArhiveTime = tour.ArhiveTime;
-            Problems = tour.Problems;
+            //Problems = tour.Problems;
             MyOwn= tour.MyOwn;
         }
     }

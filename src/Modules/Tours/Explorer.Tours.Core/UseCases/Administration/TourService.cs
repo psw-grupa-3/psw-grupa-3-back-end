@@ -56,7 +56,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
 
                 var currentProblem = ProblemConverter.ToDomain(problem);
-                tour.Problems.Add(currentProblem);
+                //tour.Problems.Add(currentProblem);
                 CrudRepository.Update(tour);
 
                 return MapToDto(tour);

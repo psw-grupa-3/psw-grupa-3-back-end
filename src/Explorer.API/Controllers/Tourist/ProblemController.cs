@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Public.Administration;
-using Explorer.Tours.Core.UseCases.Administration;
 using Explorer.Tours.API.Dtos.Tours;
-using Explorer.Stakeholders.API.Dtos;
 using Explorer.Tours.Core.Domain.RepositoryInterfaces;
-using Explorer.Tours.Core.Domain.Tours;
-using Newtonsoft.Json;
-using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Stakeholders.API.Public;
 
 namespace Explorer.API.Controllers.Tourist

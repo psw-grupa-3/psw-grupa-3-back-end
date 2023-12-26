@@ -31,30 +31,30 @@ public class ToursProfile : Profile
         CreateMap<BundleDto, Bundle>().ReverseMap();
 
 
-        CreateMap<TourDto, Tour>()
-            .ForMember(dest => dest.Problems, opt =>
-                opt.MapFrom(src =>
-                    src.Problems.Select(x =>
-                        new Problem(x.Id, x.Category, x.Priority, x.Description, x.Time, x.TourId, x.TouristId, x.AuthorsSolution, x.IsSolved, x.UnsolvedProblemComment, x.Deadline)
-                        )));
+        //CreateMap<TourDto, Tour>()
+        //    .ForMember(dest => dest.Problems, opt =>
+        //        opt.MapFrom(src =>
+        //            src.Problems.Select(x =>
+        //                new Problem(x.Id, x.Category, x.Priority, x.Description, x.Time, x.TourId, x.TouristId, x.AuthorsSolution, x.IsSolved, x.UnsolvedProblemComment, x.Deadline)
+        //                )));
 
-        CreateMap<Tour, TourDto>()
-            .ForMember(dest => dest.Problems, opt =>
-                opt.MapFrom(src =>
-                    src.Problems.Select(x =>
-                        new ProblemDto
-                        {
-                            Category = x.Category,
-                            Priority = x.Priority,
-                            Description = x.Description,
-                            Time = x.Time,
-                            TourId = (int)x.TourId,
-                            TouristId = (int)x.TouristId,
-                            AuthorsSolution = x.AuthorsSolution,
-                            IsSolved = x.IsSolved,
-                            UnsolvedProblemComment = x.UnsolvedProblemComment,
-                            Deadline = x.Deadline
-                        }
-                    )));
+        //CreateMap<Tour, TourDto>()
+        //    .ForMember(dest => dest.Problems, opt =>
+        //        opt.MapFrom(src =>
+        //            src.Problems.Select(x =>
+        //                new ProblemDto
+        //                {
+        //                    Category = x.Category,
+        //                    Priority = x.Priority,
+        //                    Description = x.Description,
+        //                    Time = x.Time,
+        //                    TourId = (int)x.TourId,
+        //                    TouristId = (int)x.TouristId,
+        //                    AuthorsSolution = x.AuthorsSolution,
+        //                    IsSolved = x.IsSolved,
+        //                    UnsolvedProblemComment = x.UnsolvedProblemComment,
+        //                    Deadline = x.Deadline
+        //                }
+        //            )));
     }
 }
