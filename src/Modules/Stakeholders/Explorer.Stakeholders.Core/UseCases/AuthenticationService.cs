@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using Explorer.BuildingBlocks.Core.UseCases;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
@@ -26,7 +25,7 @@ public class AuthenticationService : IAuthenticationService
     public Result<AuthenticationTokensDto> Login(CredentialsDto credentials)
     {
         var user = _userRepository.GetActiveByName(credentials.Username);
-        if (user == null || credentials.Password != user.Password) return Result.Fail(FailureCode.NotFound);
+        if (user == null || !user.VerifyPassword(credentials.Password)) return Result.Fail(FailureCode.NotFound);
 
         long personId;
         try

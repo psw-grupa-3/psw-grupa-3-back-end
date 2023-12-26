@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-using Explorer.BuildingBlocks.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.Domain;
 using static Explorer.Stakeholders.API.Enums.NotificationEnums;
 using static Explorer.Stakeholders.API.Enums.UserEnums;
 
@@ -16,26 +14,23 @@ public class User : Entity
     public List<Follower>? Followers { get; private set; }
     public List<Notification>? Notifications { get; private set; }
     public bool IsProfileActivated { get; set; }
-
     public User() {}
-
     public User(string username, string password, UserRole role, bool isActive, string email, List<Follower> followers, List<Notification>? notifications, bool isProfileActivated)
     {
+        Validate(username, password);
         Username = username;
-        Password = password;
         Role = role;
         IsActive = isActive;
         Followers = followers;
         Notifications = notifications;
         Email = email;
-        Validate();
         IsProfileActivated = isProfileActivated;
+        SecurePassword(password);
     }
-
-    private void Validate()
+    private void Validate(string username, string password)
     {
-        if (string.IsNullOrWhiteSpace(Username)) throw new ArgumentException("Invalid Name");
-        if (string.IsNullOrWhiteSpace(Password)) throw new ArgumentException("Invalid Password");
+        if (string.IsNullOrWhiteSpace(username)) throw new ArgumentException("Invalid Name");
+        if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Invalid Password");
     }
 
     public string GetPrimaryRoleName()
@@ -84,23 +79,17 @@ public class User : Entity
 
     public bool ChangePassword(string oldPassword, string newPassword)
     {
-        if(Password != oldPassword || Password == newPassword || string.IsNullOrEmpty(newPassword)) return false;
-        Password = newPassword;
+        if (!VerifyPassword(oldPassword) || VerifyPassword(newPassword) || string.IsNullOrEmpty(newPassword))
+            return false;
+        SecurePassword(newPassword);
         return true;
     }
-
-    public void HashPassword()
+    public bool VerifyPassword(string password)
     {
-        using (SHA256 sha256 = SHA256.Create())
-        {
-            byte[] hasedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(Password));
-
-            StringBuilder hashBuilder = new StringBuilder();
-            foreach (var hasedByte in hasedBytes)
-            {
-                hashBuilder.Append(hasedByte.ToString("x2"));
-            }
-            Password = hashBuilder.ToString();
-        }
+        return BCrypt.Net.BCrypt.Verify(password, Password);
+    }
+    private void SecurePassword(string password)
+    {
+        Password = BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt(11));
     }
 }
