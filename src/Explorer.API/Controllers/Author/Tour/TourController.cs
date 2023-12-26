@@ -52,6 +52,12 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.FindToursContainingPoints(pointsToFind));
         }
 
+        [Authorize(Policy = "touristPolicy")]
+        [HttpPut("findToursByFollowers")]
+        public ActionResult<List<TourDto>> GetToursReviewedByUsersIFollow([FromQuery] int currentUserId, [FromQuery] int ratedTourId)
+        {
+            return CreateResponse(_tourService.GetToursReviewedByUsersIFollow(currentUserId, ratedTourId));
+        }
 
 
         [AllowAnonymous]
