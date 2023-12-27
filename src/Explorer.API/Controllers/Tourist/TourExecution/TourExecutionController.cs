@@ -39,5 +39,7 @@ namespace Explorer.API.Controllers.Tourist.TourExecution
         {
             return CreateResponse(_service.UpdatePosition(tourExecutionId, positionDto));
         }
+       
+      
     }
 }
