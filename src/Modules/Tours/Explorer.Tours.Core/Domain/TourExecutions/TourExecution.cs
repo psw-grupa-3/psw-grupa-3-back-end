@@ -1,4 +1,8 @@
+
 ﻿using Explorer.BuildingBlocks.Core.Domain;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Channels;
+using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Tours.API.Dtos.TourExecutions;
 using Explorer.Tours.Core.Domain.EventSourcingDomain;
 using Explorer.Tours.Core.Domain.Tours;
@@ -8,8 +12,8 @@ using static Explorer.Tours.API.Enums.TourEnums;
 
 namespace Explorer.Tours.Core.Domain.TourExecutions
 {
-    [JsonObject(MemberSerialization.OptIn)]
-    public class TourExecution : JsonEntity, EventSourcedAggregate
+    public class TourExecution: EventSourcedAggregate
+
     {
         private const int PointProximity = 100;
         public TourExecutionStatus Status { get; set; }
@@ -92,25 +96,6 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             return timeDifference.TotalDays > 7.0;
         }
 
-
-        public override void ToJson()
-        {
-            JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ??
-                         throw new JsonSerializationException("Exception! Could not serialize object!");
-        }
-
-        public override void FromJson()
-        {
-            var tourExecution = JsonConvert.DeserializeObject<TourExecution>(JsonObject ??
-                                                                             throw new NullReferenceException(
-                                                                                 "Exception! No object to deserialize!")) ??
-                                throw new NullReferenceException("Exception! TourExecution is null!");
-            Status = tourExecution.Status;
-            Position = tourExecution.Position;
-            Tasks = tourExecution.Tasks;
-            TourId = tourExecution.TourId;
-        }
-
         //Events
 
         public void UpdatePositionEvent(int id, Position currentPosition, DateTime time)
@@ -135,7 +120,8 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
                 currentPoint.Done = true;
                 currentPoint.DoneOn = currentPosition.LastActivity;
             }
-            Status = Tasks.TrueForAll(x => x.Done) ? TourExecutionStatus.Completed : Status;
+
+            Causes(new TourCompleted(id, currentPosition, time));
         }
 
         public override void Apply(DomainEvent @event)
@@ -150,7 +136,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             Apply(@event);
         }
 
-        private void When()
+        private void When(TourQuit tour)
         {
             Status = TourExecutionStatus.Abandoned;
         }
@@ -158,6 +144,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         private void When(Position currentPosition)
         {
             Position = currentPosition;
+
+        }
+
+        private void When(TourCompleted tour)
+        {
+            Status = Tasks.TrueForAll(x => x.Done) ? TourExecutionStatus.Completed : Status;
         }
 
     }

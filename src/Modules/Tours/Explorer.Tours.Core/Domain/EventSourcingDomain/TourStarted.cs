@@ -11,12 +11,9 @@ namespace Explorer.Tours.Core.Domain.EventSourcingDomain
     {
         public TourStarted(int aggregateId, string username, DateTime time): base(aggregateId)
         {
-            Username = username;
             Time = time;
-
         }
 
-        public string Username {  get; private set; }  
         public DateTime Time { get; private set; }
     }
 

@@ -26,7 +26,7 @@ namespace Explorer.Tours.Core.UseCases.UseCasesEvents
             {
                 var positionDomain = PositionConverter.ToDomain(position);
                 var execution = CrudRepository.Get(executionId);
-                execution.UpdatePosition(positionDomain);
+                execution.CompleteTourEvent(executionId, positionDomain, _clock);
                 CrudRepository.Update(execution);
             }
             catch (Exception ex)
