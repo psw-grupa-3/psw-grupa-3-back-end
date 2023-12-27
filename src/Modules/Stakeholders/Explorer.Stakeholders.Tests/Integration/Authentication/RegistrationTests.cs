@@ -6,7 +6,6 @@ using Explorer.API.Controllers;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Infrastructure.Database;
-using ISAProject.Modules.Stakeholders.API.Public;
 using static Explorer.Stakeholders.API.Enums.UserEnums;
 
 namespace Explorer.Stakeholders.Tests.Integration.Authentication;

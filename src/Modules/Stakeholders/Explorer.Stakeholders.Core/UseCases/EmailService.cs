@@ -1,8 +1,9 @@
-﻿using System.Net.Mail;
-using System.Net;
-using ISAProject.Modules.Stakeholders.API.Public;
+﻿using System.Net;
+using System.Net.Mail;
+using System.Text;
+using Explorer.Stakeholders.API.Public;
 
-namespace ISAProject.Modules.Stakeholders.Core.UseCases
+namespace Explorer.Stakeholders.Core.UseCases
 {
     public class EmailService : IEmailService
     {
@@ -38,6 +39,40 @@ namespace ISAProject.Modules.Stakeholders.Core.UseCases
                 }
             }
         }
+        public void SendPasswordResetEmail(string recipientEmail, string resetPasswordLink)
+        {
+            string link = $"http://localhost:4200/change-password?token={resetPasswordLink}";
+            var mailBodyBuilder = new StringBuilder("Use this link:<br>");
+            mailBodyBuilder.Append($"{link} to change credentials for your 3P account.<br>");
+            var emailBody = mailBodyBuilder.ToString();
+            var emailSubject = "Password reset for 3P";
+            SendEmail(recipientEmail, emailSubject, emailBody);
+        }
+        private void SendEmail(string recipientEmail, string emailSubject, string emailBody)
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(_email);
+                mail.To.Add(recipientEmail);
+                mail.Subject = emailSubject;
+                mail.Body = emailBody;
+                mail.IsBodyHtml = true;
 
+                using (SmtpClient smtp = new SmtpClient(_smtpServer, _port))
+                {
+                    smtp.Credentials = new NetworkCredential(_email, _password);
+                    smtp.EnableSsl = true;
+                    try
+                    {
+                        smtp.Send(mail);
+                        Console.WriteLine("Email successfully sent!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+                }
+            }
+        }
     }
 }

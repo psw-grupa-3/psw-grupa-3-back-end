@@ -25,7 +25,6 @@ namespace Explorer.Stakeholders.Core.UseCases
                 if (user == null) return Result.Fail("User not found");
                 user.IsActive = false;
                 _userRepository.Update(user);
-                user.HashPassword();
                 return MapToDto(user);
             }
             catch (Exception e)
@@ -37,7 +36,6 @@ namespace Explorer.Stakeholders.Core.UseCases
         public Result<List<UserDto>> GetAll()
         {
             var users = _userRepository.GetAll();
-            users.ForEach(u => u.HashPassword());
             return MapToDto(users);
         }
     }

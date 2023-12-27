@@ -19,9 +19,19 @@ namespace Explorer.Stakeholders.Infrastructure.Database.Repositories
             return _dbContext.Users.Any(user => user.Username == username);
         }
 
+        public bool ExistsByEmail(string email)
+        {
+            return _dbContext.Users.Any(user => user.Email == email);
+        }
+
         public User? GetActiveByName(string username)
         {
             return _dbContext.Users.FirstOrDefault(user => user.Username == username && user.IsActive && user.IsProfileActivated);
+        }
+
+        public User? GetActiveByEmail(string email)
+        {
+            return _dbContext.Users.FirstOrDefault(user => user.Email == email && user.IsActive && user.IsProfileActivated); 
         }
 
         public User Create(User user)

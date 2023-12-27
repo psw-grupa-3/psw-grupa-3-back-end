@@ -34,7 +34,25 @@ public class JwtGenerator : ITokenGenerator
             
         return authenticationResponse;
     }
-        
+
+    public Result<AuthenticationTokensDto> GeneratePasswordResetToken(User user)
+    {
+        var authenticationResponse = new AuthenticationTokensDto();
+
+        var claims = new List<Claim>
+        {
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new("email", user.Email),
+            new(ClaimTypes.Role, user.GetPrimaryRoleName())
+        };
+
+        var jwt = CreateToken(claims, 10);
+        authenticationResponse.Id = user.Id;
+        authenticationResponse.AccessToken = jwt;
+
+        return authenticationResponse;
+    }
+
     private string CreateToken(IEnumerable<Claim> claims, double expirationTimeInMinutes)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
