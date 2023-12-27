@@ -1,6 +1,4 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using System.Text.Json.Serialization;
-
 namespace Explorer.Tours.Core.Domain.Tours
 {
     public class Point : ValueObject
@@ -11,6 +9,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         public string Description { get; set; }
         public string Picture { get; set; }
         public bool Public { get; set; }
+        public Point() {}
 
         [Newtonsoft.Json.JsonConstructor]
         public Point(double latitude, double longitude, string name, string description, string picture, bool isPublic = false)

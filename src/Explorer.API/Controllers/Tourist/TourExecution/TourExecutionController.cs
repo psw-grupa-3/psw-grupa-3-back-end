@@ -1,5 +1,4 @@
 ﻿using Explorer.Tours.API.Dtos.TourExecutions;
-using Explorer.Tours.API.Dtos.Tours;
 using Explorer.Tours.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -12,6 +12,8 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         public TaskType Type { get; set; }
         public Point Point { get; init; }
 
+        public PointTask() {}
+
         [JsonConstructor]
         public PointTask(Point point, TaskType type, DateTime doneOn, bool done)
         {
