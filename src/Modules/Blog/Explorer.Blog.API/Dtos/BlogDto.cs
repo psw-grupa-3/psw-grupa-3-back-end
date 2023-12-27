@@ -13,5 +13,6 @@ namespace Explorer.Blog.API.Dtos
         public int NetVotes { get; set; }
         public List<BlogRatingDto>? Ratings { get; set; }
         public List<BlogCommentDto>? BlogComments { get; set; }
+        public List<ReportDto>? Reports { get; set; }
     }
 }

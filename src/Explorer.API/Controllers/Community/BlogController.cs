@@ -37,6 +37,36 @@ namespace Explorer.API.Controllers.Community
             return CreateResponse(_blogService.GetPaged(page, pageSize));
         }
 
+        [HttpGet("getReviewedReports")]
+        public ActionResult<ReportDto> GetReviewedReports()
+        {
+            var pagedResults = _blogService.GetPaged(1, int.MaxValue).Value.Results;
+            var reviewedReports = new List<ReportDto>();
+
+            foreach (var result in pagedResults)
+            {
+                var reviewed = result.Reports.FindAll(report => report.IsReviewed);
+                reviewedReports.AddRange(reviewed);
+            }
+
+            return Ok(reviewedReports);
+        }
+
+        [HttpGet("getUnreviewedReports")]
+        public ActionResult<ReportDto> GetUnreviewedReports()
+        {
+            var pagedResults = _blogService.GetPaged(1, int.MaxValue).Value.Results;
+            var reviewedReports = new List<ReportDto>();
+
+            foreach (var result in pagedResults)
+            {
+                var reviewed = result.Reports.FindAll(report => !report.IsReviewed);
+                reviewedReports.AddRange(reviewed);
+            }
+
+            return Ok(reviewedReports);
+        }
+
         [AllowAnonymous]
         [HttpGet("getFiltered")]
         public ActionResult<BlogDto> GetFiltered([FromQuery] BlogStatus filter)
@@ -77,17 +107,41 @@ namespace Explorer.API.Controllers.Community
             return CreateResponse(_blogService.CommentBlog(blogId, comment));
         }
 
-        
+        [HttpPost("reportBlogComment/{blogId:int}")]
+        public ActionResult<ReportDto> ReportBlogComment([FromRoute] int blogId, [FromBody] ReportDto report)
+        {
+            return CreateResponse(_blogService.CreateReport(blogId, report));
+        }
+
         [HttpPut("updateBlogComment/{blogId:int}")]
         public ActionResult<BlogCommentDto> UpdateBlogComment([FromRoute] int blogId, [FromBody] BlogCommentDto comment)
         {
             return CreateResponse(_blogService.UpdateComment(blogId, comment));
         }
 
-        
+        [HttpPut("reviewReport/{blogId:int}")]
+        public ActionResult<ReportDto> ReviewReport([FromRoute] int blogId, [FromBody] ReportDto report)
+        {
+            return CreateResponse(_blogService.UpdateReport(blogId, report));
+        }
+
         [HttpPut("deleteBlogComment/{blogId:int}")]
         public ActionResult<BlogCommentDto> DeleteBlogComment([FromRoute] int blogId, [FromBody] BlogCommentDto comment)
         {
+            return CreateResponse(_blogService.DeleteComment(blogId, comment));
+        }
+
+        [HttpPut("deleteReportedBlogComment/{blogId:int}")]
+        public ActionResult<BlogCommentDto> deleteReportedBlogComment([FromRoute] int blogId, [FromBody] ReportDto report)
+        {
+            var pagedResults = _blogService.GetPaged(1, int.MaxValue).Value.Results;
+            var comment = new BlogCommentDto();
+
+            foreach (var result in pagedResults)
+            {
+                var reviewed = result.BlogComments.Find(comment => comment.UserId == report.UserId && comment.TimeCreated == report.TimeCommentCreated);
+                comment = reviewed;
+            }
             return CreateResponse(_blogService.DeleteComment(blogId, comment));
         }
     }
