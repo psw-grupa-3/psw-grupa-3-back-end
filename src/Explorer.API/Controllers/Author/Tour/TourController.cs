@@ -106,6 +106,14 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.RateTour(tourId, tourReview));
         }
 
+        [HttpPost("addProblem/{tourId:int}")]
+        //[Authorize(Policy = "TouristPolicy")]
+
+        public ActionResult<ProblemDto> AddProblem([FromRoute] int tourId, [FromBody] ProblemDto problem)
+        {
+            return CreateResponse(_tourService.AddProblem(tourId, problem));
+        }
+
         [AllowAnonymous]
         [HttpGet("averageRating/{tourId:int}")]
         public ActionResult<double> GetAverageRating(int tourId)

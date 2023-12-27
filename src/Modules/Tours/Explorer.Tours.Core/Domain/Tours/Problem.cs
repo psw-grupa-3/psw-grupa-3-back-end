@@ -1,5 +1,6 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Stakeholders.Core.Domain;
+using Explorer.Tours.API.Dtos.Tours;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,39 +9,26 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Explorer.Tours.Core.Domain.Tours
 {
-    public class Problem : Entity
+    public class Problem : ValueObject
     {
-        [JsonPropertyName("category")]
-        public string Category { get; init; }
-        [JsonPropertyName("priority")]
-        public bool Priority { get; init; }
-        [JsonPropertyName("description")]
-        public string Description { get; init; }
-        [JsonPropertyName("time")]
-        public DateTime Time { get; init; } = DateTime.Now;
-        [JsonPropertyName("tourId")]
-        public long TourId { get; init; }
-        [JsonPropertyName("touristId")]
-        public int TouristId { get; init; }
-        [JsonPropertyName("authorsSolution")]
-        public string AuthorsSolution { get; private set; }
-        [JsonPropertyName("isSolved")]
-        public bool IsSolved { get; set; }
-        [JsonPropertyName("unsolvedProblemComment")]
-        public string UnsolvedProblemComment { get; private set; }
-        [JsonPropertyName("deadline")]
-        public DateTime Deadline { get; set; }
-        public Problem()
-        {
-        }
+        public string Category { get; set; }
+        public bool Priority { get; set; }
+        public string Description { get; set; }
+        public DateTime Time { get; set; } = DateTime.Now;
+        public long TourId { get; set; } 
+        public int TouristId { get; set; } 
+        public string AuthorsSolution { get;  set; } 
+        public bool IsSolved { get; set; } 
+        public string UnsolvedProblemComment { get; set; } 
+        public DateTime Deadline { get; set; } 
 
-        [JsonConstructor]
-        public Problem(long id, string category, bool priority, string description, DateTime time, long tourId, int touristId, string authorsSolution, bool isSolved, string unsolvedProblemComment, DateTime deadline)
-        {
-            Id = id;
+        [Newtonsoft.Json.JsonConstructor]
+        public Problem(string category, bool priority, string description, DateTime time, long tourId, int touristId, string authorsSolution, bool isSolved, string unsolvedProblemComment, DateTime deadline)
+        { 
             if (string.IsNullOrWhiteSpace(category)) throw new ArgumentException("Invalid category.");
             Category = category;
             Priority = priority;
@@ -53,6 +41,20 @@ namespace Explorer.Tours.Core.Domain.Tours
             IsSolved = isSolved;
             UnsolvedProblemComment = unsolvedProblemComment;
             Deadline = deadline;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Category;
+            yield return Priority;
+            yield return Description;
+            yield return Time;
+            yield return TourId;
+            yield return TouristId;
+            yield return AuthorsSolution;
+            yield return IsSolved;
+            yield return UnsolvedProblemComment;
+            yield return Deadline;
         }
         public void UpdateProblem(Problem newProblem)
         {

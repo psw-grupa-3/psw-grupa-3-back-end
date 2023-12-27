@@ -12,7 +12,6 @@ namespace Explorer.Tours.Infrastructure.Database;
 public class ToursContext : DbContext
 {
     public DbSet<Equipment> Equipment { get; set; }
-    public DbSet<DbEntity<Problem>> Problems { get; set; }
     public DbSet<TouristEquipment> TouristEquipment { get; set; }
     public DbSet<Preference> Preferences { get; set; }
     public DbSet<Tour> Tours { get; set; }
@@ -45,10 +44,6 @@ public class ToursContext : DbContext
 
         modelBuilder.Entity<TourExecution>().ToTable("TourExecutions");
         modelBuilder.Entity<TourExecution>()
-            .Property(item => item.JsonObject).HasColumnType("jsonb");
-
-        modelBuilder.Entity<DbEntity<Problem>>().ToTable("Problems");
-        modelBuilder.Entity<DbEntity<Problem>>()
             .Property(item => item.JsonObject).HasColumnType("jsonb");
 
         modelBuilder.Entity<Bundle>().ToTable("Bundles");
