@@ -6,7 +6,6 @@ using Explorer.Payments.Infrastructure.Database;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-using static Explorer.Payments.API.Enums.TourPurchaseTokenEnums;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
@@ -24,21 +23,29 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
         {
             foreach(var item in shoppingCart.Items)
             {
-                var tokenType = TourPurchaseTokenType.SingleTour;
-                if (item.Type.Equals("Bundle")) tokenType = TourPurchaseTokenType.Bundle;
-
-                var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdType, DateTime.Now.ToUniversalTime(), item.Name, item.Image, tokenType);
-                _dbSet.Add(token);
+                if (item.Type.Equals("Bundle"))
+                {
+                    foreach (var tour in item.ToursInfo)
+                    {
+                        var token = new TourPurchaseToken(0, shoppingCart.IdUser, tour.Id, DateTime.Now.ToUniversalTime(), tour.Name, tour.Image);
+                        _dbSet.Add(token);
+                    }
+                }
+                else
+                {
+                    var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdType, DateTime.Now.ToUniversalTime(), item.Name, item.Image);
+                    _dbSet.Add(token);
+                }          
             }
             DbContext.SaveChanges();
 
             return _dbSet.ToList();
         }
-        public Result<bool> GetToken(int idUser, int IdType)
+        public Result<bool> GetToken(int idUser, int IdTour)
         {
             foreach(var token in _dbSet)
             {
-                if(token.TypeId == IdType && token.UserId == idUser)
+                if(token.TourId == IdTour && token.UserId == idUser)
                 {
                     return true;
                 }

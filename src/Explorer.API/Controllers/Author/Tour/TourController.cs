@@ -134,5 +134,11 @@ namespace Explorer.API.Controllers.Author.Tour
         {
             return CreateResponse(_tourService.PublishPoint(id, pointName));
         }
+
+        [HttpGet("getIdByName/{name}")]
+        public ActionResult<long> GetIdByName(string name)
+        {
+            return CreateResponse(_tourService.GetIdByName(name));
+        }
     }
 }

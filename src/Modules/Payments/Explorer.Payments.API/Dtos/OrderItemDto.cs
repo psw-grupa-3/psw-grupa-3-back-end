@@ -6,10 +6,11 @@ namespace Explorer.Payments.API.Dtos
     {
         public string Type { get; set; }
         public int IdType { get; set; }
+        public List<TourInfoDto>? ToursInfo { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public string Image { get; set; }
-        public string CouponCode { get; set; }  
+        public string? CouponCode { get; set; }  
 
     }
 }
