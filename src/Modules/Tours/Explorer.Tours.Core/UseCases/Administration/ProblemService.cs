@@ -16,26 +16,27 @@ using System.Xml.Linq;
 
 namespace Explorer.Tours.Core.UseCases.Administration
 {
-    public class ProblemService : CrudService<ProblemDto, Problem>, IProblemService
+    public class ProblemService : CrudService<TourDto, Tour>, IProblemService
     {
         private readonly IProblemRepository _problemRepository;
 
-        public ProblemService(ICrudRepository<Problem> repository, IMapper mapper, IProblemRepository problemRepository) : base(repository, mapper)
+        public ProblemService(ICrudRepository<Tour> repository, IMapper mapper, IProblemRepository problemRepository) : base(repository, mapper)
         {
             _problemRepository = problemRepository;
         }
 
 
-
+        /*
         public Result<List<ProblemDto>> GetProblemsWithExpiredDeadline(List<ProblemDto> problems)
         {
-            var unresolvedProblems = _problemRepository.GetUnresolvedProblemsWithDeadline(problems);
+            //var unresolvedProblems = _problemRepository.GetUnresolvedProblemsWithDeadline(problems);
 
-            return Result.Ok(unresolvedProblems);
+           // return Result.Ok(unresolvedProblems);
 
 
 
-        }
+        }*/
+        /*
         public Result<List<ProblemDto>> GetAll()
         {
             var problems = _problemRepository.GetAll();
@@ -50,9 +51,10 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 return Result.Fail<List<ProblemDto>>("Failed to retrieve problems.");
             }
         }
-
+        
         public Result<ProblemDto> RespondToProblem(long id, string response)
         {
+            
             var problemDto = _problemRepository.GetProblemById(id);
             var problem = ProblemConverter.ToDomain(problemDto);
             problem.RespondToProblem(response);
@@ -60,15 +62,15 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var problemDto2 = ProblemConverter.ToDto(problem);
             problemDto2.Id = (long)count + 1;
             var problem2 = ProblemConverter.ToDomain(problemDto2);
-            CrudRepository.Delete(problem.Id);
-            CrudRepository.Create(problem2);
+           // CrudRepository.Delete(problem.Id);
+           // CrudRepository.Create(problem2);
             _problemRepository.SaveChanges(problem);
             problemDto = ProblemConverter.ToDto(problem);
-            problemDto.Id = problem.Id;
+           // problemDto.Id = problem.Id;
             return problemDto;
-        }
+        }*/
 
-        public object ProblemNotSolved(long id, string comment)
+       /* public object ProblemNotSolved(long id, string comment)
         {
             var problemDto = _problemRepository.GetProblemById(id);
             var problem = ProblemConverter.ToDomain(problemDto);
@@ -77,14 +79,14 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var problemDto2 = ProblemConverter.ToDto(problem);
             problemDto2.Id = (long)count + 1;
             var problem2 = ProblemConverter.ToDomain(problemDto2);
-            CrudRepository.Delete(problem.Id);
-            CrudRepository.Create(problem2);
+            //CrudRepository.Delete(problem.Id);
+            //CrudRepository.Create(problem2);
             _problemRepository.SaveChanges(problem);
             problemDto = ProblemConverter.ToDto(problem);
-            problemDto.Id = problem.Id;
+            //problemDto.Id = problem.Id;
             return problemDto;
-        }
-
+        }*/
+       /*
         public object ProblemIsSolved(long id)
         {
             var problemDto = _problemRepository.GetProblemById(id);
@@ -94,11 +96,11 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var problemDto2 = ProblemConverter.ToDto(problem);
             problemDto2.Id = (long)count + 1;
             var problem2 = ProblemConverter.ToDomain(problemDto2);
-            CrudRepository.Delete(problem.Id);
-            CrudRepository.Create(problem2);
+            //CrudRepository.Delete(problem.Id);
+            //CrudRepository.Create(problem2);
             _problemRepository.SaveChanges(problem2);
             problemDto = ProblemConverter.ToDto(problem2);
-            problemDto.Id = problem.Id;
+            //problemDto.Id = problem.Id;
             return problemDto;
         }
 
@@ -118,11 +120,11 @@ namespace Explorer.Tours.Core.UseCases.Administration
             var problemDto = _problemRepository.GetProblemById(id);
             var problem = ProblemConverter.ToDomain(problemDto);
             problem.SetDeadline(newDeadline);
-            CrudRepository.Update(problem);
+            //CrudRepository.Update(problem);
             _problemRepository.SaveChanges(problem);
 
             problemDto = ProblemConverter.ToDto(problem);
-            problemDto.Id = problem.Id;
+            //problemDto.Id = problem.Id;
             return problemDto;
         }
 
@@ -137,21 +139,30 @@ namespace Explorer.Tours.Core.UseCases.Administration
             {
                 if (problem.IsSolved)
                 {
-                    CrudRepository.Delete(problem.Id); 
+                   // CrudRepository.Delete(problem.Id); 
                 }
                 else
                 {
                    _problemRepository.TourFromProblem(problemDto);
-                    CrudRepository.Delete(problem.Id);
+                   // CrudRepository.Delete(problem.Id);
 
                 }
 
             }
 
             problemDto = ProblemConverter.ToDto(problem);
-            problemDto.Id = problem.Id;
+           // problemDto.Id = problem.Id;
             return problemDto;
         }
 
+        public Result<ProblemDto> Create(ProblemDto problem)
+        {
+            throw new NotImplementedException();
+        }
+
+        Result<PagedResult<ProblemDto>> IProblemService.GetPaged(int page, int pageSize)
+        {
+            throw new NotImplementedException();
+        }*/
     }
 }

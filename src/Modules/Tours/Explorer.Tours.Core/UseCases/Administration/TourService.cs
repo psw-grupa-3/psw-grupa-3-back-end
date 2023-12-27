@@ -45,18 +45,17 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return MapToDto(tourDb);
         }
 
-        public Result<TourDto> AddProblem(long tourId,ProblemDto problem)
+        public Result<TourDto> AddProblem(int tourId,ProblemDto problemDto)
         {
-            var tour = CrudRepository.Get(tourId);
+            var problem = ProblemConverter.ToDomain(problemDto);
+            Tour tour = CrudRepository.Get(tourId);
             if (tour is null)
             {
                 return Result.Fail<TourDto>($"Tour not found ({FailureCode.NotFound}).");
             }
             try
             {
-
-                var currentProblem = ProblemConverter.ToDomain(problem);
-                tour.Problems.Add(currentProblem);
+                tour.Problems.Add(problem);
                 CrudRepository.Update(tour);
 
                 return MapToDto(tour);
@@ -66,6 +65,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
                 return Result.Fail<TourDto>(ex.Message);
             }
         }
+
         /*public Result<TourDto> RespondToProblem(int tourId, ProblemDto problem)
         {
            var problemDomain = ProblemConverter.ToDomain(problem);
@@ -256,7 +256,5 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return filteredTours;
             
         }
-
-
     }
 }

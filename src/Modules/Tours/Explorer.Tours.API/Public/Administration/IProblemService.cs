@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Explorer.Tours.API.Public.Administration
 {
     public interface IProblemService
-    {
+    {/*
         Result<ProblemDto> Create(ProblemDto problem); 
         Result<PagedResult<ProblemDto>> GetPaged(int page, int pageSize);
         Result<List<ProblemDto>> GetProblemsWithExpiredDeadline(List<ProblemDto> problems);
@@ -21,6 +21,6 @@ namespace Explorer.Tours.API.Public.Administration
         object GetProblemById(long id);
         object GetToursProblems(long id);
            object SetProblemDeadline(long id, DateTime deadline);
-        Result<ProblemDto> DeleteProblem(long id);
+        Result<ProblemDto> DeleteProblem(long id);*/
     }
 }

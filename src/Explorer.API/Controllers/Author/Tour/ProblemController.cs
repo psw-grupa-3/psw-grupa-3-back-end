@@ -21,7 +21,7 @@ namespace Explorer.API.Controllers.Author.Tour
             _problemService = problemService;
             _userNotificationService = userNotificationService;
         }
-
+        /*
         [HttpGet("getAll")]
         public ActionResult<PagedResult<ProblemDto>> GetAll()
         {
@@ -50,7 +50,7 @@ namespace Explorer.API.Controllers.Author.Tour
             var result = _problemService.GetToursProblems(id);
 
             return Ok(result);
-        }
+        }*/
     }
 }
 

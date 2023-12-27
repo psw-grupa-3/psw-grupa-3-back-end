@@ -30,12 +30,15 @@ namespace Explorer.API.Controllers.Tourist
             _problemRepository = problemRepository;
             _userNotificationService = userNotificationService;
         }
+        /*
         [HttpPost]
+        
         public ActionResult<ProblemDto> Create([FromBody] ProblemDto problem)
         {
             var result = _problemService.Create(problem);
             return CreateResponse(result);
-        }
+        }*/
+        /*
         [HttpPatch("addProblem")]
         public ActionResult<TourDto> AddProblem([FromBody] ProblemDto problem)
         {
@@ -76,7 +79,7 @@ namespace Explorer.API.Controllers.Tourist
             {
                 return BadRequest("Failed to retrieve problems.");
             }
-        }
+        }*/
     }
 
 }
