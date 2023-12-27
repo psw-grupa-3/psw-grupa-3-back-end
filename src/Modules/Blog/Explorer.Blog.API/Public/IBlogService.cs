@@ -18,5 +18,7 @@ namespace Explorer.Blog.API.Public
         Result<BlogDto> CommentBlog(int blogId, BlogCommentDto comment);
         Result<BlogDto> UpdateComment(int blogId, BlogCommentDto comment);
         Result<BlogDto> DeleteComment(int blogId, BlogCommentDto comment);
+        Result<BlogDto> UpdateReport(int blogId, ReportDto report);
+        Result<BlogDto> CreateReport(int blogId, ReportDto report);
     }
 }

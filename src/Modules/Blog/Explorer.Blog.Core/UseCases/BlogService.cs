@@ -47,11 +47,28 @@ namespace Explorer.Blog.Core.UseCases
             CrudRepository.Update(blog);
             return MapToDto(blog);
         }
+        public Result<BlogDto> CreateReport(int blogId, ReportDto report)
+        {
+            var blogReport = BlogReportConverter.ToDomain(report);
+            Domain.Blog blog = CrudRepository.Get(blogId);
+            blog.Reports.Add(blogReport);
+            CrudRepository.Update(blog);
+            return MapToDto(blog);
+        }
         public Result<BlogDto> UpdateComment(int blogId, BlogCommentDto comment)
         {
             var blogComment = BlogCommentConverter.ToDomain(comment);
             var blog = CrudRepository.Get(blogId);
             blog.UpdateComments(blogComment);
+            CrudRepository.Update(blog);
+            return MapToDto(blog);
+        }
+
+        public Result<BlogDto> UpdateReport(int blogId, ReportDto report)
+        {
+            var blogReport = BlogReportConverter.ToDomain(report);
+            var blog = CrudRepository.Get(blogId);
+            blog.UpdateReports(blogReport);
             CrudRepository.Update(blog);
             return MapToDto(blog);
         }

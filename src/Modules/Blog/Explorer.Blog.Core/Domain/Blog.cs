@@ -26,12 +26,14 @@ namespace Explorer.Blog.Core.Domain
         public int NetVotes { get; private set; }
         [NotMapped][JsonProperty]
         public List<BlogComment>? BlogComments { get; private set; } = new List<BlogComment>();
+        [NotMapped][JsonProperty]
+        public List<Report>? Reports { get; private set; } = new List<Report>();
 
         public Blog(){}
 
         [JsonConstructor]
         public Blog(string title, string description, DateTime creationDate,
-            BlogStatus status, string[] images, long userId, int netVotes, List<BlogRating> ratings, List<BlogComment> blogComments)
+            BlogStatus status, string[] images, long userId, int netVotes, List<BlogRating> ratings, List<BlogComment> blogComments, List<Report> reports)
         {
             Validate(title, description);
             Title = title;
@@ -43,6 +45,7 @@ namespace Explorer.Blog.Core.Domain
             NetVotes = netVotes;
             Ratings = ratings;
             BlogComments = blogComments;
+            Reports = reports;
         }
 
         public Blog(string title, string description, DateTime creationDate,
@@ -117,6 +120,12 @@ namespace Explorer.Blog.Core.Domain
             oldComment.UpdateComment(comment);
         }
 
+        public void UpdateReports(Report report)
+        {
+            Report oldReport = Reports.Find(x => x.UserId == report.UserId && x.TimeReported == report.TimeReported);
+            oldReport.UpdateReport(report);
+        }
+
         public override void ToJson()
         {
             JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ?? 
@@ -137,6 +146,7 @@ namespace Explorer.Blog.Core.Domain
             Ratings = blog.Ratings;
             NetVotes = blog.NetVotes;
             BlogComments = blog.BlogComments;
+            Reports = blog.Reports;
         }
     }
 }
