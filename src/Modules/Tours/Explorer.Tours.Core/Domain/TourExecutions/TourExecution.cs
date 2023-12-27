@@ -1,5 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Channels;
 using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Tours.API.Dtos.TourExecutions;
+using Explorer.Tours.Core.Domain.EventSourcingDomain;
 using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.Domain.Utilities;
 using Newtonsoft.Json;
@@ -8,7 +11,7 @@ using static Explorer.Tours.API.Enums.TourEnums;
 namespace Explorer.Tours.Core.Domain.TourExecutions
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class TourExecution: JsonEntity
+    public class TourExecution : JsonEntity, EventSourcedAggregate
     {
         [NotMapped]
         private const int PointProximity = 100;
@@ -52,10 +55,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             }
             Status = Tasks.TrueForAll(x => x.Done) ? TourExecutionStatus.Completed : Status;
         }
+
         public void QuitTourExecution()
         {
             Status = TourExecutionStatus.Abandoned;
         }
+
         private static void Validate(IReadOnlyCollection<Point> points)
         {
             if (points.Count < 0) throw new ArgumentException("Exception! No points found!");
@@ -76,7 +81,7 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
         {
             if (tourExecution.Tasks == null || tourExecution.Tasks.Count == 0)
             {
-                return 0.0; 
+                return 0.0;
             }
 
             int totalTasks = tourExecution.Tasks.Count;
@@ -90,21 +95,21 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
 
         public bool IsLastActivityWithinWeek(TourExecution tourExecution)
         {
-            
+
             if (tourExecution.Position == null)
             {
                 return true;
             }
 
-            
+
             if (tourExecution.Position.LastActivity == null)
             {
-                return true; 
+                return true;
             }
 
             TimeSpan timeDifference = DateTime.Now - tourExecution.Position.LastActivity;
 
-            
+
             return timeDifference.TotalDays > 7.0;
         }
 
@@ -124,7 +129,57 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             Status = tourExecution.Status;
             Position = tourExecution.Position;
             Tasks = tourExecution.Tasks;
-            TourId= tourExecution.TourId;
+            TourId = tourExecution.TourId;
         }
+
+        //Events
+
+        public void UpdatePositionEvent(int id, Position currentPosition, DateTime time)
+        {
+            Causes(new UserLocationNoted(id, currentPosition, time));
+        }
+
+        public void QuitTourEvent(int id, DateTime time)
+        {
+            Causes(new TourQuit(id, time));
+        }
+
+        public void CompleteTourEvent(int id, Position currentPosition, DateTime time)
+        {
+            if (Status != TourExecutionStatus.Active) return;
+            if (!Position.IsChanged(currentPosition)) return;
+            Position = currentPosition;
+            var currentPoint = Tasks.FirstOrDefault(x => !x.Done) ?? throw new Exception("Exception! All Tour Points passed!");
+            var inProximity = DistanceCalculator.CalculateDistance(currentPoint, currentPosition) * 1000 <= PointProximity;
+            if (inProximity)
+            {
+                currentPoint.Done = true;
+                currentPoint.DoneOn = currentPosition.LastActivity;
+            }
+            Status = Tasks.TrueForAll(x => x.Done) ? TourExecutionStatus.Completed : Status;
+        }
+
+        public override void Apply(DomainEvent @event)
+        {
+            When((dynamic)@event);
+            Version = Version++;
+        }
+
+        private void Causes(DomainEvent @event)
+        {
+            Changes.Add(@event);
+            Apply(@event);
+        }
+
+        private void When()
+        {
+            Status = TourExecutionStatus.Abandoned;
+        }
+
+        private void When(Position currentPosition)
+        {
+            Position = currentPosition;
+        }
+
     }
 }

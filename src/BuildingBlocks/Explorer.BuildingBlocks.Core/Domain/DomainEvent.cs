@@ -8,12 +8,12 @@ namespace Explorer.BuildingBlocks.Core.Domain
 {
     public abstract class DomainEvent
     {
-        public DomainEvent(Guid aggregateId)
+        public DomainEvent(int aggregateId)
         {
             Id = aggregateId;
         }
 
-        public Guid Id { get; private set; } 
+        public int Id { get; private set; } 
         
     }
 }
