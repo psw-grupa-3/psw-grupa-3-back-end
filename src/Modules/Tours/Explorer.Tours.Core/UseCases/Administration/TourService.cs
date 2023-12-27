@@ -256,5 +256,10 @@ namespace Explorer.Tours.Core.UseCases.Administration
             return filteredTours;
             
         }
+
+        public Result<long> GetIdByName(string name)
+        {
+            return CrudRepository.GetPaged(0, 0).Results.FirstOrDefault(x => x.Name.Equals(name)).Id;
+        }
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Explorer.Payments.API.Dtos
 {
-    public class WalletDto
+    public class TourInfoDto
     {
-        public long Id { get; set; }
-        public int UserId { get; set; }
-        public double Coins { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -27,5 +27,6 @@ namespace Explorer.Tours.API.Public.Administration
         Result<List<PointDto>> GetAllPublicPointsForTours();
         Result<List<TourDto>> FindToursContainingPoints(List<PointDto> pointsToFind);
         Result<List<TourDto>> GetToursReviewedByUsersIFollow(int currentUserId, int ratedTourId);
+        Result<long> GetIdByName(string name);
     }
 }

@@ -4,6 +4,7 @@ using Explorer.Payments.API.Dtos;
 using Explorer.Payments.API.Public;
 using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
+using Explorer.Stakeholders.Core.Domain.Users;
 using FluentResults;
 
 namespace Explorer.Tours.Core.UseCases.Shopping
@@ -11,9 +12,11 @@ namespace Explorer.Tours.Core.UseCases.Shopping
     public class TourPurchaseTokenService : CrudService<TourPurchaseTokenDto, TourPurchaseToken>, ITourPurchaseTokenService
     {
         private readonly ITourPurchaseTokenRepository _tourPurchaseRepository;
-        public TourPurchaseTokenService(ICrudRepository<TourPurchaseToken> repository, IMapper mapper, ITourPurchaseTokenRepository tourPurchaseRepository) : base(repository, mapper)
+        private readonly IWalletRepository _walletRepository;
+        public TourPurchaseTokenService(ICrudRepository<TourPurchaseToken> repository, IMapper mapper, ITourPurchaseTokenRepository tourPurchaseRepository, IWalletRepository walletRepository) : base(repository, mapper)
         {
             _tourPurchaseRepository = tourPurchaseRepository;
+            _walletRepository = walletRepository;
         }
 
         public Result<bool> GetToken(int idUser, int idTour)
@@ -23,7 +26,26 @@ namespace Explorer.Tours.Core.UseCases.Shopping
 
         public Result<List<TourPurchaseTokenDto>> PurchaseItemsFromCart(ShoppingCartDto shoppingCart)
         {
-            return MapToDto(_tourPurchaseRepository.PurchaseItemsFromCart(shoppingCart));
+            double coins = 0;
+            foreach (var item in shoppingCart.Items)
+            {
+                coins -= item.Price;
+                if (item.Type.Equals("Bundle"))
+                {
+                    foreach (var tour in item.ToursInfo)
+                    {
+                        var token = new TourPurchaseToken(0, shoppingCart.IdUser, tour.Id, DateTime.Now.ToUniversalTime(), tour.Name, tour.Image);                      
+                        CrudRepository.Create(token);
+                    }
+                }
+                else
+                {
+                    var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdType, DateTime.Now.ToUniversalTime(), item.Name, item.Image);
+                    CrudRepository.Create(token);
+                }
+            }
+            _walletRepository.AddCoinsToWallet(shoppingCart.IdUser, coins);
+            return MapToDto(_tourPurchaseRepository.GetAllForUser(shoppingCart.IdUser));
         }
 
         public Result<List<TourPurchaseTokenDto>> GetAllForUser(int userId)
