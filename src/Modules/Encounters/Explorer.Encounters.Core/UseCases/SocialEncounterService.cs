@@ -42,6 +42,9 @@ namespace Explorer.Encounters.Core.UseCases
 
         public Result<SocialEncounterDto> Create(SocialEncounterDto socialEncounter)
         {
+            var cache = MemoryCache.Default;
+            var cachedData = (List<SocialEncounterDto>)cache.Get(cacheKey);
+            cachedData ??= CacheData(cacheKey);
             var result = _repository.Create(MapToDomain(socialEncounter));
             return MapToDto(result);
         }
