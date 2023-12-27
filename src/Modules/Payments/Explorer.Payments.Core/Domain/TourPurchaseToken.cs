@@ -26,8 +26,8 @@ namespace Explorer.Payments.Core.Domain
 
         private void Validate()
         {
-            if (UserId <= 0) throw new ArgumentOutOfRangeException();
-            if (TourId <= 0) throw new ArgumentOutOfRangeException();
+            if (UserId == 0) throw new ArgumentOutOfRangeException("Unauthenticated user!");
+            if (TourId == 0) throw new ArgumentOutOfRangeException();
             if (TourName == string.Empty || TourName == null) throw new ArgumentNullException();
             if (TourImage == string.Empty || TourImage == null) throw new ArgumentNullException();
         }

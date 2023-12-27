@@ -19,28 +19,6 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             _dbSet = DbContext.Set<TourPurchaseToken>();
         }
 
-        public Result<List<TourPurchaseToken>> PurchaseItemsFromCart(ShoppingCartDto shoppingCart)
-        {
-            foreach(var item in shoppingCart.Items)
-            {
-                if (item.Type.Equals("Bundle"))
-                {
-                    foreach (var tour in item.ToursInfo)
-                    {
-                        var token = new TourPurchaseToken(0, shoppingCart.IdUser, tour.Id, DateTime.Now.ToUniversalTime(), tour.Name, tour.Image);
-                        _dbSet.Add(token);
-                    }
-                }
-                else
-                {
-                    var token = new TourPurchaseToken(0, shoppingCart.IdUser, item.IdType, DateTime.Now.ToUniversalTime(), item.Name, item.Image);
-                    _dbSet.Add(token);
-                }          
-            }
-            DbContext.SaveChanges();
-
-            return _dbSet.ToList();
-        }
         public Result<bool> GetToken(int idUser, int IdTour)
         {
             foreach(var token in _dbSet)

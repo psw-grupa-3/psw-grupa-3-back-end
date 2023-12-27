@@ -37,7 +37,7 @@ namespace Explorer.Payments.Infrastructure.Database.Repositories
             
         }
 
-        public Result<Wallet> AddCoinsToWallet(int userId, int coins)
+        public Result<Wallet> AddCoinsToWallet(int userId, double coins)
         {
             var wallet = _dbSet.FirstOrDefault(x => x.UserId == userId);
             wallet.AddCoins(coins);
@@ -48,7 +48,15 @@ namespace Explorer.Payments.Infrastructure.Database.Repositories
 
         public Result<Wallet> GetByUserId(int userId)
         {
-            return _dbSet.FirstOrDefault(x => x.UserId == userId);
+            var wallet = _dbSet.FirstOrDefault(x => x.UserId == userId);
+            if (wallet == null)
+            {
+                var newWallet = new Wallet(userId, 570);
+                _dbSet.Add(newWallet);
+                DbContext.SaveChanges();
+                return newWallet;
+            }
+            return wallet;
         }
     }
 }

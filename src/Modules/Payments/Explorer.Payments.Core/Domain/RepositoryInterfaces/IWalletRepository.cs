@@ -12,7 +12,7 @@ namespace Explorer.Payments.Core.Domain.RepositoryInterfaces
     public interface IWalletRepository : ICrudRepository<Wallet>
     {
         Result<Wallet> CreateWallet(int userId);
-        Result<Wallet> AddCoinsToWallet(int userId, int coins);
+        Result<Wallet> AddCoinsToWallet(int userId, double coins);
         Result<Wallet> GetByUserId(int userId);
     }
 }

@@ -13,16 +13,16 @@ namespace Explorer.Payments.Core.Domain
         [JsonPropertyName("UserId")]
         public int UserId { get; private set; }
         [JsonPropertyName("Coins")]
-        public int Coins { get; private set; }
+        public double Coins { get; private set; }
 
         [JsonConstructor]
-        public Wallet(int userId, int coins)
+        public Wallet(int userId, double coins)
         {
             UserId = userId;
             Coins = coins;
         }
 
-        public void AddCoins(int coins)
+        public void AddCoins(double coins)
         {
             Coins += coins;
         }
