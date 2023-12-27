@@ -1,5 +1,6 @@
 ﻿using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.Order;
+using Explorer.Payments.Core.Domain.Session;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
@@ -13,6 +14,7 @@ public class PaymentsContext : DbContext
     public DbSet<TourPurchaseToken> TourPurchaseTokens { get; set; }
     public DbSet<Coupon> Coupons { get; set; }
     public DbSet<Sale> Sales { get; set; }
+    public DbSet<ShoppingSession> ShoppingSessions { get; set; }
 
 
     public PaymentsContext(DbContextOptions<PaymentsContext> options) : base(options) { }
@@ -21,8 +23,10 @@ public class PaymentsContext : DbContext
     {
         modelBuilder.HasDefaultSchema("payments");
         modelBuilder.Entity<OrderItem>().HasNoKey();
+        modelBuilder.Entity<Event>().HasNoKey();
         modelBuilder.Entity<Payment>().ToTable("Payments");
         modelBuilder.Entity<ShoppingCart>().Property(item => item.Items).HasColumnType("jsonb");
+        modelBuilder.Entity<ShoppingSession>().Property(session => session.Events).HasColumnType("jsonb");
 
         modelBuilder.Entity<Wallet>().ToTable("Wallet");
         modelBuilder.Entity<Sale>().ToTable("Sales");
