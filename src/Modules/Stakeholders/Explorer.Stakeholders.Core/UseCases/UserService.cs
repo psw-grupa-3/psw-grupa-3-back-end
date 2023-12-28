@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Explorer.Stakeholders.API.Dtos;
-using FluentResults;
-using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Domain.Users;
+using FluentResults;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
@@ -37,6 +37,36 @@ namespace Explorer.Stakeholders.Core.UseCases
         {
             var users = _userRepository.GetAll();
             return MapToDto(users);
+        }
+
+        public Result<UserDto> DisableBlogs(int id)
+        {
+            try
+            {
+                var user = _userRepository.GetAll().Find(u => u.Id == id);
+                if (user.IsBlogEnabled == false) return MapToDto(user);
+                user.IsBlogEnabled = false;
+                _userRepository.Update(user);
+                return MapToDto(user);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail($"Error disabling blogs for the user: {e.Message}");
+            }
+        }
+
+        public Result<bool> CanUserUseBlog(int id)
+        {
+            try
+            {
+                var user = _userRepository.GetAll().Find(u => u.Id == id);
+                if (user == null) return Result.Fail("User not found");
+                return user.IsBlogEnabled ?? true;
+            }
+            catch (Exception e)
+            {
+                return Result.Fail($"Error disabling blogs for the user: {e.Message}");
+            }
         }
     }
 }
