@@ -261,7 +261,21 @@ namespace Explorer.Tours.Core.UseCases.Administration
         {
             return CrudRepository.GetPaged(0, 0).Results.FirstOrDefault(x => x.Name.Equals(name)).Id;
         }
-       
+        public Result<List<TourDto>> GetAllAuthorsTours(int idUser)
+        {
+            var allTours = CrudRepository.GetPaged(0, 0).Results;
 
+            var tours = new List<TourDto>();
+            foreach(var tour in allTours)
+            {
+                if(tour.AuthorId == idUser)
+                {
+                    
+                    tours.Add(MapToDto(tour));
+                }
+            }
+
+            return tours;
+        }
     }
 }

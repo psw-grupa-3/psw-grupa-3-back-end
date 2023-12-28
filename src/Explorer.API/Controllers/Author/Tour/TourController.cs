@@ -140,5 +140,11 @@ namespace Explorer.API.Controllers.Author.Tour
         {
             return CreateResponse(_tourService.GetIdByName(name));
         }
+        [AllowAnonymous]
+        [HttpGet("getAllAuthorsTours/{idUser:int}")]
+        public ActionResult<TourDto> GetAllAuthorsTours([FromRoute] int idUser)
+        {
+            return CreateResponse(_tourService.GetAllAuthorsTours(idUser));
+        }
     }
 }
