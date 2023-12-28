@@ -14,7 +14,8 @@ public class User : Entity
     public List<Follower>? Followers { get; private set; }
     public List<Notification>? Notifications { get; private set; }
     public bool IsProfileActivated { get; set; }
-    public User() {}
+    public bool? IsBlogEnabled { get; set; }
+    public User() { }
     public User(string username, string password, UserRole role, bool isActive, string email, List<Follower> followers, List<Notification>? notifications, bool isProfileActivated)
     {
         Validate(username, password);

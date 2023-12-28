@@ -57,13 +57,13 @@ public class AuthenticationService : IAuthenticationService
     }
 
     public Result<bool> ActivateAccount(int id)
-    { 
+    {
         return _userRepository.ActivateAccount(id);
     }
 
     public Result<AuthenticationTokensDto> ForgotPassword(string email)
     {
-        if(!_userRepository.ExistsByEmail(email)) return Result.Fail(FailureCode.NotFound);
+        if (!_userRepository.ExistsByEmail(email)) return Result.Fail(FailureCode.NotFound);
 
         try
         {

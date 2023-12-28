@@ -3,15 +3,16 @@ using Explorer.Blog.API.Dtos;
 using Explorer.Blog.API.Enums;
 using Explorer.Blog.API.Public;
 using Explorer.Blog.Core.Converters;
+using Explorer.Blog.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
 using FluentResults;
 using static Explorer.Blog.API.Enums.BlogEnums;
 
 namespace Explorer.Blog.Core.UseCases
 {
-    public class BlogService : CrudService<BlogDto, Domain.Blog> ,IBlogService
+    public class BlogService : CrudService<BlogDto, Domain.Blog>, IBlogService
     {
-        public BlogService(ICrudRepository<Domain.Blog> repository, IMapper mapper): base(repository, mapper) { }
+        public BlogService(ICrudRepository<Domain.Blog> repository, IMapper mapper) : base(repository, mapper) { }
 
         public Result<List<BlogDto>> GetFiltered(BlogStatus filter)
         {
@@ -51,6 +52,8 @@ namespace Explorer.Blog.Core.UseCases
         {
             var blogReport = BlogReportConverter.ToDomain(report);
             Domain.Blog blog = CrudRepository.Get(blogId);
+            if (blog.Reports == null)
+                blog.Reports = new List<Report>();
             blog.Reports.Add(blogReport);
             CrudRepository.Update(blog);
             return MapToDto(blog);
