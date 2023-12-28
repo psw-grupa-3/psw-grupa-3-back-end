@@ -46,6 +46,13 @@ namespace Explorer.API.Controllers.Encounter
             }
 
             [Authorize(Policy = "touristPolicy")]
+            [HttpPut("activate-social/{encounterId:int}")]
+            public ActionResult<SocialEncounterDto> ActivateSocial([FromRoute] int encounterId, [FromBody] ParticipantLocationDto locationDto)
+            {
+                return CreateResponse(_encounterService.Activate(encounterId, locationDto));
+            }
+
+        [Authorize(Policy = "touristPolicy")]
             [HttpPut("solve-social/{encounterId:int}")]
             public ActionResult<SocialEncounterDto> SolveSocial([FromRoute] int encounterId, [FromBody] ParticipantLocationDto locationDto)
             {
