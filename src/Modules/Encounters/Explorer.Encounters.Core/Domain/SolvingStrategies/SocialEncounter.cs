@@ -15,6 +15,8 @@ namespace Explorer.Encounters.Core.Domain.SolvingStrategies
         public List<SocialEncounterEvent> Events { get; private set; }
         [NotMapped]
         public List<Completer> SolveResult { get; set; }
+        [NotMapped]
+        public bool ActivateResult { get; set; }
 
         public SocialEncounter(){}
 
@@ -23,6 +25,12 @@ namespace Explorer.Encounters.Core.Domain.SolvingStrategies
             Validate(requiredParticipants, currentlyInRange);
             RequiredParticipants = requiredParticipants;
             CurrentlyInRange = currentlyInRange;
+        }
+
+        public bool ActivateSocialEncounter(string username, double longitude, double latitude)
+        {
+            Causes(new SocialEncounterEvent(DateTime.Now, username, longitude, latitude, SocialEventType.Activate));
+            return ActivateResult;
         }
 
         public List<Completer> Solve(string username, double longitude, double latitude)
@@ -45,10 +53,25 @@ namespace Explorer.Encounters.Core.Domain.SolvingStrategies
 
         public void Apply(SocialEncounterEvent @event)
         {
-            When((dynamic)@event);
+            switch (@event.Type)
+            {
+                case SocialEventType.Solved:
+                    WhenSolve(@event);
+                    break;
+
+                case SocialEventType.Activate:
+                    WhenActivate(@event);
+                    break;
+
+                // Add more cases as needed...
+
+                default:
+                    // Handle default case or throw an exception if necessary
+                    break;
+            }
         }
 
-        private List<Completer> When(SocialEncounterEvent encounterSolved)
+        private List<Completer> WhenSolve(SocialEncounterEvent encounterSolved)
         {
             var participantsLocation = new Location(encounterSolved.Longitude, encounterSolved.Latitude);
             var inProximity = DistanceCalculator.CalculateDistance(participantsLocation, Location) * 1000 <= Radius;
@@ -66,6 +89,17 @@ namespace Explorer.Encounters.Core.Domain.SolvingStrategies
             }
             SolveResult =  new List<Completer>();
             return SolveResult;
+        }
+
+        public bool WhenActivate(SocialEncounterEvent encounterActivated)
+        {
+            if (Participants.Any(x => x.Username.Equals(encounterActivated.Username))) return false; //Already activated
+            if (Completers.Any(x => x.Username.Equals(encounterActivated.Username))) return false; //Already completed
+            var personsLocation = new Location(encounterActivated.Longitude, encounterActivated.Latitude);
+            var inProximity = DistanceCalculator.CalculateDistance(personsLocation, Location) * 1000 <= Radius;
+            if (inProximity) Participants.Add(new Participant(encounterActivated.Username));
+            ActivateResult = inProximity; //Activation result, positive/negative
+            return ActivateResult;
         }
     }
 }

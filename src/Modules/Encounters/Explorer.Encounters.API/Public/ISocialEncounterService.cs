@@ -9,6 +9,7 @@ namespace Explorer.Encounters.API.Public
         Result<List<SocialEncounterDto>> GetAll();
         Result<SocialEncounterDto> Create(SocialEncounterDto socialEncounter);
         Result<SocialEncounterDto> Update(SocialEncounterDto socialEncounter);
+        Result<SocialEncounterDto> Activate(int id, ParticipantLocationDto participantLocation);
         Result<SocialEncounterDto> Solve(int id, ParticipantLocationDto participantLocation);
     }
 }
