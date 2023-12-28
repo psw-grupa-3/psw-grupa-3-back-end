@@ -261,5 +261,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
         {
             return CrudRepository.GetPaged(0, 0).Results.FirstOrDefault(x => x.Name.Equals(name)).Id;
         }
+       
+
     }
 }

@@ -2,6 +2,7 @@
 using Explorer.Tours.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Explorer.API.Controllers.Tourist.TourExecution
 {
@@ -14,7 +15,7 @@ namespace Explorer.API.Controllers.Tourist.TourExecution
         {
             _service = service;
         }
-
+        
         [HttpGet("getAll")]
         public ActionResult<TourExecutionDto> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
@@ -39,5 +40,6 @@ namespace Explorer.API.Controllers.Tourist.TourExecution
         {
             return CreateResponse(_service.UpdatePosition(tourExecutionId, positionDto));
         }
+
     }
 }

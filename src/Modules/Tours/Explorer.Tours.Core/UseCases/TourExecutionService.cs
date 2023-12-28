@@ -6,6 +6,7 @@ using Explorer.Tours.Core.Converters;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
+using static Explorer.Tours.API.Enums.TourEnums;
 
 namespace Explorer.Tours.Core.UseCases
 {
@@ -39,6 +40,7 @@ namespace Explorer.Tours.Core.UseCases
             return MapToDto(tourExecution);
         }
 
+       
 
     }
 }
