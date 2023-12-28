@@ -15,7 +15,7 @@ namespace Explorer.API.Controllers.Tourist.TourExecution
         {
             _service = service;
         }
-
+        
         [HttpGet("getAll")]
         public ActionResult<TourExecutionDto> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
