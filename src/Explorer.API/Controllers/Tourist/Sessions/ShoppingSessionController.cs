@@ -31,7 +31,7 @@ namespace Explorer.API.Controllers.Tourist.Sessions
         }
 
         [HttpPatch("addEvent/{userId}")]
-        public ActionResult<ShoppingSession> AddEvent([FromBody] EventDto @event,long userId)
+        public ActionResult<ShoppingSession> AddEvent([FromBody] ShoppingEventDto @event,long userId)
         {
             return CreateResponse(_service.AddEvent(@event, userId));
         }

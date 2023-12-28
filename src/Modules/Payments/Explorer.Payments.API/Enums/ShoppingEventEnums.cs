@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Explorer.Payments.API.Enums
 {
-    public class EventEnums
+    public class ShoppingEventEnums
     {
         public enum EventType
         {

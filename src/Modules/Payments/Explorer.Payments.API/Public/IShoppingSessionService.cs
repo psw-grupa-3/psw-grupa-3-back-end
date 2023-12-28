@@ -11,7 +11,7 @@ namespace Explorer.Payments.API.Public
     public interface IShoppingSessionService
     {
         Result<ShoppingSessionDto> StartSession(long userId);
-        Result<ShoppingSessionDto> AddEvent(EventDto eventDto, long userId);
+        Result<ShoppingSessionDto> AddEvent(ShoppingEventDto eventDto, long userId);
         Result<ShoppingSessionDto> CloseSession(long userId);
     }
 }

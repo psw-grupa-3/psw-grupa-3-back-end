@@ -23,7 +23,7 @@ public class PaymentsContext : DbContext
     {
         modelBuilder.HasDefaultSchema("payments");
         modelBuilder.Entity<OrderItem>().HasNoKey();
-        modelBuilder.Entity<Event>().HasNoKey();
+        modelBuilder.Entity<ShoppingEvent>().HasNoKey();
         modelBuilder.Entity<Payment>().ToTable("Payments");
         modelBuilder.Entity<ShoppingCart>().Property(item => item.Items).HasColumnType("jsonb");
         modelBuilder.Entity<ShoppingSession>().Property(session => session.Events).HasColumnType("jsonb");

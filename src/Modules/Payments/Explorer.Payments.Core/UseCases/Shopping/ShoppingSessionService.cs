@@ -24,13 +24,13 @@ namespace Explorer.Payments.Core.UseCases.Shopping
             _mapper = mapper;
         }
 
-        public Result<ShoppingSessionDto> AddEvent(EventDto eventDto, long userId)
+        public Result<ShoppingSessionDto> AddEvent(ShoppingEventDto eventDto, long userId)
         {
             var session = _sessionRepository.GetActivetByUserId(userId);
             if(session != null)
             {
                 eventDto.Timestamp = DateTime.UtcNow;
-                session.AddEvent(_mapper.Map<Event>(eventDto));
+                session.AddEvent(_mapper.Map<ShoppingEvent>(eventDto));
                 session = CrudRepository.Update(session);
                 return MapToDto(session);
             }
@@ -42,7 +42,7 @@ namespace Explorer.Payments.Core.UseCases.Shopping
             var session = _sessionRepository.GetActivetByUserId(userId);
             if (session != null)
             {
-                var closeSessionEvent = new Event(API.Enums.EventEnums.EventType.CloseSession, DateTime.UtcNow);
+                var closeSessionEvent = new ShoppingEvent(API.Enums.ShoppingEventEnums.EventType.CloseSession, DateTime.UtcNow);
                 session.CloseSession(closeSessionEvent);
                 session = CrudRepository.Update(session);
                 return MapToDto(session);
@@ -52,7 +52,7 @@ namespace Explorer.Payments.Core.UseCases.Shopping
 
         public Result<ShoppingSessionDto> StartSession(long userId)
         {
-            var events = new List<Event>();
+            var events = new List<ShoppingEvent>();
 
             var session = _sessionRepository.GetActivetByUserId(userId);
             if(session != null)
@@ -64,12 +64,13 @@ namespace Explorer.Payments.Core.UseCases.Shopping
                 else
                 {
                     CloseSession(userId);
-                    var expiredSessionEvent = new Event(API.Enums.EventEnums.EventType.ExpiredSession, session.Id, DateTime.UtcNow);
+                    var expiredSessionEvent = new ShoppingEvent(API.Enums.ShoppingEventEnums.EventType.ExpiredSession, session.Id, DateTime.UtcNow);
                     events.Add(expiredSessionEvent);
                 }
             }
             
-            var openSessionEvent = new Event(API.Enums.EventEnums.EventType.OpenSession, DateTime.UtcNow);
+            var openSessionEvent = new ShoppingEvent(API.Enums.ShoppingEventEnums.EventType.OpenSession, DateTime.UtcNow);
+            events.Add(openSessionEvent);
             var newSession = new ShoppingSession(userId,events,true);
             newSession = CrudRepository.Create(newSession);
             return MapToDto(newSession);

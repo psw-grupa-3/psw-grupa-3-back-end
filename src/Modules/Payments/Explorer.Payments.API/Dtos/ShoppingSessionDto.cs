@@ -11,7 +11,7 @@ namespace Explorer.Payments.API.Dtos
     {
         public long Id { get; set; }
         public long UserId { get; set; }
-        public List<EventDto> Events { get; set; }
+        public List<ShoppingEventDto> Events { get; set; }
         public bool IsActive { get; set; }
     }
 }

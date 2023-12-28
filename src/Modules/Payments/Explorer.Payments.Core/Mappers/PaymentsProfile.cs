@@ -18,7 +18,7 @@ public class PaymentsProfile : Profile
         CreateMap<SaleDto, Sale>().ReverseMap();
         CreateMap<TourInfoDto, TourInfo>().ReverseMap();
         CreateMap<ShoppingSessionDto, ShoppingSession>().ReverseMap();
-        CreateMap<EventDto, Event>().ReverseMap();
+        CreateMap<ShoppingEventDto, ShoppingEvent>().ReverseMap();
 
     }
 }

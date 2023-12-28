@@ -5,23 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using static Explorer.Payments.API.Enums.EventEnums;
+using static Explorer.Payments.API.Enums.ShoppingEventEnums;
 
 namespace Explorer.Payments.Core.Domain.Session
 {
-    public class Event : ValueObject
+    public class ShoppingEvent : ValueObject
     {
         public EventType EventType { get; init; }
         public long? ItemId { get; init; }
         public DateTime Timestamp { get; init; }
 
         [JsonConstructor]
-        public Event(EventType eventType, DateTime timestamp)
+        public ShoppingEvent(EventType eventType, DateTime timestamp)
         {
             EventType = eventType;
             Timestamp = timestamp;
         }
-        public Event(EventType eventType, long itemId, DateTime timestamp)
+        public ShoppingEvent(EventType eventType, long itemId, DateTime timestamp)
         {
             EventType = eventType;
             Timestamp = timestamp;
