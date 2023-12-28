@@ -14,7 +14,7 @@ namespace Explorer.Payments.Core.Domain.Order
         }
         private void Validate()
         {
-
+            if (IdUser == 0) throw new ArgumentOutOfRangeException("User doesn't exist!");
         }
 
     }
