@@ -1,57 +1,72 @@
 ﻿using AutoMapper;
-using Explorer.Stakeholders.API.Dtos;
-using FluentResults;
-using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Domain.Users;
+using FluentResults;
 
 namespace Explorer.Stakeholders.Core.UseCases
 {
-    public class UserService : BaseService<UserAdminDto, User>, IUserService
+    public class UserService : BaseService<UserDto, User>, IUserService
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserService(IMapper mapper, IUserRepository userRepository) : base(mapper)
         {
-            this.userRepository = userRepository;
+            _userRepository = userRepository;
         }
 
-        public Result<UserAdminDto> Update(UserAdminDto user)
-        {
-            var userEntity = MapToDomain(user);
-            return MapToDto(userEntity);
-        }
-
-        public Result Block(string username)
+        public Result<UserDto> Block(string username)
         {
             try
             {
-                userRepository.Block(username);
-                return Result.Ok();
+                var user = _userRepository.GetActiveByName(username);
+                if (user == null) return Result.Fail("User not found");
+                user.IsActive = false;
+                _userRepository.Update(user);
+                return MapToDto(user);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return Result.Fail($"Error blocking the user: {ex.Message}");
+                return Result.Fail($"Error blocking the user: {e.Message}");
             }
         }
 
-        public Result<List<UserAdminDto>> GetAll()
+        public Result<List<UserDto>> GetAll()
         {
-            List<UserAdminDto> users = new();
-            foreach (var user in userRepository.GetAll())
-            {
-                users.Add(new()
-                {
-                    UserId = user.UserId,
-                    Username = user.Username,
-                    Role = user.Role,
-                    IsActive = user.IsActive,
-                    Email = user.Email
-                });
-            }
-            return users;
+            var users = _userRepository.GetAll();
+            return MapToDto(users);
         }
 
+        public Result<UserDto> DisableBlogs(int id)
+        {
+            try
+            {
+                var user = _userRepository.GetAll().Find(u => u.Id == id);
+                if (user.IsBlogEnabled == false) return MapToDto(user);
+                user.IsBlogEnabled = false;
+                _userRepository.Update(user);
+                return MapToDto(user);
+            }
+            catch (Exception e)
+            {
+                return Result.Fail($"Error disabling blogs for the user: {e.Message}");
+            }
+        }
+
+        public Result<bool> CanUserUseBlog(int id)
+        {
+            try
+            {
+                var user = _userRepository.GetAll().Find(u => u.Id == id);
+                if (user == null) return Result.Fail("User not found");
+                return user.IsBlogEnabled ?? true;
+            }
+            catch (Exception e)
+            {
+                return Result.Fail($"Error disabling blogs for the user: {e.Message}");
+            }
+        }
     }
 }

@@ -10,5 +10,14 @@
             Active, 
             Famous
         }
+
+        public enum ReportReason
+        {
+            Spam = 1,
+            HateSpeech,
+            FalseInfo,
+            Bullying,
+            Violence
+        }
     }
 }

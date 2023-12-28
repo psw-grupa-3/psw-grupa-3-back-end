@@ -14,7 +14,7 @@ namespace Explorer.Tours.API.Public.Administration
         Result<TourDto> PublishTour(long id);
         Result<TourDto> ArhiveTour(long id);
         Result<List<TourDto>> SearchByPointDistance(double longitude, double latitude, int distance);
-        Result<TourDto> AddProblem(long tourId,ProblemDto problem);
+        Result<TourDto> AddProblem(int tourId,ProblemDto problem);
         //Result<TourDto> RespondToProblem(Problem problem);
         //Result<TourDto> UpdateProblem(ProblemDto problem, );
         Result<TourDto> PublishPoint(long id, string pointName);
@@ -26,5 +26,9 @@ namespace Explorer.Tours.API.Public.Administration
 
         Result<List<PointDto>> GetAllPublicPointsForTours();
         Result<List<TourDto>> FindToursContainingPoints(List<PointDto> pointsToFind);
+        Result<List<TourDto>> GetToursReviewedByUsersIFollow(int currentUserId, int ratedTourId);
+        Result<long> GetIdByName(string name);
+        Result<List<TourDto>> GetAllAuthorsTours(int idUser);
     }
+
 }

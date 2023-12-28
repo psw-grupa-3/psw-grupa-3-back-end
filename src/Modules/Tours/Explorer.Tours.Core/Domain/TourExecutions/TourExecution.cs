@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Explorer.BuildingBlocks.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Tours.Core.Domain.Tours;
 using Explorer.Tours.Core.Domain.Utilities;
 using Newtonsoft.Json;
@@ -7,20 +6,13 @@ using static Explorer.Tours.API.Enums.TourEnums;
 
 namespace Explorer.Tours.Core.Domain.TourExecutions
 {
-    [JsonObject(MemberSerialization.OptIn)]
-    public class TourExecution: JsonEntity
+    public class TourExecution: Entity
     {
-        [NotMapped]
         private const int PointProximity = 100;
-        [NotMapped][JsonProperty]
         public TourExecutionStatus Status { get; set; }
-        [NotMapped][JsonProperty]
         public Position? Position { get; set; }
-        [NotMapped][JsonProperty]
         public List<PointTask>? Tasks { get; set; } = new List<PointTask>();
-        [NotMapped][JsonProperty]
         public int TourId { get; set; }
-        
         public TourExecution(){}
 
         [JsonConstructor]
@@ -90,41 +82,12 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
 
         public bool IsLastActivityWithinWeek(TourExecution tourExecution)
         {
-            
-            if (tourExecution.Position == null)
-            {
-                return true;
-            }
-
-            
-            if (tourExecution.Position.LastActivity == null)
-            {
-                return true; 
-            }
-
+            if (tourExecution.Position == null) return true;
             TimeSpan timeDifference = DateTime.Now - tourExecution.Position.LastActivity;
-
-            
             return timeDifference.TotalDays > 7.0;
         }
+        
 
 
-        public override void ToJson()
-        {
-            JsonObject = JsonConvert.SerializeObject(this, Formatting.Indented) ??
-                         throw new JsonSerializationException("Exception! Could not serialize object!");
-        }
-
-        public override void FromJson()
-        {
-            var tourExecution = JsonConvert.DeserializeObject<TourExecution>(JsonObject ??
-                                                                             throw new NullReferenceException(
-                                                                                 "Exception! No object to deserialize!")) ??
-                                throw new NullReferenceException("Exception! TourExecution is null!");
-            Status = tourExecution.Status;
-            Position = tourExecution.Position;
-            Tasks = tourExecution.Tasks;
-            TourId= tourExecution.TourId;
-        }
     }
 }

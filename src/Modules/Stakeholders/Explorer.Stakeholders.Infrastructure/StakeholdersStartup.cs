@@ -10,8 +10,6 @@ using Explorer.Stakeholders.Core.UseCases;
 using Explorer.Stakeholders.Infrastructure.Authentication;
 using Explorer.Stakeholders.Infrastructure.Database;
 using Explorer.Stakeholders.Infrastructure.Database.Repositories;
-using ISAProject.Modules.Stakeholders.API.Public;
-using ISAProject.Modules.Stakeholders.Core.UseCases;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

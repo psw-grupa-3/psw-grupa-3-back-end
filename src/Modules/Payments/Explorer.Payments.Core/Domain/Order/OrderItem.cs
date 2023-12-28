@@ -8,10 +8,11 @@ namespace Explorer.Payments.Core.Domain.Order
     {
         public OrderItemType Type { get; set; }
         public int IdType { get; init; }
+        public List<TourInfo>? ToursInfo { get; init; }
         public string Name { get; init; }
         public double Price { get; set; }
         public string Image { get; init; }
-        public string CouponCode { get; init; }
+        public string? CouponCode { get; init; }
 
 
         [JsonConstructor]

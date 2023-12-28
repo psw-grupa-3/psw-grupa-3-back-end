@@ -2,10 +2,14 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Encounters.API.Dtos;
 using Explorer.Encounters.API.Public;
+using Explorer.Encounters.Core.Domain;
+using System.Runtime.Caching;
 using Explorer.Encounters.Core.Domain.RepositoryInterfaces;
 using Explorer.Encounters.Core.Domain.SolvingStrategies;
+using Explorer.Encounters.Core.UseCasesEvent;
 using Explorer.Stakeholders.API.Internal;
 using FluentResults;
+using Explorer.Encounters.API.Enums;
 
 namespace Explorer.Encounters.Core.UseCases
 {
@@ -13,11 +17,16 @@ namespace Explorer.Encounters.Core.UseCases
     {
         private readonly ISocialEncounterRepository _repository;
         private readonly IInternalPersonService _personService;
+        private readonly SolveSocialEncounter solveSocialEncounter;
+        private readonly ActivateSocialEncounter activateSocialEncounter;
+        private const string cacheKey = "encounterData";
 
         public SocialEncounterService(IMapper mapper, ISocialEncounterRepository repository, IInternalPersonService personService) : base(mapper)
         {
             _repository = repository;
             _personService = personService;
+            solveSocialEncounter = new SolveSocialEncounter(repository);
+            activateSocialEncounter = new ActivateSocialEncounter(repository);
         }
 
         public Result<SocialEncounterDto> Get(int id)
@@ -28,12 +37,23 @@ namespace Explorer.Encounters.Core.UseCases
 
         public Result<List<SocialEncounterDto>> GetAll()
         {
-            var encounters = _repository.GetAll();
-            return MapToDto(encounters);
+            var cache = MemoryCache.Default;
+            var cachedData = cache.Get(cacheKey) as Result<List<SocialEncounterDto>>;
+
+            if (cachedData == null || !cachedData.IsSuccess)
+            {
+                cachedData = CacheData(cacheKey);
+                return cachedData;
+            }
+
+            return cachedData.Value;
         }
 
         public Result<SocialEncounterDto> Create(SocialEncounterDto socialEncounter)
         {
+            var cache = MemoryCache.Default;
+            var cachedData = (List<SocialEncounterDto>)cache.Get(cacheKey);
+            cachedData ??= CacheData(cacheKey);
             var result = _repository.Create(MapToDomain(socialEncounter));
             return MapToDto(result);
         }
@@ -55,13 +75,33 @@ namespace Explorer.Encounters.Core.UseCases
             }
         }
 
+        public Result<SocialEncounterDto> Activate(int id, ParticipantLocationDto participantLocation)
+        {
+            var encounter = activateSocialEncounter.Execute(id, participantLocation);
+            return MapToDto(encounter);
+        }
+
         public Result<SocialEncounterDto> Solve(int id, ParticipantLocationDto participantLocation)
         {
-            var encounter = _repository.Get(id);
-            var completers = encounter.Solve(participantLocation.Username, participantLocation.Longitude, participantLocation.Latitude);
+            var encounter = solveSocialEncounter.Execute(id, participantLocation);
+            var completers = encounter.Completers;
             if (completers.Count > 0) _personService.RewardWithXp(completers.Select(u => u.Username).ToList(), encounter.Experience);
-            _repository.Update(encounter);
             return MapToDto(encounter);
+        }
+
+        private List<SocialEncounterDto> CacheData(string cacheKey)
+        {
+            var cache = MemoryCache.Default;
+            var data = _repository.GetAll();
+            var dataDto = MapToDto(data);
+
+            var cacheItemPolicy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(2592000)  //30 days
+            };
+            cache.Add(cacheKey, dataDto, cacheItemPolicy);
+
+            return dataDto.Value;
         }
     }
 }

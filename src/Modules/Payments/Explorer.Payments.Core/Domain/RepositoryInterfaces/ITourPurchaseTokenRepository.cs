@@ -6,7 +6,6 @@ namespace Explorer.Payments.Core.Domain.RepositoryInterfaces
     public interface ITourPurchaseTokenRepository
     {
         Result<List<TourPurchaseToken>> GetAllForUser(int userId);
-        Result<List<TourPurchaseToken>> PurchaseItemsFromCart(ShoppingCartDto shoppingCart);
         Result<bool> GetToken(int idUser, int idTour);
     }
 }

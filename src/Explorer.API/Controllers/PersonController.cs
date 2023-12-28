@@ -12,15 +12,18 @@ namespace Explorer.API.Controllers
     {
         private readonly IPersonService _personService;
         private readonly IUserFollowerService _userFollowerService;
+        private readonly IUserService _userService;
 
-        public PersonController(IPersonService personService, IUserFollowerService userFollowerService)
+        public PersonController(IPersonService personService, IUserFollowerService userFollowerService, IUserService userService)
         {
             _personService = personService;
             _userFollowerService = userFollowerService;
+            _userService = userService;
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<PagedResult<PersonDto>> GetPerson(int id) {
+        public ActionResult<PagedResult<PersonDto>> GetPerson(int id)
+        {
             var result = _personService.GetPersonByUserId(id);
             return CreateResponse(result);
         }
@@ -32,7 +35,7 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("updateUser/{id:int}")]
         public ActionResult<PersonDto> Update([FromBody] PersonDto personDto)
         {
             var result = _personService.Update(personDto);
@@ -58,6 +61,12 @@ namespace Explorer.API.Controllers
         {
             var result = _userFollowerService.Unfollow(userId, userToUnfollowId);
             return CreateResponse(result);
+        }
+
+        [HttpGet("canUserUseBlog/{userId:int}")]
+        public ActionResult<bool> CanUserUseBlog(int userId)
+        {
+            return CreateResponse(_userService.CanUserUseBlog(userId));
         }
 
     }

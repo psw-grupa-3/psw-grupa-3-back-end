@@ -45,5 +45,19 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tokenService.GetAllForUser(userId);
             return CreateResponse(result);
         }
+
+        [HttpGet("purchaseCount/{idUser:int}/{idTour:int}")]
+        public ActionResult<int> GetToursPurchaseCount(int idTour)
+        {
+            var result = _tokenService.GetToursPurchaseCount(idTour);
+            return CreateResponse(result);
+        }
+
+        [HttpGet("purchasedTourCount/{idUser:int}")]
+        public ActionResult<int> GetAllPrchasedToursCount()
+        {
+            var result = _tokenService.GetAuthorsPurchasedTours();
+            return CreateResponse(result);
+        }
     }
 }

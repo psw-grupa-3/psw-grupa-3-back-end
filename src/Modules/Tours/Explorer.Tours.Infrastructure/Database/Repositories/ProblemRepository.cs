@@ -18,27 +18,27 @@ using System.Threading.Tasks;
 
 namespace Explorer.Tours.Infrastructure.Database.Repositories
 {
-    public class ProblemRepository : CrudDatabaseRepository<Problem, ToursContext>, IProblemRepository
+    public class ProblemRepository : CrudDatabaseRepository<Tour, ToursContext>, IProblemRepository
     {
 
         private readonly ToursContext _context;
-        private readonly DbSet<DbEntity<Problem>> _dbSet;
+        private readonly DbSet<Problem> _dbSet;
         public ProblemRepository(ToursContext dbContext) : base(dbContext)
         {
             _context = dbContext;
-            _dbSet = DbContext.Set<DbEntity<Problem>>();
+            _dbSet = DbContext.Set<Problem>();
         }
 
-        public ProblemDto GetProblemById(long id)
+        /*public ProblemDto GetProblemById(long id)
         {
-            var dbProblems = _context.Problems.ToList();
-            var p = dbProblems.Find(p => p.Id == id);
+            var dbProblems = _context.Problems;
+            //var p = dbProblems.Find(p => p.Id == id);
 
             if (p != null)
             {
                 var problem = ExtractProblem(p.JsonObject);
                 var problemDto = ProblemConverter.ToDto(problem);
-                problemDto.Id = p.Id;
+                //problemDto.Id = p.Id;
 
                 return problemDto;
             }
@@ -48,11 +48,11 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
                 // Na primer, možete baciti izuzetak, vratiti odgovarajući rezultat ili uraditi nešto drugo.
                 throw new Exception($"Problem with ID {id} not found.");
             }
-        }
+        }*/
 
 
 
-        public static Problem ExtractProblem(string jsonString)
+        /*public static Problem ExtractProblem(string jsonString)
         {
             jsonString = jsonString.Trim();
 
@@ -99,7 +99,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             );
 
             return problem;
-        }
+        }*/
 
         private static DateTime ParseDateTime(string dateTimeString)
         {
@@ -113,9 +113,9 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             }
         }
 
-        public int GetProblemCount()
+        /*public int GetProblemCount()
         {
-            var problems = _context.Problems.ToList();
+            var tours = _context.Tours;
             var last = problems.LastOrDefault();
             if( last == null)
             {
@@ -125,14 +125,14 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             {
                 return (int)last.Id;
             }
-        }
+        }*/
         public List<ProblemDto> GetUnresolvedProblemsWithDeadline(List<ProblemDto> problems)
         {
             return problems
                 .Where(problem => !problem.IsSolved && problem.Deadline < problem.Time)
                 .ToList();
         }
-        public List<ProblemDto> GetAllProblems()
+        /*public List<ProblemDto> GetAllProblems()
         {
             var dbProblems = _context.Problems.ToList();
             List<ProblemDto> problemDtos = new List<ProblemDto>();
@@ -148,8 +148,8 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             return problemDtos
                 .Where(problem => !problem.IsSolved && problem.Deadline < problem.Time)
                 .ToList(); return problemDtos;
-        }
-        public List<ProblemDto> GetAll()
+        }*/
+       /* public List<ProblemDto> GetAll()
         {
             var dbProblems = _context.Problems.ToList();
             List<ProblemDto> problemDtos = new List<ProblemDto>();
@@ -163,14 +163,14 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             }
 
             return problemDtos;
-        }
+        }*/
 
         public void SaveChanges(Problem problem)
         {
             _context.SaveChanges();
         }
 
-        public object GetToursProblems(long tourId)
+        /*public object GetToursProblems(long tourId)
         {
             var dbProblems = GetAll();
             List<ProblemDto> problemDtos = new List<ProblemDto>();
@@ -184,7 +184,7 @@ namespace Explorer.Tours.Infrastructure.Database.Repositories
             }
 
             return problemDtos;
-        }
+        }*/
         public TourDto TourFromProblem(ProblemDto problem)
         {
             var associatedTour = _context.Tours.FirstOrDefault(t => t.Id == problem.TourId);

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Explorer.Stakeholders.API.Enums.UserEnums;
+﻿using static Explorer.Stakeholders.API.Enums.UserEnums;
 
 namespace Explorer.Stakeholders.API.Dtos
 {
@@ -16,5 +11,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public bool IsActive { get; set; }
         public List<FollowerDto> Followers { get; set; }
         public List<NotificationDto> Notifications { get; set; }
+        public bool? IsBlogEnabled { get; set; }
     }
 }

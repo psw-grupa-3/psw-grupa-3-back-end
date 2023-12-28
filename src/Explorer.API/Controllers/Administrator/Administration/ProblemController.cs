@@ -18,7 +18,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
         {
             _problemService = problemService;
         }
-
+        /*
         [HttpGet]
         public ActionResult<PagedResult<ProblemDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
@@ -63,6 +63,6 @@ namespace Explorer.API.Controllers.Administrator.Administration
             }
 
             return BadRequest("Failed to delete Problem or Tour.");
-        }
+        }*/
     }
 }

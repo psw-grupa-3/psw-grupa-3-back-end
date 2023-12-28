@@ -5,6 +5,7 @@ using Explorer.Payments.API.Public.Shopping;
 using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.Order;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
+using Explorer.Payments.Core.Domain.Session;
 using Explorer.Payments.Core.Mappers;
 using Explorer.Payments.Core.UseCases.Shopping;
 using Explorer.Payments.Infrastructure.Database;
@@ -44,10 +45,12 @@ public static class PaymentsStartup
         services.AddScoped(typeof(ICrudRepository<Wallet>), typeof(CrudDatabaseRepository<Wallet, PaymentsContext>));
         services.AddScoped(typeof(ICrudRepository<Sale>), typeof(JsonCrudRepo<Sale, PaymentsContext>));
         services.AddScoped(typeof(ICrudRepository<TourPurchaseToken>), typeof(CrudDatabaseRepository<TourPurchaseToken, PaymentsContext>));
+        services.AddScoped(typeof(ICrudRepository<ShoppingSession>), typeof(CrudDatabaseRepository<ShoppingSession, PaymentsContext>));
         services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
         services.AddScoped(typeof(ITourPurchaseTokenRepository), typeof(TourPurchaseTokenRepository));
         services.AddScoped(typeof(IWalletRepository), typeof(WalletRepository));
         services.AddScoped(typeof(ISaleRepository), typeof(SaleRepository));
+        services.AddScoped(typeof(IShoppingSessionRepository), typeof(ShoppingSessionRepository));
 
         services.AddScoped(typeof(ICrudRepository<Coupon>), typeof(CrudDatabaseRepository<Coupon, PaymentsContext>));
 
@@ -65,5 +68,6 @@ public static class PaymentsStartup
         services.AddScoped<IWalletService, WalletService>();
         services.AddScoped<ISaleService, SaleService>();
 
+        services.AddScoped<IShoppingSessionService, ShoppingSessionService>();
     }
 }

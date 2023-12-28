@@ -1,17 +1,18 @@
-﻿using Explorer.Stakeholders.API.Dtos;
-using Explorer.Stakeholders.Core.Domain.Users;
+﻿using Explorer.Stakeholders.Core.Domain.Users;
 
 namespace Explorer.Stakeholders.Core.Domain.RepositoryInterfaces
 {
     public interface IUserRepository
     {
         bool Exists(string username);
+        bool ExistsByEmail(string email);
         User? GetActiveByName(string username);
+        User? GetActiveByEmail(string email);
         User Create(User user);
         long GetPersonId(long userId);
-        void Block(string username);
+        User Update(User user);
         bool ActivateAccount(int id);
-        List<UserPerson> GetAll();
+        List<User> GetAll();
         Person GetPersonById(long personId);
     }
 }

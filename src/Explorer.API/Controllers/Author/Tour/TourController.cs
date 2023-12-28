@@ -52,6 +52,12 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.FindToursContainingPoints(pointsToFind));
         }
 
+        [Authorize(Policy = "touristPolicy")]
+        [HttpPut("findToursByFollowers")]
+        public ActionResult<List<TourDto>> GetToursReviewedByUsersIFollow([FromQuery] int currentUserId, [FromQuery] int ratedTourId)
+        {
+            return CreateResponse(_tourService.GetToursReviewedByUsersIFollow(currentUserId, ratedTourId));
+        }
 
 
         [AllowAnonymous]
@@ -100,6 +106,14 @@ namespace Explorer.API.Controllers.Author.Tour
             return CreateResponse(_tourService.RateTour(tourId, tourReview));
         }
 
+        [HttpPost("addProblem/{tourId:int}")]
+        //[Authorize(Policy = "TouristPolicy")]
+
+        public ActionResult<ProblemDto> AddProblem([FromRoute] int tourId, [FromBody] ProblemDto problem)
+        {
+            return CreateResponse(_tourService.AddProblem(tourId, problem));
+        }
+
         [AllowAnonymous]
         [HttpGet("averageRating/{tourId:int}")]
         public ActionResult<double> GetAverageRating(int tourId)
@@ -119,6 +133,18 @@ namespace Explorer.API.Controllers.Author.Tour
         public ActionResult PublishPoint(long id, [FromQuery] string pointName)
         {
             return CreateResponse(_tourService.PublishPoint(id, pointName));
+        }
+
+        [HttpGet("getIdByName/{name}")]
+        public ActionResult<long> GetIdByName(string name)
+        {
+            return CreateResponse(_tourService.GetIdByName(name));
+        }
+        [AllowAnonymous]
+        [HttpGet("getAllAuthorsTours/{idUser:int}")]
+        public ActionResult<TourDto> GetAllAuthorsTours([FromRoute] int idUser)
+        {
+            return CreateResponse(_tourService.GetAllAuthorsTours(idUser));
         }
     }
 }

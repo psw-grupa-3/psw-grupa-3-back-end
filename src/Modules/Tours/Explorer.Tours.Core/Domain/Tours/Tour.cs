@@ -44,7 +44,7 @@ namespace Explorer.Tours.Core.Domain.Tours
         public DateTime? ArhiveTime { get; private set; }
         [NotMapped]
         [JsonProperty]
-        public List<Problem>? Problems { get; private set; } = new List<Problem>();
+        public List<Problem>? Problems { get; set; } = new List<Problem>();
         [NotMapped]
         [JsonProperty]
         public bool? MyOwn { get; private set; }
@@ -53,7 +53,7 @@ namespace Explorer.Tours.Core.Domain.Tours
 
         [JsonConstructor]
         public Tour(string name, string description, int difficult, TourStatus status, Guide guide, double price, float length, DateTime? publishTime,
-            DateTime? arhiveTime, int authorId, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews, List<Problem>? problems, bool myOwn)
+            DateTime? arhiveTime, int authorId, List<Point> points, List<Tag> tags, List<RequiredTime> requiredTimes, List<TourReview> reviews, List<Problem> problems, bool myOwn)
         {
             Name = name;
             Description = description;

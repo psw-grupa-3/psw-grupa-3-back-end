@@ -9,27 +9,29 @@ public class User : Entity
     public string Username { get; private set; }
     public string Password { get; private set; }
     public UserRole Role { get; private set; }
+    public string Email { get; private set; }
     public bool IsActive { get; set; }
     public List<Follower>? Followers { get; private set; }
     public List<Notification>? Notifications { get; private set; }
     public bool IsProfileActivated { get; set; }
-
-    public User(string username, string password, UserRole role, bool isActive, List<Follower> followers, List<Notification>? notifications, bool isProfileActivated)
+    public bool? IsBlogEnabled { get; set; }
+    public User() { }
+    public User(string username, string password, UserRole role, bool isActive, string email, List<Follower> followers, List<Notification>? notifications, bool isProfileActivated)
     {
+        Validate(username, password);
         Username = username;
-        Password = password;
         Role = role;
         IsActive = isActive;
         Followers = followers;
         Notifications = notifications;
-        Validate();
+        Email = email;
         IsProfileActivated = isProfileActivated;
+        SecurePassword(password);
     }
-
-    private void Validate()
+    private void Validate(string username, string password)
     {
-        if (string.IsNullOrWhiteSpace(Username)) throw new ArgumentException("Invalid Name");
-        if (string.IsNullOrWhiteSpace(Password)) throw new ArgumentException("Invalid Password");
+        if (string.IsNullOrWhiteSpace(username)) throw new ArgumentException("Invalid Name");
+        if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Invalid Password");
     }
 
     public string GetPrimaryRoleName()
@@ -74,5 +76,21 @@ public class User : Entity
         {
             Notifications.Remove(new(notification.Id, notification.SenderId, notification.Message, NotificationStatus.Unread, DateTime.Now));
         }
+    }
+
+    public bool ChangePassword(string newPassword)
+    {
+        if (VerifyPassword(newPassword) || string.IsNullOrEmpty(newPassword))
+            return false;
+        SecurePassword(newPassword);
+        return true;
+    }
+    public bool VerifyPassword(string password)
+    {
+        return BCrypt.Net.BCrypt.Verify(password, Password);
+    }
+    private void SecurePassword(string password)
+    {
+        Password = BCrypt.Net.BCrypt.HashPassword(password, BCrypt.Net.BCrypt.GenerateSalt(11));
     }
 }

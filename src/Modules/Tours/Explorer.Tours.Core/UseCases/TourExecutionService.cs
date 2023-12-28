@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Stakeholders.Core.Domain.Users;
 using Explorer.Tours.API.Dtos.TourExecutions;
 using Explorer.Tours.API.Public;
 using Explorer.Tours.Core.Converters;
 using Explorer.Tours.Core.Domain.TourExecutions;
 using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
+using static Explorer.Tours.API.Enums.TourEnums;
 
 namespace Explorer.Tours.Core.UseCases
 {
@@ -39,6 +41,39 @@ namespace Explorer.Tours.Core.UseCases
             return MapToDto(tourExecution);
         }
 
+        public Result<int> getActiveTourCount(int tourId)
+        {
+            var executions = CrudRepository.GetPaged(0, 0);
+            var toursExecutions = executions.Results
+            .Where(e => e.TourId == tourId && e.Status == TourExecutionStatus.Active)
+            .ToList();
+            return toursExecutions.Count;
+        }
+        public Result<int> getCompletedTourCount(int tourId)
+        {
+            var executions = CrudRepository.GetPaged(0, 0);
+            var toursExecutions = executions.Results
+            .Where(e => e.TourId == tourId && e.Status == TourExecutionStatus.Completed)
+            .ToList();
+            return toursExecutions.Count;
+        }
 
+        public Result<int> getAllActiveToursCount()
+        {
+            var executions = CrudRepository.GetPaged(0, 0);
+            var toursExecutions = executions.Results
+            .Where(e => e.Status == TourExecutionStatus.Active)
+            .ToList();
+            return toursExecutions.Count;
+        }
+
+        public Result<int> getAllCompletedToursCount()
+        {
+            var executions = CrudRepository.GetPaged(0, 0);
+            var toursExecutions = executions.Results
+            .Where(e => e.Status == TourExecutionStatus.Completed)
+            .ToList();
+            return toursExecutions.Count;
+        }
     }
 }

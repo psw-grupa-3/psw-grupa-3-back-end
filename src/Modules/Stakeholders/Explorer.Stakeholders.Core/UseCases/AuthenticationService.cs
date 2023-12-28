@@ -25,7 +25,7 @@ public class AuthenticationService : IAuthenticationService
     public Result<AuthenticationTokensDto> Login(CredentialsDto credentials)
     {
         var user = _userRepository.GetActiveByName(credentials.Username);
-        if (user == null || credentials.Password != user.Password) return Result.Fail(FailureCode.NotFound);
+        if (user == null || !user.VerifyPassword(credentials.Password)) return Result.Fail(FailureCode.NotFound);
 
         long personId;
         try
@@ -38,17 +38,14 @@ public class AuthenticationService : IAuthenticationService
         }
         return _tokenGenerator.GenerateAccessToken(user, personId);
     }
-
-
-
     public Result<AuthenticationTokensDto> RegisterTourist(AccountRegistrationDto account)
     {
         if (_userRepository.Exists(account.Username)) return Result.Fail(FailureCode.NonUniqueUsername);
 
         try
         {
-            var user = _userRepository.Create(new User(account.Username, account.Password, UserRole.Tourist, true, new(), new(), isProfileActivated: false));
-            var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, account.Email, " ", " ", " "));
+            var user = _userRepository.Create(new User(account.Username, account.Password, UserRole.Tourist, true, account.Email, new(), new(), isProfileActivated: false));
+            var person = _personRepository.Create(new Person(user.Id, account.Name, account.Surname, " ", " ", " "));
 
             return _tokenGenerator.GenerateAccessToken(user, person.Id);
         }
@@ -59,12 +56,37 @@ public class AuthenticationService : IAuthenticationService
         }
     }
 
-
     public Result<bool> ActivateAccount(int id)
     {
-        var res = _userRepository.ActivateAccount(id);
-        if (res == true) return true;
-        return false;
+        return _userRepository.ActivateAccount(id);
     }
 
+    public Result<AuthenticationTokensDto> ForgotPassword(string email)
+    {
+        if (!_userRepository.ExistsByEmail(email)) return Result.Fail(FailureCode.NotFound);
+
+        try
+        {
+            var user = _userRepository.GetActiveByEmail(email) ?? throw new ArgumentException("Not found");
+            return _tokenGenerator.GeneratePasswordResetToken(user);
+        }
+        catch (ArgumentException e)
+        {
+            return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
+        }
+    }
+    public Result<bool> ChangePassword(PasswordChangeDto passwordChangeDto)
+    {
+        try
+        {
+            var user = _userRepository.GetActiveByEmail(passwordChangeDto.Email) ?? throw new ArgumentException("Not found");
+            var result = user.ChangePassword(passwordChangeDto.NewPassword);
+            if (result) _userRepository.Update(user);
+            return result;
+        }
+        catch (Exception e)
+        {
+            return Result.Fail(FailureCode.Forbidden).WithError(e.Message);
+        }
+    }
 }
