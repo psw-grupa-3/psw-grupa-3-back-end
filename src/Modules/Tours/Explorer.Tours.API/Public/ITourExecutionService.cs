@@ -11,6 +11,6 @@ namespace Explorer.Tours.API.Public
         Result<TourExecutionDto> UpdatePosition(int executionId, PositionDto position);
         Result<TourExecutionDto> StartExecution(int tourId);
         Result<PagedResult<TourExecutionDto>> GetPaged(int page, int pageSize);
-      
+       
     }
 }

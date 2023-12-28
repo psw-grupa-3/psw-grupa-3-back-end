@@ -39,8 +39,8 @@ namespace Explorer.Tours.Core.UseCases
             CrudRepository.Create(tourExecution);
             return MapToDto(tourExecution);
         }
+
        
-        
 
     }
 }

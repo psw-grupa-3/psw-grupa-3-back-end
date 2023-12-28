@@ -86,5 +86,8 @@ namespace Explorer.Tours.Core.Domain.TourExecutions
             TimeSpan timeDifference = DateTime.Now - tourExecution.Position.LastActivity;
             return timeDifference.TotalDays > 7.0;
         }
+        
+
+
     }
 }
