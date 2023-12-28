@@ -11,6 +11,6 @@ namespace Explorer.Payments.API.Dtos
     {
         public EventType EventType { get; set; }
         public long? ItemId { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTime? Timestamp { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace Explorer.Payments.Core.UseCases.Shopping
                 session = CrudRepository.Update(session);
                 return MapToDto(session);
             }
-            return null;
+            return Result.Fail(FailureCode.NotFound);
         }
 
         public Result<ShoppingSessionDto> CloseSession(long userId)
@@ -47,7 +47,7 @@ namespace Explorer.Payments.Core.UseCases.Shopping
                 session = CrudRepository.Update(session);
                 return MapToDto(session);
             }
-            return null;
+            return Result.Fail(FailureCode.NotFound);
         }
 
         public Result<ShoppingSessionDto> StartSession(long userId)

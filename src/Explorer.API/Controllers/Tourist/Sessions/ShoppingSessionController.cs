@@ -24,16 +24,16 @@ namespace Explorer.API.Controllers.Tourist.Sessions
             return CreateResponse(_service.StartSession(userId));
         }
 
-        [HttpPatch("closeSession/{userId}")]
+        [HttpGet("closeSession/{userId}")]
         public ActionResult<ShoppingSession> CloseSession(long userId)
         {
             return CreateResponse(_service.CloseSession(userId));
         }
 
         [HttpPatch("addEvent/{userId}")]
-        public ActionResult<ShoppingSession> AddEvent([FromBody] ShoppingEventDto @event,long userId)
+        public ActionResult<ShoppingSession> AddEvent([FromBody] ShoppingEventDto newEvent, long userId)
         {
-            return CreateResponse(_service.AddEvent(@event, userId));
+            return CreateResponse(_service.AddEvent(newEvent, userId));
         }
     }
 }
