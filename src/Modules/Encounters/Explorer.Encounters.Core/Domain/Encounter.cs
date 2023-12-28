@@ -2,6 +2,7 @@
 using Explorer.Encounters.API.Enums;
 using Explorer.Encounters.Core.Domain.Participants;
 using Explorer.Encounters.Core.Domain.Utilities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Explorer.Encounters.Core.Domain
 {

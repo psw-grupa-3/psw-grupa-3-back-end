@@ -13,4 +13,10 @@
         Active,
         Archieved
     }
+
+    public enum SocialEventType
+    {
+        Solved = 1,
+        Activate
+    }
 }

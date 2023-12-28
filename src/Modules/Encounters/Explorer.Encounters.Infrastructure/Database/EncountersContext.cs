@@ -1,6 +1,10 @@
-﻿using Explorer.Encounters.Core.Domain;
+﻿using Explorer.BuildingBlocks.Core.Domain;
+using Explorer.Encounters.Core.Domain;
 using Explorer.Encounters.Core.Domain.SolvingStrategies;
+using Explorer.Encounters.Core.EventSourcingDomain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 
 namespace Explorer.Encounters.Infrastructure.Database
 {
@@ -17,6 +21,8 @@ namespace Explorer.Encounters.Infrastructure.Database
         {
             modelBuilder.HasDefaultSchema("encounters");
 
+            modelBuilder.Entity<SocialEncounterEvent>().HasNoKey();
+
             modelBuilder.Entity<Encounter>().ToTable("Encounters");
             modelBuilder.Entity<Encounter>().Property(x => x.Location).HasColumnType("jsonb");
             modelBuilder.Entity<Encounter>().Property(x => x.Participants).HasColumnType("jsonb");
@@ -27,6 +33,7 @@ namespace Explorer.Encounters.Infrastructure.Database
             modelBuilder.Entity<SocialEncounter>().Property(x => x.Participants).HasColumnType("jsonb");
             modelBuilder.Entity<SocialEncounter>().Property(x => x.Completers).HasColumnType("jsonb");
             modelBuilder.Entity<SocialEncounter>().Property(x => x.CurrentlyInRange).HasColumnType("jsonb");
+            modelBuilder.Entity<SocialEncounter>().Property(x => x.Events).HasColumnType("jsonb");
 
             modelBuilder.Entity<HiddenEncounter>().ToTable("HiddenEncounters");
             modelBuilder.Entity<HiddenEncounter>().Property(x => x.Location).HasColumnType("jsonb");

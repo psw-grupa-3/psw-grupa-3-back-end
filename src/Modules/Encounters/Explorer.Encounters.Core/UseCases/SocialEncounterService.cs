@@ -6,6 +6,7 @@ using Explorer.Encounters.Core.Domain;
 using System.Runtime.Caching;
 using Explorer.Encounters.Core.Domain.RepositoryInterfaces;
 using Explorer.Encounters.Core.Domain.SolvingStrategies;
+using Explorer.Encounters.Core.UseCasesEvent;
 using Explorer.Stakeholders.API.Internal;
 using FluentResults;
 
@@ -15,12 +16,14 @@ namespace Explorer.Encounters.Core.UseCases
     {
         private readonly ISocialEncounterRepository _repository;
         private readonly IInternalPersonService _personService;
+        private readonly SolveSocialEncounter solveSocialEncounter;
         private const string cacheKey = "encounterData";
 
         public SocialEncounterService(IMapper mapper, ISocialEncounterRepository repository, IInternalPersonService personService) : base(mapper)
         {
             _repository = repository;
             _personService = personService;
+            solveSocialEncounter = new SolveSocialEncounter(repository);
         }
 
         public Result<SocialEncounterDto> Get(int id)
@@ -32,12 +35,15 @@ namespace Explorer.Encounters.Core.UseCases
         public Result<List<SocialEncounterDto>> GetAll()
         {
             var cache = MemoryCache.Default;
-            var cachedData = (List<SocialEncounterDto>)cache.Get(cacheKey);
-            if (cachedData == null)
+            var cachedData = cache.Get(cacheKey) as Result<List<SocialEncounterDto>>;
+
+            if (cachedData == null || !cachedData.IsSuccess)
             {
                 cachedData = CacheData(cacheKey);
+                return cachedData;
             }
-            return cachedData;
+
+            return cachedData.Value;
         }
 
         public Result<SocialEncounterDto> Create(SocialEncounterDto socialEncounter)
@@ -68,10 +74,9 @@ namespace Explorer.Encounters.Core.UseCases
 
         public Result<SocialEncounterDto> Solve(int id, ParticipantLocationDto participantLocation)
         {
-            var encounter = _repository.Get(id);
-            var completers = encounter.Solve(participantLocation.Username, participantLocation.Longitude, participantLocation.Latitude);
+            var encounter = solveSocialEncounter.Execute(id, participantLocation);
+            var completers = encounter.Completers;
             if (completers.Count > 0) _personService.RewardWithXp(completers.Select(u => u.Username).ToList(), encounter.Experience);
-            _repository.Update(encounter);
             return MapToDto(encounter);
         }
 
