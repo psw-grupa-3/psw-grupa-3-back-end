@@ -52,5 +52,24 @@ namespace Explorer.Tours.Core.UseCases.Shopping
         {
             return MapToDto(_tourPurchaseRepository.GetAllForUser(userId));
         }
+        public Result<int> GetToursPurchaseCount(int tourId)
+        {
+            var allTokens = CrudRepository.GetPaged(0, 0);
+            var tokensForTour = allTokens.Results
+                .Where(token => token.TourId == tourId)
+                .ToList();
+            return tokensForTour.Count;
+        }
+
+        public Result<int> GetAuthorsPurchasedTours()
+        {
+            var allTokens = CrudRepository.GetPaged(0, 0);
+            var uniqueTourIdsForUser = allTokens.Results
+                .Select(token => token.TourId)
+                .Distinct()
+                .ToList();
+
+            return uniqueTourIdsForUser.Count;
+        }
     }
 }
