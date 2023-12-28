@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Explorer.BuildingBlocks.Core.Domain;
 using Explorer.Encounters.API.Dtos;
 using Explorer.Encounters.Core.Domain;
 using Explorer.Encounters.Core.Domain.Participants;
 using Explorer.Encounters.Core.Domain.SolvingStrategies;
+using Explorer.Encounters.Core.EventSourcingDomain;
 
 namespace Explorer.Encounters.Core.Mappers
 {
@@ -17,6 +19,7 @@ namespace Explorer.Encounters.Core.Mappers
             CreateMap<SocialEncounterDto, SocialEncounter>().ReverseMap();
             CreateMap<HiddenEncounterDto, HiddenEncounter>().ReverseMap();
             CreateMap<MiscEncounterDto, MiscEncounter>().ReverseMap();
+            CreateMap<SocialEncounterEventDto, SocialEncounterEvent>().ReverseMap();
         }
     }
 }
