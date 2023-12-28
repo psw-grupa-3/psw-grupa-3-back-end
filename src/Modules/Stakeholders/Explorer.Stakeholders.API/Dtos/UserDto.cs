@@ -11,5 +11,6 @@ namespace Explorer.Stakeholders.API.Dtos
         public bool IsActive { get; set; }
         public List<FollowerDto> Followers { get; set; }
         public List<NotificationDto> Notifications { get; set; }
+        public bool? IsBlogEnabled { get; set; }
     }
 }
