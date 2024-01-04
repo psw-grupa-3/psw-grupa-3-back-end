@@ -29,26 +29,7 @@ namespace Explorer.API.Controllers.Tourist
             _tourService = tourService;
             _problemRepository = problemRepository;
             _userNotificationService = userNotificationService;
-        }
-        /*
-        [HttpPost]
-        
-        public ActionResult<ProblemDto> Create([FromBody] ProblemDto problem)
-        {
-            var result = _problemService.Create(problem);
-            return CreateResponse(result);
-        }*/
-        /*
-        [HttpPatch("addProblem")]
-        public ActionResult<TourDto> AddProblem([FromBody] ProblemDto problem)
-        {
-
-            int count = _problemRepository.GetProblemCount();
-            problem.Id = (long)count+1;
-            var result = _problemService.Create(problem);
-            var result2 = _tourService.AddProblem(problem.TourId, problem);
-            return CreateResponse(result);
-        }
+        } 
         [HttpPatch("problemNotSolved/{id}/{comment}")]
         public ActionResult<PagedResult<ProblemDto>> ProblemNotSolved(long id, string comment)
         {
@@ -61,25 +42,18 @@ namespace Explorer.API.Controllers.Tourist
             var result = _problemService.ProblemIsSolved(id);
             return Ok(result);
         }
-        [HttpGet("getProblem/{id}")]
+       /* [HttpGet("getProblem/{id}")]
         public ActionResult<PagedResult<ProblemDto>> GetProblem(long id)
         {
             var result = _problemService.GetProblemById(id);
             return Ok(result);
-        }
-        [HttpGet("getAll")]
-        public ActionResult<PagedResult<ProblemDto>> GetAll()
-        {
-            var result = _problemService.GetAll();
-            if (result.IsSuccess)
-            {
-                return Ok(result.Value);
-            }
-            else
-            {
-                return BadRequest("Failed to retrieve problems.");
-            }
         }*/
+        [HttpGet("getAll/{touristsId:int}")]
+        public ActionResult<PagedResult<ProblemDto>> GetAll(int touristsId)
+        {
+            var result = _tourService.GetAllTouristsProblems(touristsId);
+            return CreateResponse(result);
+        }
     }
 
 }

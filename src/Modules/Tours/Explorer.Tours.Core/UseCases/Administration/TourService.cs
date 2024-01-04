@@ -47,7 +47,7 @@ namespace Explorer.Tours.Core.UseCases.Administration
 
         public Result<TourDto> AddProblem(int tourId,ProblemDto problemDto)
         {
-            var problem = ProblemConverter.ToDomain(problemDto);
+            //var problem = ProblemConverter.ToDomain(problemDto);
             Tour tour = CrudRepository.Get(tourId);
             if (tour is null)
             {
@@ -55,7 +55,9 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
             try
             {
-                tour.Problems.Add(problem);
+                var count = tour.Problems.Count();
+                problemDto.Id = count + 1;
+                tour.Problems.Add(problemDto);
                 CrudRepository.Update(tour);
 
                 return MapToDto(tour);
@@ -276,6 +278,44 @@ namespace Explorer.Tours.Core.UseCases.Administration
             }
 
             return tours;
+        }
+
+        public Result<TourDto> AddProblem(long tourId, ProblemDto problem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Result<List<ProblemDto>> GetAllProblems(int authorsId)
+        {
+            var allTours = CrudRepository.GetPaged(0, 0).Results;
+            List<ProblemDto> problems = new List<ProblemDto>();
+            foreach (var tour in allTours)
+            {
+                if (tour.AuthorId == authorsId)
+                {
+                    foreach(ProblemDto problem in tour.Problems)
+                    { 
+                        problems.Add(problem);
+                    }
+                }
+            }
+            return problems;
+        }
+        public Result<List<ProblemDto>> GetAllTouristsProblems(int touristsId)
+        {
+            var allTours = CrudRepository.GetPaged(0, 0).Results;
+            List<ProblemDto> problems = new List<ProblemDto>();
+            foreach (var tour in allTours)
+            {
+                foreach (ProblemDto problem in tour.Problems)
+                {
+                    if(problem.TouristId == touristsId)
+                    {
+                        problems.Add(problem);
+                    }
+                }
+            }
+            return problems;
         }
     }
 }
