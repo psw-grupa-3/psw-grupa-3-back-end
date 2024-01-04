@@ -16,41 +16,35 @@ namespace Explorer.API.Controllers.Author.Tour
     {
         private readonly IProblemService _problemService;
         private readonly IUserNotificationService _userNotificationService;
-        public ProblemController(IProblemService problemService, IUserNotificationService userNotificationService)
+        private readonly ITourService _tourService;
+        public ProblemController(IProblemService problemService, IUserNotificationService userNotificationService, ITourService tourService)
         {
             _problemService = problemService;
             _userNotificationService = userNotificationService;
+            _tourService = tourService;
         }
-        /*
-        [HttpGet("getAll")]
-        public ActionResult<PagedResult<ProblemDto>> GetAll()
+        [HttpGet("getAll/{authorsId:int}")]
+        public ActionResult<PagedResult<ProblemDto>> GetAll(int authorsId)
         {
-            var result = _problemService.GetAll();
-            if (result.IsSuccess)
-            {
-                return Ok(result.Value);
-            }
-            else
-            {
-                return BadRequest("Failed to retrieve problems.");
-            }
+            var result = _tourService.GetAllProblems(authorsId);
+            return CreateResponse(result);
         }
 
-        [HttpPatch("respondToProblem/{id}/{response}")]
-        public ActionResult<PagedResult<ProblemDto>> RespondToProblem(long id, string response)
+        [HttpPatch("respondToProblem/{id:int}/{response}")]
+        public ActionResult<PagedResult<ProblemDto>> RespondToProblem(int id, string response)
         {
             var result = _problemService.RespondToProblem(id, response);
             var problem = result.Value;
-            return Ok(result);
+            return CreateResponse(result);
         }
-
-        [HttpGet("getToursProblems/{id}")]
-        public ActionResult<PagedResult<ProblemDto>> GetToursProblems(long id)
+        
+        [HttpGet("getToursProblems/{id:int}")]
+        public ActionResult<PagedResult<ProblemDto>> GetToursProblems(int id)
         {
             var result = _problemService.GetToursProblems(id);
 
-            return Ok(result);
-        }*/
+            return CreateResponse(result);
+        }
     }
 }
 
