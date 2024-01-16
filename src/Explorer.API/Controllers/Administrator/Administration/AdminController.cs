@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Explorer.Stakeholders.API.Dtos;
+﻿using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Admin
 {
@@ -16,6 +16,7 @@ namespace Explorer.API.Controllers.Admin
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpGet("getAll")]
         public ActionResult<UserDto> GetAll()
         {
